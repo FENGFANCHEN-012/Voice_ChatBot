@@ -1,14 +1,14 @@
 from fastapi import Request, HTTPException, Depends
 from app.store.session_store import SessionStore
-from app.pipeline.orchestrator import PipelineOrchestrator
+from app.services.document_service import DocumentService
 
 
-def get_session_store() -> SessionStore:
-    raise NotImplementedError("Inject via app.state.session_store")
+def get_document_service(request: Request) -> DocumentService:
+    return request.app.state.document_service
 
 
-def get_orchestrator() -> PipelineOrchestrator:
-    raise NotImplementedError("Inject via app.state.orchestrator")
+def get_session_store(request: Request) -> SessionStore:
+    return request.app.state.session_store
 
 
 async def get_current_session(
