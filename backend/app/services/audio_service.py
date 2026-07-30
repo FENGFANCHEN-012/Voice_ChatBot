@@ -2,8 +2,8 @@ import io
 import tempfile
 from pathlib import Path
 
+import edge_tts
 from faster_whisper import WhisperModel
-from gtts import gTTS
 
 
 class AudioService:
@@ -31,8 +31,10 @@ class AudioService:
 
     # Synthesize text to speech using gTTS and return the audio as bytes.
     async def synthesize(self, text: str) -> bytes:
-        tts = gTTS(text=text, lang="en", slow=False)
+        communicate = edge_tts.Communicate(text, voice="en-US-EmmaMultilingualNeural")
         buf = io.BytesIO()
-        tts.write_to_fp(buf)
+        async for chunk in communicate.stream():
+            if chunk["type"] == "audio":
+                buf.write(chunk["data"])
         buf.seek(0)
         return buf.getvalue()

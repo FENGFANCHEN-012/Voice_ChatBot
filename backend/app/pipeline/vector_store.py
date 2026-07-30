@@ -38,9 +38,15 @@ class ChromaVectorStore:
         return ids
 
 
-    def search(self, query_vector, k=20):
-        
-        results = self.collection.query(query_embeddings=[query_vector], n_results=k)
+    def get_all_texts(self) -> list[str]:
+        results = self.collection.get(include=["documents"])
+        return results.get("documents", [])
+
+    def search(self, query_vector, k=20, where: dict | None = None):
+        kwargs = {"query_embeddings": [query_vector], "n_results": k}
+        if where:
+            kwargs["where"] = where
+        results = self.collection.query(**kwargs)
         output = []
         for i in range(len(results["ids"][0])):
             meta = results["metadatas"][0][i] or {}
@@ -86,6 +92,9 @@ class FaissVectorStore:
         self.save()
         return [str(i) for i in ids]
 
+
+    def get_all_texts(self) -> list[str]:
+        return [m.get("text", "") for m in self.metadata.values()]
 
     def search(self, query_vector, k=20):
         import faiss

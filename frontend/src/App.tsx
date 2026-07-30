@@ -50,6 +50,7 @@ function App() {
     getMessages(currentId).then(({ data }) => setMessages(data)).catch(() => {});
   }, [currentId]);
 
+
   const playTts = useCallback(async (text: string) => {
     try {
       const { data } = await synthesizeSpeech(text);
@@ -60,6 +61,7 @@ function App() {
       audio.play();
     } catch {}
   }, []);
+  
 
   const handleCreateSession = async () => {
     try {

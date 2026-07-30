@@ -15,6 +15,11 @@ from app.pipeline.vector_store import create_vector_store
 from app.pipeline.retriever import Retriever
 from app.pipeline.reranker import Reranker
 from app.pipeline.llm import LLMClient
+from app.pipeline.query_expander import QueryExpander
+from app.pipeline.hybrid_search import HybridSearch
+from app.pipeline.self_rag import SelfRAG
+from app.pipeline.fallback import Fallback
+from app.pipeline.agent_rag import AgentRAG
 from app.pipeline.orchestrator import PipelineOrchestrator
 
 from app.services.document_service import DocumentService
@@ -45,7 +50,12 @@ async def lifespan(app: FastAPI):
     llm = LLMClient(settings.gemini_api_key)
 
     retriever = Retriever(vector_store, embedder, k=settings.retrieval_top_k)
-    orchestrator = PipelineOrchestrator(retriever, reranker, llm)
+    hybrid = HybridSearch(vector_store, embedder, k=settings.retrieval_top_k)
+    query_expander = QueryExpander(settings.gemini_api_key)
+    self_rag = SelfRAG(settings.gemini_api_key)
+    agent = AgentRAG(settings.gemini_api_key)
+    fallback = Fallback(hybrid, embedder, reranker, query_expander, self_rag, llm, top_k=settings.retrieval_top_k)
+    orchestrator = PipelineOrchestrator(retriever, reranker, llm, query_expander, hybrid, self_rag, fallback, agent)
 
     app.state.document_service = DocumentService(file_store, pdf_parser, embedder, vector_store)
     app.state.session_service = SessionService(app.state.session_store)

@@ -8,6 +8,7 @@ router = APIRouter()
 
 
 @router.post("/transcribe", response_model=TranscribeResponse)
+
 async def transcribe_audio(
     audio: UploadFile = File(...),
     service: AudioService = Depends(get_audio_service),
@@ -15,6 +16,7 @@ async def transcribe_audio(
     data = await audio.read()
     result = await service.transcribe(data, audio.filename or "audio.webm")
     return TranscribeResponse(**result)
+
 
 
 @router.post("/synthesize")
