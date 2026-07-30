@@ -18,8 +18,7 @@ class PdfParser:
         strategy: str = "recursive",  # "recursive" or "semantic"
         embedding_fn: Callable | None = None,  # function that embeds text (only needed for semantic)
 ) -> list[dict]:           # returns list of chunk dicts
-       
-       
+        
         pages = self._extract_pages(file_path)  # step 1: get (page_num, text) tuples
       
         if strategy == "semantic":

@@ -1,0 +1,2506 @@
+INFO:     Will watch for changes in these directories: ['C:\\Users\\johny\\OneDrive - Ngee Ann Polytechnic\\Desktop\\Voice_ChatBot\\backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [9240] using WatchFiles
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|##########| 393/393 [00:00<00:00, 8994.22it/s]
+INFO:     Started server process [33216]
+INFO:     Waiting for application startup.
+2026-07-30 12:18:57.801 | INFO     | app.main:lifespan:28 - Starting up: loading models and stores...
+2026-07-30 12:18:57.802 | INFO     | app.main:lifespan:35 - Loading embedding model: BAAI/bge-m3
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|##########| 391/391 [00:00<00:00, 30421.13it/s]
+2026-07-30 12:19:06.877 | INFO     | app.main:lifespan:38 - Loading vector store: chroma
+2026-07-30 12:19:08.020 | INFO     | app.main:lifespan:41 - Loading reranker model: BAAI/bge-reranker-v2-m3
+2026-07-30 12:19:08.021 | INFO     | app.main:lifespan:44 - Initialising LLM client
+2026-07-30 12:19:08.021 | INFO     | app.main:lifespan:56 - Initialising audio service with whisper model: base
+2026-07-30 12:19:08.702 | INFO     | app.main:lifespan:61 - Startup complete
+INFO:     Application startup complete.
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:53894', 'GET', '/api/v1/health', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:52618', 'GET', '/api/v1/documents/', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:52619', 'GET', '/api/v1/sessions', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:52622', 'POST', '/api/v1/documents/upload', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:61943', 'POST', '/api/v1/sessions', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:53007', 'POST', '/api/v1/sessions', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:50671', 'GET', '/api/v1/chats/a692e9ab-9c17-4f8f-9153-a0b728779d58/messages', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:60847', 'GET', '/api/v1/chats/71490008-9e18-4ea3-92d8-25223cd12065/messages', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:65350', 'POST', '/api/v1/chats/voice-query', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:54973', 'POST', '/api/v1/chats/voice-query', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:57324', 'POST', '/api/v1/audio/synthesize', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:59455', 'POST', '/api/v1/chats/voice-query', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:54334', 'POST', '/api/v1/audio/synthesize', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:54771', 'POST', '/api/v1/chats/voice-query', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:56346', 'POST', '/api/v1/chats/voice-query', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:49191', 'POST', '/api/v1/audio/synthesize', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:64505', 'GET', '/api/v1/sessions', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:64506', 'GET', '/api/v1/documents/', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:60916', 'GET', '/api/v1/documents/', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:60918', 'GET', '/api/v1/sessions', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:55783', 'GET', '/api/v1/documents/', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:55785', 'GET', '/api/v1/sessions', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:60624', 'GET', '/api/v1/documents/', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:60625', 'GET', '/api/v1/sessions', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:61293', 'GET', '/api/v1/chats/a692e9ab-9c17-4f8f-9153-a0b728779d58/messages', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:62910', 'POST', '/api/v1/chats/voice-query', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 167, in send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:52518', 'POST', '/api/v1/audio/synthesize', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:62709', 'GET', '/api/v1/documents/', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:62711', 'GET', '/api/v1/sessions', '1.1', 200)
+WARNING:  WatchFiles detected changes in 'app\services\audio_service.py'. Reloading...
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:60167', 'GET', '/api/v1/documents/', '1.1', 200)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Python313\Lib\logging\__init__.py", line 1136, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Call stack:
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+  File "C:\Python313\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Python313\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Python313\Lib\asyncio\base_events.py", line 2034, in _run_once
+    handle._run()
+  File "C:\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 401, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\responses.py", line 146, in __call__
+    await send(
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\_exception_handler.py", line 48, in sender
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\middleware\errors.py", line 162, in _send
+    await send(message)
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\protocols\http\httptools_impl.py", line 468, in send
+    self.access_logger.info(
+Message: '%s - "%s %s HTTP/%s" %d'
+Arguments: ('127.0.0.1:60168', 'GET', '/api/v1/sessions', '1.1', 200)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-07-30 14:17:43.098 | INFO     | app.main:lifespan:64 - Shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33216]
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=9240, pipe_handle=464)
+                                                  ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Python313\Lib\multiprocessing\spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\multiprocessing\process.py", line 331, in _bootstrap
+    util._flush_std_streams()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python313\Lib\multiprocessing\util.py", line 427, in _flush_std_streams
+    sys.stdout.flush()
+    ~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Exception ignored on flushing sys.stdout:
+OSError: [Errno 22] Invalid argument
+WARNING:  WatchFiles detected changes in 'app\services\audio_service.py'. Reloading...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|##########| 393/393 [00:00<00:00, 11104.04it/s]
+INFO:     Started server process [39600]
+INFO:     Waiting for application startup.
+2026-07-30 14:18:37.609 | INFO     | app.main:lifespan:28 - Starting up: loading models and stores...
+2026-07-30 14:18:37.610 | INFO     | app.main:lifespan:35 - Loading embedding model: BAAI/bge-m3
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|##########| 391/391 [00:00<00:00, 6983.30it/s]
+2026-07-30 14:18:49.740 | INFO     | app.main:lifespan:38 - Loading vector store: chroma
+2026-07-30 14:18:53.821 | INFO     | app.main:lifespan:41 - Loading reranker model: BAAI/bge-reranker-v2-m3
+2026-07-30 14:18:53.822 | INFO     | app.main:lifespan:44 - Initialising LLM client
+2026-07-30 14:18:53.823 | INFO     | app.main:lifespan:56 - Initialising audio service with whisper model: base
+2026-07-30 14:18:55.460 | INFO     | app.main:lifespan:61 - Startup complete
+INFO:     Application startup complete.
+ERROR:    Traceback (most recent call last):
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\starlette\routing.py", line 700, in lifespan
+    await receive()
+  File "C:\Users\johny\AppData\Roaming\Python\Python313\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|##########| 393/393 [00:00<00:00, 4242.34it/s]
+INFO:     Started server process [27680]
+INFO:     Waiting for application startup.
+2026-07-30 14:19:34.167 | INFO     | app.main:lifespan:28 - Starting up: loading models and stores...
+2026-07-30 14:19:34.168 | INFO     | app.main:lifespan:35 - Loading embedding model: BAAI/bge-m3
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|##########| 391/391 [00:00<00:00, 8147.31it/s]
+2026-07-30 14:19:45.906 | INFO     | app.main:lifespan:38 - Loading vector store: chroma
+2026-07-30 14:19:49.386 | INFO     | app.main:lifespan:41 - Loading reranker model: BAAI/bge-reranker-v2-m3
+2026-07-30 14:19:49.387 | INFO     | app.main:lifespan:44 - Initialising LLM client
+2026-07-30 14:19:49.388 | INFO     | app.main:lifespan:56 - Initialising audio service with whisper model: base
+2026-07-30 14:19:50.829 | INFO     | app.main:lifespan:61 - Startup complete
+INFO:     Application startup complete.

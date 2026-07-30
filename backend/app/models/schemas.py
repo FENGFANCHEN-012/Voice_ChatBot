@@ -32,7 +32,7 @@ class ChunkInfo(BaseModel):
 
 class QueryResponse(BaseModel):
     answer_text: str
-    audio_url: str
+    audio_url: str = ""
     chunks: list[ChunkInfo]
 
 

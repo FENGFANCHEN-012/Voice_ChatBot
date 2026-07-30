@@ -1,6 +1,12 @@
+from app.pipeline.embedder import Embedder
+
+
 class Retriever:
-    def __init__(self, vector_store, k: int = 20, fetch_k: int = 40):
-        pass
+    def __init__(self, vector_store, embedder: Embedder, k: int = 20):
+        self.vector_store = vector_store
+        self.embedder = embedder
+        self.k = k
 
     def retrieve(self, query_text: str) -> list[dict]:
-        pass
+        query_vector = self.embedder.embed([query_text])[0]
+        return self.vector_store.search(query_vector, k=self.k)

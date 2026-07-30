@@ -35,22 +35,22 @@ export async function deleteSession(sessionId: string) {
   return api.delete(`/sessions/${sessionId}`);
 }
 
-export async function queryChat(
-  sessionId: string,
-  audio?: Blob,
-  text?: string
-) {
+export async function queryChat(sessionId: string, text: string) {
   const form = new FormData();
   form.append("session_id", sessionId);
-  if (audio) form.append("audio", audio, "recording.wav");
-  if (text) form.append("text", text);
-  return api.post("/chats/query", form, {
-    responseType: "blob",
-  });
+  form.append("text", text);
+  return api.post("/chats/query", form);
 }
 
 export async function getMessages(sessionId: string) {
   return api.get(`/chats/${sessionId}/messages`);
+}
+
+export async function voiceQuery(sessionId: string, audio: Blob) {
+  const form = new FormData();
+  form.append("session_id", sessionId);
+  form.append("audio", audio, "recording.webm");
+  return api.post("/chats/voice-query", form);
 }
 
 export async function transcribeAudio(audio: Blob) {

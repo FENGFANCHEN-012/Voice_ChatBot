@@ -1,36 +1,43 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Form
-from typing import Optional
-from app.models.schemas import QueryResponse, SessionResponse, MessageResponse
+from fastapi import APIRouter, Depends, Form, HTTPException, UploadFile, File
+from app.models.schemas import QueryResponse, MessageResponse
 from app.services.chat_service import ChatService
-from app.services.session_service import SessionService
+from app.services.audio_service import AudioService
+from app.core.dependencies import get_chat_service, get_audio_service
 
 router = APIRouter()
-
-
-@router.post("/sessions", response_model=SessionResponse)
-async def create_session():
-    pass
-
-
-@router.get("/sessions", response_model=list[SessionResponse])
-async def list_sessions():
-    pass
-
-
-@router.delete("/sessions/{session_id}")
-async def delete_session(session_id: str):
-    pass
 
 
 @router.post("/query", response_model=QueryResponse)
 async def query(
     session_id: str = Form(...),
-    audio: Optional[UploadFile] = File(None),
-    text: Optional[str] = Form(None),
+    text: str = Form(""),
+    chat_service: ChatService = Depends(get_chat_service),
 ):
-    pass
+    result = await chat_service.query(session_id, text)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return QueryResponse(**result)
+
+
+@router.post("/voice-query", response_model=QueryResponse)
+async def voice_query(
+    session_id: str = Form(...),
+    audio: UploadFile = File(...),
+    chat_service: ChatService = Depends(get_chat_service),
+    audio_service: AudioService = Depends(get_audio_service),
+):
+    audio_data = await audio.read()
+    transcript = await audio_service.transcribe(audio_data, audio.filename or "audio.webm")
+    result = await chat_service.query(session_id, transcript["text"])
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return QueryResponse(**result)
 
 
 @router.get("/{session_id}/messages", response_model=list[MessageResponse])
-async def get_messages(session_id: str):
-    pass
+async def get_messages(
+    session_id: str,
+    chat_service: ChatService = Depends(get_chat_service),
+):
+    msgs = chat_service.get_messages(session_id)
+    return [MessageResponse(**m) for m in msgs]
