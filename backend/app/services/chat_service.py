@@ -12,7 +12,9 @@ class ChatService:
     async def query(self, session_id: str, text: str) -> dict:
         session = self.session_store.get(session_id)
         if session is None:
-            return {"error": "Session not found"}
+            from app.models.domain import Session
+            session = Session(session_id=session_id)
+            self.session_store.set(session_id, session)
 
         session.messages.append(Message(role="user", content=text))
 

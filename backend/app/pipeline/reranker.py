@@ -1,10 +1,16 @@
 
 
 
+
+
+import torch
+from loguru import logger
 from sentence_transformers import CrossEncoder
 
+_device = "cuda" if torch.cuda.is_available() else "cpu"
+
 reranker = CrossEncoder(
-    "BAAI/bge-reranker-v2-m3"
+    "BAAI/bge-reranker-v2-m3", device=_device
 )
 
 
@@ -20,5 +26,11 @@ class Reranker:
        
         for i, c in enumerate(candidates):
             c["score"] = scores[i]
-            
-        return sorted(candidates, key=lambda x: x["score"], reverse=True)[:top_k]
+
+        ranked = sorted(candidates, key=lambda x: x["score"], reverse=True)[:top_k]
+
+        logger.info(f"[Reranker] {len(candidates)} candidates → top {top_k}")
+        for i, r in enumerate(ranked):
+            logger.info(f"  #{i+1} score={r['score']:.4f} | {r['text'][:100]}...")
+
+        return ranked

@@ -1,7 +1,7 @@
 import fitz  # PyMuPDF — reads PDF files
 import numpy as np  # numerical ops for cosine similarity
 from typing import Callable  # type hint for the embedding function parameter
-from langchain.text_splitter import RecursiveCharacterTextSplitter  # splits text by paragraphs/sentences/words
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
 class PdfParser:
@@ -39,6 +39,9 @@ class PdfParser:
         doc.close()                   # free the file handle
         return pages
 
+
+    
+    
     def _chunk_recursive(
         self, pages: list[tuple[int, str]], doc_id: str
     ) -> list[dict]:
@@ -49,6 +52,7 @@ class PdfParser:
             separators=["\n\n", "\n", ".", "?", "!", " ", ""],  # priority order: double newline first, single char last
             length_function=len,              # how to measure chunk size (character count)
         )
+        
         chunks = []
         idx = 0                               # global chunk index across all pages
         for page_num, text in pages:          # process each page separately so we know which page each chunk came from
@@ -62,6 +66,9 @@ class PdfParser:
                 idx += 1
         return chunks
 
+
+
+   # more advanced chunking strategy that uses embeddings to detect topic shifts
     def _chunk_semantic(
         self,
         pages: list[tuple[int, str]],

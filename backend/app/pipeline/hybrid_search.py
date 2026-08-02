@@ -1,7 +1,10 @@
 import numpy as np
+from loguru import logger
 from rank_bm25 import BM25Okapi
 
 
+
+# hybrid search that combines vector search and BM25 ranking using Reciprocal Rank Fusion (RRF)
 class HybridSearch:
     def __init__(self, vector_store, embedder, k: int = 20, rrf_k: int = 60):
         self.vector_store = vector_store
@@ -23,7 +26,7 @@ class HybridSearch:
         if self._bm25 is None:
             self.rebuild()
 
-        query_vector = self.embedder.embed([query_text])[0]
+        query_vector = self.embedder.embed_query(query_text)
         vec_results = self.vector_store.search(query_vector, k=self.k, where=where)
 
         tokenized_query = query_text.lower().split()
@@ -66,4 +69,10 @@ class HybridSearch:
             r = dict(item["result"])
             r["score"] = float(item["rrf_score"])
             results.append(r)
+
+        logger.info(f"[HybridSearch] Query: {query_text}")
+        logger.info(f"[HybridSearch] Retrieved {len(results)} chunks (vec: {len(vec_results)}, bm25: {len(bm25_ranked)})")
+        for i, r in enumerate(results[:3]):
+            logger.info(f"  #{i+1} score={r['score']:.4f} | {r['text'][:100]}...")
+
         return results

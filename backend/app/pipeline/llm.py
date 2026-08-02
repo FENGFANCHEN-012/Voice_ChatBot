@@ -1,13 +1,12 @@
+import time
+from loguru import logger
 import google.generativeai as genai
 
 
 
-# LLMClient is a wrapper around the Gemini 2.5 Flash model for generating answers based on user queries and context.
 class LLMClient:
     def __init__(self, api_key: str):
         genai.configure(api_key=api_key)
-        
-        # use genai.GenerativeModel to create a model instance for Gemini 2.5 Flash
         self.model = genai.GenerativeModel("gemini-3.5-flash-lite")
 
     def generate(self, query: str, context: list[str], history: list[dict] | None = None) -> str:
@@ -21,7 +20,7 @@ class LLMClient:
                 lines.append(f"{role}: {msg['content']}")
             history_block = "\n".join(lines) + "\n\n"
 
-        prompt = f"""You are a helpful assistant. Answer the user's question based ONLY on the provided context.
+        prompt = f"""You are a helpful assistant. Answer the user's question based on the provided context and conversation history.
 
 Conversation history:
 {history_block}Context:
@@ -29,7 +28,21 @@ Conversation history:
 
 Question: {query}
 
-Answer concisely and accurately. If the context does not contain the answer, say "I cannot find this information in the uploaded documents."
-"""
-        response = self.model.generate_content(prompt)
-        return response.text
+Rules:
+- If the question is about something from the conversation history, answer from that.
+- If the question needs document context, use the provided context.
+- If the question is a general follow-up (like "explain more", "what do you mean"), answer from conversation history.
+- Only say "I cannot find this information in the uploaded documents" if the question clearly requires document context that isn't available."""
+        for attempt in range(3):
+            try:
+                response = self.model.generate_content(prompt)
+                return response.text
+            except Exception as e:
+                if "RESOURCE_EXHAUSTED" in str(e) or "429" in str(e):
+                    wait = 30 * (attempt + 1)
+                    logger.warning(f"[LLM] Quota hit, waiting {wait}s (attempt {attempt+1}/3)")
+                    time.sleep(wait)
+                else:
+                    raise
+        logger.error("[LLM] Quota exceeded after 3 retries")
+        return "I'm experiencing high demand. Please try again in a minute."

@@ -13,7 +13,10 @@ class Settings(BaseSettings):
     
     # ------------------------------------------
     
+    # fast embedding model
     embedding_model_name: str = "BAAI/bge-m3"
+    
+    
     reranker_model_name: str = "BAAI/bge-reranker-v2-m3"
 
     # Vector store — "chroma" (default) or "faiss"
@@ -23,7 +26,7 @@ class Settings(BaseSettings):
     faiss_metadata_path: str = "faiss_index/metadata.pkl"
 
     upload_dir: str = "uploads"
-    max_file_size_mb: int = 20
+    max_file_size_mb: int = 40
     chunk_size: int = 512
     chunk_overlap: int = 64
     retrieval_top_k: int = 20

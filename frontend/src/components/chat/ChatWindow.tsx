@@ -33,7 +33,7 @@ export function ChatWindow({ messages, loading }: Props) {
   return (
     <div className="flex-1 overflow-y-auto px-4 py-6 space-y-3 scrollbar-custom">
       {messages.map((m, i) => (
-        <MessageBubble key={i} role={m.role} content={m.content} />
+        <MessageBubble key={i} role={m.role} content={m.content} chunks={m.chunks} />
       ))}
       {loading && <TypingIndicator />}
       <div ref={bottomRef} />

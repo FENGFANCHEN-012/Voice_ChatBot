@@ -8,5 +8,5 @@ class Retriever:
         self.k = k
 
     def retrieve(self, query_text: str) -> list[dict]:
-        query_vector = self.embedder.embed([query_text])[0]
+        query_vector = self.embedder.embed_query(query_text)
         return self.vector_store.search(query_vector, k=self.k)

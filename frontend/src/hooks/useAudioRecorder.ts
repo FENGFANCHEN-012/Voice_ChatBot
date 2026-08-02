@@ -7,7 +7,12 @@ export function useAudioRecorder() {
 
   const start = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+
+    const mimeType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+      ? "audio/webm;codecs=opus"
+      : "audio/webm";
+
+    const recorder = new MediaRecorder(stream, { mimeType });
     chunksRef.current = [];
 
     recorder.ondataavailable = (e) => chunksRef.current.push(e.data);
@@ -24,7 +29,7 @@ export function useAudioRecorder() {
       if (!recorder) return resolve(new Blob());
 
       recorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+        const blob = new Blob(chunksRef.current, { type: recorder.mimeType });
         recorder.stream.getTracks().forEach((t) => t.stop());
         setIsRecording(false);
         resolve(blob);

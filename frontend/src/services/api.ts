@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "/api/v1",
-  timeout: 60000,
+  timeout: 120000,
 });
 
 
@@ -13,6 +13,7 @@ export async function uploadDocument(file: File, onProgress?: (pct: number) => v
   form.append("file", file);
  
   return api.post("/documents/upload", form, {
+    timeout: 300000,
     onUploadProgress: (e) => {
       if (e.total && onProgress) onProgress(Math.round((e.loaded / e.total) * 100));
     },
@@ -70,6 +71,46 @@ export async function synthesizeSpeech(text: string) {
   return api.post("/audio/synthesize", form, {
     responseType: "blob",
   });
+}
+
+export async function synthesizeSpeechStream(text: string) {
+  const form = new FormData();
+  form.append("text", text);
+  const response = await fetch("/api/v1/audio/synthesize-stream", {
+    method: "POST",
+    body: form,
+  });
+  if (!response.ok) throw new Error("TTS failed");
+  return response;
+}
+
+export function subscribeToProgress(
+  docId: string,
+  onProgress: (current: number, total: number) => void,
+  onComplete: () => void,
+  onError: (msg: string) => void,
+): () => void {
+  const es = new EventSource(`/api/v1/documents/${docId}/progress`);
+  es.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+    if (data.status === "complete") {
+      onComplete();
+      es.close();
+    } else if (data.status === "error") {
+      onError(data.message || "Embedding failed");
+      es.close();
+    } else if (data.status === "not_found") {
+      onError("Document not found");
+      es.close();
+    } else if (data.current !== undefined) {
+      onProgress(data.current, data.total);
+    }
+  };
+  es.onerror = () => {
+    onError("Connection lost");
+    es.close();
+  };
+  return () => es.close();
 }
 
 export async function healthCheck() {

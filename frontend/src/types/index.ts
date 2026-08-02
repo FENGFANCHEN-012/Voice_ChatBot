@@ -8,12 +8,15 @@ export interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: string;
+  chunks?: ChunkInfo[];
 }
 
 export interface Document {
   doc_id: string;
   filename: string;
+  file_path: string;
   chunk_count: number;
+  total_chunks: number;
   uploaded_at: string;
 }
 

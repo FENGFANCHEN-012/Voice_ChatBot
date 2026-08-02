@@ -14,8 +14,8 @@ export function FileDropzone({ onUpload, disabled }: Props) {
       alert("Only PDF files are supported");
       return;
     }
-    if (file.size > 20 * 1024 * 1024) {
-      alert("File exceeds 20 MB limit");
+    if (file.size > 40 * 1024 * 1024) {
+      alert("File exceeds 40 MB limit");
       return;
     }
     onUpload(file);
@@ -42,15 +42,15 @@ export function FileDropzone({ onUpload, disabled }: Props) {
       onClick={() => inputRef.current?.click()}
       className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
         dragging
-          ? "border-blue-500 bg-blue-50"
-          : "border-gray-300 hover:border-gray-400"
+          ? "border-amber-500 bg-amber-50"
+          : "border-stone-300 hover:border-stone-400"
       } ${disabled ? "opacity-50 pointer-events-none" : ""}`}
     >
       <input ref={inputRef} type="file" accept=".pdf" onChange={onInput} hidden />
-      <p className="text-gray-500">
+      <p className="text-stone-500">
         {dragging ? "Drop your PDF here" : "Click or drag a PDF to upload"}
       </p>
-      <p className="text-xs text-gray-400 mt-1">Max 20 MB</p>
+      <p className="text-xs text-stone-400 mt-1">Max 40 MB</p>
     </div>
   );
 }

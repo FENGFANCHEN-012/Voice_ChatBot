@@ -1,3 +1,5 @@
+import time
+from loguru import logger
 import google.generativeai as genai
 
 
@@ -23,10 +25,17 @@ class AgentRAG:
 
 Query: {query}
 Category:"""
-        resp = self.model.generate_content(prompt)
-        category = resp.text.strip().lower()
-
-        valid = {self.SIMPLE, self.COMPLEX, self.COMPARISON, self.OUT_OF_SCOPE, self.SUMMARIZE}
-        if category not in valid:
-            return self.COMPLEX
-        return category
+        for attempt in range(3):
+            try:
+                resp = self.model.generate_content(prompt)
+                category = resp.text.strip().lower()
+                valid = {self.SIMPLE, self.COMPLEX, self.COMPARISON, self.OUT_OF_SCOPE, self.SUMMARIZE}
+                return category if category in valid else self.COMPLEX
+            except Exception as e:
+                if "RESOURCE_EXHAUSTED" in str(e):
+                    wait = 30 * (attempt + 1)
+                    logger.warning(f"[AgentRAG] Quota hit, waiting {wait}s")
+                    time.sleep(wait)
+                else:
+                    raise
+        return self.COMPLEX

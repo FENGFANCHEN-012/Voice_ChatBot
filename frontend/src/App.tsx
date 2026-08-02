@@ -11,24 +11,30 @@ import { UploadProgress } from "./components/upload/UploadProgress";
 import {
   uploadDocument, listDocuments, deleteDocument,
   createSession, listSessions, queryChat, getMessages,
-  voiceQuery, synthesizeSpeech,
+  voiceQuery, subscribeToProgress,
 } from "./services/api";
 
+import { useTtsSocket } from "./hooks/useTtsSocket";
 
 import type { Document, Session, Message } from "./types";
 
 function App() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [uploadPhase, setUploadPhase] = useState<"uploading" | "embedding" | "done" | "error">("uploading");
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [embedCurrent, setEmbedCurrent] = useState(0);
+  const [embedTotal, setEmbedTotal] = useState(0);
   const [uploadFilename, setUploadFilename] = useState("");
+  const [uploadError, setUploadError] = useState("");
+  const cleanupSSE = useRef<(() => void) | null>(null);
 
   const [sessions, setSessions] = useState<Session[]>([]);
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [sending, setSending] = useState(false);
   const initRef = useRef(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { play: playTts } = useTtsSocket();
 
   const fetchDocs = useCallback(async () => {
     try { const { data } = await listDocuments(); setDocuments(data); } catch {}
@@ -50,19 +56,6 @@ function App() {
     getMessages(currentId).then(({ data }) => setMessages(data)).catch(() => {});
   }, [currentId]);
 
-
-  const playTts = useCallback(async (text: string) => {
-    try {
-      const { data } = await synthesizeSpeech(text);
-      const url = URL.createObjectURL(data);
-      const audio = new Audio(url);
-      audioRef.current = audio;
-      audio.onended = () => URL.revokeObjectURL(url);
-      audio.play();
-    } catch {}
-  }, []);
-  
-
   const handleCreateSession = async () => {
     try {
       const { data } = await createSession();
@@ -79,7 +72,7 @@ function App() {
     setMessages((prev) => [...prev, userMsg]);
     try {
       const { data } = await queryChat(currentId, text);
-      const botMsg: Message = { role: "assistant", content: data.answer_text, timestamp: new Date().toISOString() };
+      const botMsg: Message = { role: "assistant", content: data.answer_text, timestamp: new Date().toISOString(), chunks: data.chunks };
       setMessages((prev) => [...prev, botMsg]);
       playTts(data.answer_text);
     } catch {
@@ -96,7 +89,7 @@ function App() {
     setMessages((prev) => [...prev, userMsg]);
     try {
       const { data } = await voiceQuery(currentId, blob);
-      const botMsg: Message = { role: "assistant", content: data.answer_text, timestamp: new Date().toISOString() };
+      const botMsg: Message = { role: "assistant", content: data.answer_text, timestamp: new Date().toISOString(), chunks: data.chunks };
       setMessages((prev) => [...prev, botMsg]);
       playTts(data.answer_text);
     } catch {
@@ -108,15 +101,36 @@ function App() {
 
   const handleUpload = async (file: File) => {
     setUploading(true);
-    setProgress(0);
+    setUploadPhase("uploading");
+    setUploadProgress(0);
+    setEmbedCurrent(0);
+    setEmbedTotal(0);
     setUploadFilename(file.name);
+    setUploadError("");
     try {
-      const { data } = await uploadDocument(file, setProgress);
-      setProgress(100);
+      const { data } = await uploadDocument(file, setUploadProgress);
+      setUploadPhase("embedding");
+      setEmbedTotal(data.total_chunks);
       setDocuments((prev) => [...prev, data]);
-      setTimeout(() => setProgress(0), 1500);
+
+      cleanupSSE.current = subscribeToProgress(
+        data.doc_id,
+        (current, total) => {
+          setEmbedCurrent(current);
+          setEmbedTotal(total);
+        },
+        () => {
+          setUploadPhase("done");
+          setTimeout(() => setUploadProgress(0), 2000);
+        },
+        (msg) => {
+          setUploadPhase("error");
+          setUploadError(msg);
+        },
+      );
     } catch {
-      setProgress(0);
+      setUploadPhase("error");
+      setUploadError("Upload failed");
     } finally {
       setUploading(false);
     }
@@ -134,8 +148,17 @@ function App() {
       <section>
         <h2 className="text-xs font-medium uppercase tracking-wider text-stone-400 mb-3">Upload</h2>
         <FileDropzone onUpload={handleUpload} disabled={uploading} />
-        {uploading && (
-          <div className="mt-3"><UploadProgress progress={progress} filename={uploadFilename} /></div>
+        {uploadProgress > 0 && (
+          <div className="mt-3">
+            <UploadProgress
+              phase={uploadPhase}
+              uploadProgress={uploadProgress}
+              embedCurrent={embedCurrent}
+              embedTotal={embedTotal}
+              filename={uploadFilename}
+              errorMsg={uploadError}
+            />
+          </div>
         )}
       </section>
       <section>

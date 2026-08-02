@@ -15,7 +15,9 @@ class SessionResponse(BaseModel):
 class DocumentResponse(BaseModel):
     doc_id: str
     filename: str
+    file_path: str = ""
     chunk_count: int
+    total_chunks: int = 0
     uploaded_at: datetime
 
 
@@ -26,7 +28,7 @@ class QueryRequest(BaseModel):
 
 class ChunkInfo(BaseModel):
     content: str
-    page: int
+    page: Optional[int] = None
     score: float
 
 

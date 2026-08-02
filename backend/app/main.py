@@ -1,7 +1,8 @@
 from contextlib import asynccontextmanager
 from loguru import logger
+import json
 
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
@@ -17,7 +18,6 @@ from app.pipeline.reranker import Reranker
 from app.pipeline.llm import LLMClient
 from app.pipeline.query_expander import QueryExpander
 from app.pipeline.hybrid_search import HybridSearch
-from app.pipeline.self_rag import SelfRAG
 from app.pipeline.fallback import Fallback
 from app.pipeline.agent_rag import AgentRAG
 from app.pipeline.orchestrator import PipelineOrchestrator
@@ -52,10 +52,9 @@ async def lifespan(app: FastAPI):
     retriever = Retriever(vector_store, embedder, k=settings.retrieval_top_k)
     hybrid = HybridSearch(vector_store, embedder, k=settings.retrieval_top_k)
     query_expander = QueryExpander(settings.gemini_api_key)
-    self_rag = SelfRAG(settings.gemini_api_key)
     agent = AgentRAG(settings.gemini_api_key)
-    fallback = Fallback(hybrid, embedder, reranker, query_expander, self_rag, llm, top_k=settings.retrieval_top_k)
-    orchestrator = PipelineOrchestrator(retriever, reranker, llm, query_expander, hybrid, self_rag, fallback, agent)
+    fallback = Fallback(hybrid, embedder, reranker, query_expander, llm, top_k=settings.retrieval_top_k)
+    orchestrator = PipelineOrchestrator(retriever, reranker, llm, query_expander, hybrid, fallback, agent)
 
     app.state.document_service = DocumentService(file_store, pdf_parser, embedder, vector_store)
     app.state.session_service = SessionService(app.state.session_store)
@@ -94,3 +93,23 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api/v1")
+
+
+@app.websocket("/ws/tts")
+async def websocket_tts(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            msg = json.loads(data)
+            text = msg.get("text", "")
+            if not text:
+                continue
+            async for chunk in app.state.audio_service.synthesize_stream(text):
+                import base64
+                await websocket.send_bytes(chunk)
+            await websocket.send_text(json.dumps({"status": "done"}))
+    except WebSocketDisconnect:
+        pass
+    except Exception as e:
+        logger.error(f"WebSocket TTS error: {e}")
