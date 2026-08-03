@@ -1,0 +1,75 @@
+{
+  "config": {
+    "concurrent_users": [
+      1,
+      5,
+      10,
+      20
+    ],
+    "queries_per_user": 5,
+    "ramp_up_seconds": 5,
+    "timeout_seconds": 30
+  },
+  "results": [
+    {
+      "num_users": 1,
+      "queries_per_user": 5,
+      "total_queries": 5,
+      "success": 5,
+      "errors": 0,
+      "timeouts": 0,
+      "success_rate": 1.0,
+      "total_time": 15.751537084579468,
+      "throughput": 0.31742933868307555,
+      "avg_latency": 2.5002206325531007,
+      "p50_latency": 2.779529333114624,
+      "p95_latency": 3.551518440246582,
+      "p99_latency": 3.551518440246582
+    },
+    {
+      "num_users": 5,
+      "queries_per_user": 5,
+      "total_queries": 25,
+      "success": 25,
+      "errors": 0,
+      "timeouts": 0,
+      "success_rate": 1.0,
+      "total_time": 8.85375165939331,
+      "throughput": 2.82366176077194,
+      "avg_latency": 0.3118578338623047,
+      "p50_latency": 0.3101201057434082,
+      "p95_latency": 0.3397998809814453,
+      "p99_latency": 0.39754343032836914
+    },
+    {
+      "num_users": 10,
+      "queries_per_user": 5,
+      "total_queries": 50,
+      "success": 50,
+      "errors": 0,
+      "timeouts": 0,
+      "success_rate": 1.0,
+      "total_time": 9.2416672706604,
+      "throughput": 5.410279177517614,
+      "avg_latency": 0.31085309505462644,
+      "p50_latency": 0.3057088851928711,
+      "p95_latency": 0.3507528305053711,
+      "p99_latency": 0.43358445167541504
+    },
+    {
+      "num_users": 20,
+      "queries_per_user": 5,
+      "total_queries": 100,
+      "success": 100,
+      "errors": 0,
+      "timeouts": 0,
+      "success_rate": 1.0,
+      "total_time": 9.55690598487854,
+      "throughput": 10.463637515972792,
+      "avg_latency": 0.30844635486602784,
+      "p50_latency": 0.3050098419189453,
+      "p95_latency": 0.3409280776977539,
+      "p99_latency": 0.37674593925476074
+    }
+  ]
+}

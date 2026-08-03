@@ -68,7 +68,8 @@ async def run_ragas_evaluation():
     print("=" * 70)
 
     print("\nLoading evaluation dataset...")
-    with open("evaluation_dataset.json", "r", encoding="utf-8") as f:
+    dataset_path = Path(__file__).parent / "evaluation_dataset.json"
+    with open(dataset_path, "r", encoding="utf-8") as f:
         full_dataset = json.load(f)
 
     dataset = full_dataset[:NUM_QUESTIONS]
@@ -79,7 +80,6 @@ async def run_ragas_evaluation():
     headers = {"ngrok-skip-browser-warning": "true"}
     async with aiohttp.ClientSession(headers=headers) as session:
         session_id = await create_session(session)
-
         print(f"Created session: {session_id}")
 
         for i, item in enumerate(dataset):
@@ -101,9 +101,25 @@ async def run_ragas_evaluation():
 
             await asyncio.sleep(0.5)
 
-    print("\nInitializing RAGAS evaluator with Gemini 3.5 Flash Lite...")
-    client = genai.Client(api_key=GEMINI_API_KEY)
-    evaluator_llm = llm_factory("gemini-3.5-flash-lite", provider="google", client=client)
+    deepseek_key = os.getenv("DEEPSEEK_API_KEY", "")
+    gemini_key = os.getenv("GEMINI_API_KEY", "")
+    preferred_provider = os.getenv("LLM_PROVIDER", "deepseek").lower()
+
+    if preferred_provider == "gemini" and gemini_key:
+        print("\nInitializing RAGAS evaluator with Google Gemini...")
+        client = genai.Client(api_key=gemini_key)
+        evaluator_llm = llm_factory("gemini-2.0-flash-lite", provider="google", client=client)
+    elif deepseek_key:
+        print("\nInitializing RAGAS evaluator with DeepSeek V3 (deepseek-chat)...")
+        from openai import AsyncOpenAI
+        openai_client = AsyncOpenAI(api_key=deepseek_key, base_url="https://api.deepseek.com")
+        evaluator_llm = llm_factory("deepseek-chat", provider="openai", client=openai_client)
+    elif gemini_key:
+        print("\nInitializing RAGAS evaluator with Google Gemini...")
+        client = genai.Client(api_key=gemini_key)
+        evaluator_llm = llm_factory("gemini-2.0-flash-lite", provider="google", client=client)
+    else:
+        raise ValueError("Please set either DEEPSEEK_API_KEY or GEMINI_API_KEY to run RAGAS evaluation.")
 
     print("Building RAGAS evaluation dataset...")
     eval_data = []
@@ -138,12 +154,19 @@ async def run_ragas_evaluation():
     print("RAGAS EVALUATION RESULTS")
     print("=" * 70)
 
+    def _to_avg(val):
+        if isinstance(val, (list, tuple)):
+            clean = [x for x in val if x is not None]
+            return sum(clean) / len(clean) if clean else 0.0
+        return float(val) if val is not None else 0.0
+
     metric_scores = {
-        "faithfulness": result["faithfulness"],
-        "context_recall": result["context_recall"],
-        "context_precision": result["context_precision"],
-        "answer_correctness": result["answer_correctness"],
+        "faithfulness": _to_avg(result["faithfulness"]),
+        "context_recall": _to_avg(result["context_recall"]),
+        "context_precision": _to_avg(result["context_precision"]),
+        "answer_correctness": _to_avg(result["answer_correctness"]),
     }
+
 
     for metric_name, score in metric_scores.items():
         print(f"{metric_name:<25}: {score:.3f}/1.000")
