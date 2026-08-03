@@ -1,271 +1,211 @@
-# Enterprise Real-Time Voice RAG ChatBot 🎙️🤖
+# Voice RAG Assistant
 
-An enterprise-grade, real-time **Voice Retrieval-Augmented Generation (RAG) Assistant** designed for low-latency, high-accuracy document intelligence and conversational speech interaction.
+A full-stack **retrieval-augmented generation (RAG)** chatbot that answers questions about enterprise policy documents using **voice**. Upload PDFs, ask questions by speaking, and get streamed text + spoken answers (edge-tts).
 
-The system integrates **Faster-Whisper ASR**, **BM25 + BGE-M3 Hybrid Search**, **BGE-Reranker-v2-m3 Cross-Encoder Reranking**, **Dual LLM Engines (DeepSeek-V3 & Google Gemini)**, and **Streaming Edge-TTS Audio Output**.
+## Features
 
----
+- 🎤 **Voice-first** — record a question, get a spoken answer (WebM → faster-whisper → RAG → edge-tts)
+- 📄 **PDF ingestion** — upload PDFs, chunked & embedded into a vector store (ChromaDB default / FAISS optional)
+- 🔍 **Hybrid retrieval** — vector (BAAI/bge-m3) + BM25 fused with Reciprocal Rank Fusion, re-ranked by `BAAI/bge-reranker-v2-m3`
+- 💬 **Streaming chat** — SSE text streaming + WebSocket TTS with sentence-boundary speech
+- 🧠 **Advanced pipeline (GPU only)** — AgentRAG query classification + QueryExpander for comparison & multi-hop queries
+- 🔁 **Provider fallback** — DeepSeek (default) with automatic Gemini fallback
 
-## 🌟 Key Features
+## Architecture
 
-* ⚡ **Ultra-Low Spoken Latency (< 2.8s)**: Audio streaming begins out-loud while the LLM is still generating subsequent sentences.
-* 🎯 **Hybrid Retrieval (RAG)**: Combines dense vector similarity (`BAAI/bge-m3`) and sparse keyword search (`rank-bm25`) using Reciprocal Rank Fusion (RRF).
-* 🔬 **Cross-Encoder Reranking**: Re-ranks top document chunks using `BAAI/bge-reranker-v2-m3` to eliminate hallucinations and maximize precision.
-* 🧠 **Dual LLM Provider System (DeepSeek-V3 + Gemini)**:
-  * **DeepSeek-V3 (`deepseek-chat`)**: High-throughput streaming via REST API with 128k context window and strict system prompt compliance.
-  * **Google Gemini 2.0 / 1.5**: Full multi-modal support.
-  * **Zero-Downtime Auto-Failover**: Automatically fails over from Gemini to DeepSeek-V3 if a 429 quota limit occurs.
-* 🎙️ **Real-Time Voice Pipeline**:
-  * **Speech-to-Text (ASR)**: Uses `faster-whisper` (base/medium models) with PyTorch CUDA GPU acceleration.
-  * **Text-to-Speech (TTS)**: Streams MP3 audio chunks via WebSocket (`/ws/tts`) using a strict sequence-locked queue for natural out-loud speech.
-  * **TTS Sanitization**: Automatic regex cleaning converts slashes (`/`, `\`) and markdown symbols into natural spoken phrases (e.g. `CI/CD` is spoken as *"C I C D"*).
-* ☁️ **Dual Execution Architecture**:
-  * **Option 1: Google Colab Cloud GPU Server**: NVIDIA T4 GPU acceleration (~35ms rerank latency).
-  * **Option 2: Local CPU Server**: For offline local development.
-
----
-
-## 📐 System Architecture
-
-```mermaid
-graph TD
-    User([User Voice / Text Input]) --> Frontend[React + Vite Frontend\nlocalhost:5173]
-    
-    subgraph Frontend Layer
-        Frontend -->|Audio Blob| ASR_Call[POST /api/v1/audio/transcribe]
-        Frontend -->|Stream Token| SSE_Call[POST /api/v1/chats/query/stream]
-        Frontend -->|Audio Segment| WS_Call[WebSocket /ws/tts]
-    end
-
-    subgraph Backend Orchestration Layer (FastAPI)
-        ASR_Call --> FasterWhisper[Faster-Whisper ASR\nbase / medium int8/float16]
-        FasterWhisper --> QueryEngine[Pipeline Orchestrator]
-        SSE_Call --> QueryEngine
-        
-        QueryEngine -->|1. Keyword Search| BM25[BM25 Index]
-        QueryEngine -->|2. Dense Search| Chroma[ChromaDB Vector Store]
-        
-        BM25 --> Hybrid[Hybrid Search RRF Fusion\nTop 30 Candidates]
-        Chroma --> Hybrid
-        
-        Hybrid --> Reranker[CrossEncoder Reranker\nBAAI/bge-reranker-v2-m3\n⚡ 35ms on GPU]
-        Reranker --> TopDocs[Top 8 Context Chunks]
-        
-        TopDocs --> LLMEngine[LLM Provider Engine\nDeepSeek-V3 / Gemini 2.0]
-        LLMEngine -->|Streaming Tokens| Frontend
-    end
-
-    subgraph Audio Output Layer
-        WS_Call --> EdgeTTS[Edge-TTS Streamer]
-        EdgeTTS -->|MP3 Audio Chunks| Playback[Sequence-Locked Audio Queue]
-        Playback -->|Spoken Voice| User
-    end
+```
+Frontend (React/Vite :5173)              Backend (FastAPI :8000)
+  App.tsx / ChatInput / Visualizer  ──►  /api/v1/sessions
+  FileDropzone / FileList            ──►  /api/v1/documents
+  ChatWindow / MessageBubble  (SSE)  ──►  /api/v1/chats/query/stream
+  TTS audio            (WebSocket)   ──►  /ws/tts
 ```
 
----
+Pipeline: **PDF → PyMuPDF parse → semantic/recursive chunking → bge-m3 embeddings → ChromaDB → hybrid (vector+BM25) search → rerank → DeepSeek/Gemini generation → stream + TTS**
 
-## 📁 Directory Structure
-
-```text
-Voice_ChatBot/
-├── backend/
-│   ├── app/
-│   │   ├── api/v1/            # REST API endpoints (chats, documents, sessions, audio)
-│   │   ├── core/              # Custom exceptions & logging
-│   │   ├── models/            # Pydantic schemas & domain data models
-│   │   ├── pipeline/          # RAG engine (hybrid search, reranker, LLM client, rate limiter)
-│   │   ├── services/          # Audio service (ASR, TTS, text cleaning)
-│   │   ├── config.py          # Pydantic environment configuration settings
-│   │   └── main.py            # FastAPI entry point & lifespan management
-│   ├── tests/                 # Benchmark suite (ASR, latency, load test, RAGAS eval)
-│   └── requirements.txt       # Python dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── components/        # React UI components (ChatWindow, Sidebar, AudioVisualizer)
-│   │   ├── hooks/             # Custom hooks (useAudioRecorder, useTtsSocket)
-│   │   ├── services/          # Axios API & SSE streaming clients
-│   │   └── App.tsx            # Main application shell
-│   ├── vite.config.ts         # Vite dev server & backend proxy configuration
-│   └── package.json           # Frontend dependencies
-├── docs/                      # Architecture documentation & diagrams
-└── README.md                  # Project documentation
-```
+> Full architecture document: `docs/Voice_RAG_Architecture_v2.2.pdf`
 
 ---
 
-## ⚙️ Configuration Reference (`backend/.env`)
+## Prerequisites
 
-Copy `backend/.env.example` to `backend/.env` and update your keys:
-
-```env
-# Server Configuration
-HOST=0.0.0.0
-PORT=8000
-CORS_ORIGINS=http://localhost:5173
-
-# LLM Provider Configuration ("gemini", "deepseek", or "auto")
-LLM_PROVIDER=auto
-
-# DeepSeek API Configuration
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-DEEPSEEK_BASE_URL=https://api.deepseek.com
-DEEPSEEK_MODEL_NAME=deepseek-chat
-
-# Google Gemini API Configuration
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# Models & Hardware Acceleration
-WHISPER_MODEL_SIZE=base
-WHISPER_USE_GPU=True
-EMBEDDING_MODEL_NAME=BAAI/bge-m3
-RERANKER_MODEL_NAME=BAAI/bge-reranker-v2-m3
-
-# RAG Search Settings
-VECTOR_STORE_TYPE=chroma
-RETRIEVAL_TOP_K=30
-RERANKER_TOP_K=8
-```
+- Python **3.11+**
+- Node.js **18+**
+- API keys (at least one):
+  - **DeepSeek** — https://platform.deepseek.com (primary)
+  - **Google Gemini** — https://aistudio.google.com/app/apikey (fallback / advanced pipeline)
+- (Optional) **NVIDIA GPU + CUDA** for accelerated inference
 
 ---
 
-## 🚀 Quick Start Guide
+## 1. Setup
 
-### Prerequisites
-* **Python**: `3.10` or higher
-* **Node.js**: `18.0` or higher
-* **Git**
-
----
-
-### Step 1: Backend Setup (Local Machine)
+### Backend
 
 ```bash
-# Navigate to backend directory
 cd backend
+python -m venv .venv
+.venv\Scripts\activate          # Windows
+# source .venv/bin/activate    # macOS / Linux
 
-# Create & activate Python virtual environment
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On Linux/macOS:
-source venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Start FastAPI Uvicorn server
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+cp .env.example .env           # then fill in your API keys
 ```
 
-Backend will start at `http://localhost:8000`. API docs available at `http://localhost:8000/docs`.
-
----
-
-### Step 2: Frontend Setup (Local Machine)
+### Frontend
 
 ```bash
-# Navigate to frontend directory
 cd frontend
-
-# Install Node dependencies
 npm install
-
-# Start Vite dev server
-npm run dev
 ```
 
-Frontend will run at `http://localhost:5173`.
+### Configuration
+
+Edit `backend/.env`:
+
+| Setting                | Default                    | Purpose                                  |
+| ---------------------- | -------------------------- | ---------------------------------------- |
+| `LLM_PROVIDER`         | `deepseek`                 | `deepseek`, `gemini`, or `auto`          |
+| `DEEPSEEK_API_KEY`     | —                          | Primary LLM                              |
+| `GEMINI_API_KEY`       | —                          | Fallback LLM + AgentRAG/QueryExpander    |
+| `WHISPER_USE_GPU`      | `true`                     | Run faster-whisper on GPU (auto-fallback)|
+| `VECTOR_STORE_TYPE`    | `chroma`                   | `chroma` or `faiss`                      |
+
+### Run
+
+```bash
+# Terminal 1 — backend
+cd backend
+uvicorn app.main:app --reload --port 8000
+
+# Terminal 2 — frontend
+cd frontend
+npm run dev     # http://localhost:5173
+```
+
+Open `http://localhost:5173`, upload a PDF, and ask a question by voice.
 
 ---
 
-## ☁️ Deploying Backend on Google Colab Cloud GPU
+## 2. GPU Setup
 
-To achieve **35ms reranking latency** and **sub-3s voice responses**, deploy the backend on Google Colab T4 GPU:
+### 2.1 Requirements
 
-1. Open [Google Colab](https://colab.research.google.com) and select **Runtime ➔ Change runtime type ➔ T4 GPU**.
-2. Run **Cell 1: Environment Setup**:
-   ```python
-   import os
-   %cd /content
-   if not os.path.exists('/content/Voice_ChatBot'):
-       !git clone https://github.com/FENGFANCHEN-012/Voice_ChatBot.git
+- NVIDIA GPU with CUDA compute capability **7.5+** (RTX 20-series or newer recommended)
+- [NVIDIA Driver](https://www.nvidia.com/drivers)
+- [CUDA Toolkit 12.x](https://developer.nvidia.com/cuda-downloads)
+- Install **PyTorch with CUDA** (not the CPU build):
 
-   %cd /content/Voice_ChatBot
-   !git pull
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+```
 
-   !pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 -q
-   !pip install -r backend/requirements.txt -q
-   !pip install pyngrok rank-bm25 llama-index-embeddings-huggingface -q
-   ```
-3. Run **Cell 2: Launch Backend Server & Tunnel**:
-   ```python
-   import os
-   from pyngrok import ngrok
+> `pip install -r requirements.txt` installs a CPU-compatible torch by default. The command above replaces it with the CUDA build.
 
-   !pkill ngrok
-   !pkill uvicorn
-   ngrok.kill()
+### 2.2 Verify GPU is detected
 
-   ngrok.set_auth_token("YOUR_NGROK_TOKEN")
-   public_url = ngrok.connect(8000)
-   print("🚀 CLOUD GPU BACKEND IS LIVE:", public_url)
+```bash
+python -c "import torch; print('CUDA available:', torch.cuda.is_available()); print('GPU:', torch.cuda.get_device_name(0))"
+```
 
-   %cd /content/Voice_ChatBot/backend
-   !python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-   ```
-4. Copy the generated HTTPS ngrok URL and set it in `frontend/.env`:
-   ```env
-   VITE_BACKEND_URL=https://your-ngrok-url.ngrok-free.dev
-   ```
-   Or paste it into `frontend/vite.config.ts` under Option 1 proxy target.
+Expected output:
 
----
+```
+CUDA available: True
+GPU: NVIDIA GeForce RTX 3060
+```
 
-## 🔀 Strategy & Configuration Switching
+If it prints `False`, the CPU fallback is used automatically — no code changes needed.
 
-### 1. Cloud vs Local Server Switch (`frontend/.env` & `vite.config.ts`)
-- **Cloud Backend (Google Colab)**: Set `VITE_BACKEND_URL=https://your-ngrok-url.ngrok-free.dev` in `frontend/.env`.
-- **Local Backend**: Set `VITE_BACKEND_URL=http://localhost:8000` in `frontend/.env` (or uncomment Option 2 in `vite.config.ts`).
+### 2.3 What runs on the GPU
 
-### 2. Chunking & Vector Store Strategy Switch (`backend/.env`)
-- **Vector Store (`VECTOR_STORE_TYPE`)**:
-  - `VECTOR_STORE_TYPE=chroma` (Default persistent vector store)
-  - `VECTOR_STORE_TYPE=faiss` (Lightweight FAISS fallback)
-- **Document Chunking Strategy**:
-  - `strategy="semantic"` (Default `LlamaIndex` `SemanticSplitterNodeParser` based on embedding distance)
-  - `strategy="recursive"` (`LangChain` `RecursiveCharacterTextSplitter` with chunk size 512, overlap 64)
-- **LLM Provider (`LLM_PROVIDER`)**:
-  - `LLM_PROVIDER=auto` (Auto failover between Gemini and DeepSeek)
-  - `LLM_PROVIDER=gemini` (Google Gemini 3.5 Flash Lite)
-  - `LLM_PROVIDER=deepseek` (DeepSeek-V3)
+Everything auto-detects CUDA at startup and falls back to CPU if unavailable:
 
----
+| Component                  | GPU behavior                                                    |
+| -------------------------- | --------------------------------------------------------------- |
+| **faster-whisper (ASR)**   | `WHISPER_USE_GPU=true` → CUDA + FP16; falls back to CPU + int8  |
+| **Embedder (bge-m3)**      | `torch.cuda.is_available()` → CUDA                              |
+| **Reranker (bge-reranker)**| `torch.cuda.is_available()` → CUDA                              |
+| **Advanced pipeline**      | AgentRAG + QueryExpander **only enabled when CUDA is available**|
 
-## 🧪 Benchmark & Testing Suite
+Startup log confirms it:
 
-The repository includes automated testing scripts under `backend/tests/`:
+```
+[Pipeline] Advanced retrieval (AgentRAG + QueryExpander): ENABLED
+```
 
-| Test Script | Description | Execution Command |
-| :--- | :--- | :--- |
-| **`test_asr.py`** | Evaluates Whisper Word Error Rate (WER) and Character Error Rate (CER). | `python backend/tests/test_asr.py` |
-| **`test_latency.py`** | Measures end-to-end voice query latency and processing breakdown. | `python backend/tests/test_latency.py` |
-| **`test_load.py`** | Simulates 1, 5, and 10 concurrent user queries. | `python backend/tests/test_load.py` |
-| **`evaluate_ragas.py`** | Runs RAGAS evaluation (Faithfulness, Answer Correctness, Context Recall). | `python backend/tests/evaluate_ragas.py` |
-| **`run_tests.py`** | Interactive menu to launch all benchmark suites. | `python backend/tests/run_tests.py` |
+### 2.4 Advanced pipeline (AgentRAG + QueryExpander)
 
----
+When a CUDA GPU is detected, the pipeline classifies each query with **AgentRAG** (simple_fact / complex_reasoning / comparison / summarization / out_of_scope) and rewrites it with **QueryExpander** before retrieval. This significantly improves **comparison** and **multi-hop** questions.
 
-## 📊 Performance Metrics
+- Auto-enabled when `torch.cuda.is_available()` is `True`
+- Disable manually in `backend/.env`:
 
-| Metric | Target | Cloud GPU (NVIDIA T4) | Local CPU | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **BGE-Reranker v2-m3** | - | **35 ms** | 10,200 ms | ⚡ **300x Faster on GPU** |
-| **Whisper ASR** | - | **150 ms** | 900 ms | ⚡ **6x Faster on GPU** |
-| **End-to-End Voice Latency** | **< 8.0s** | **2.65 seconds** | 14.50 seconds | 🏆 **`[PASS]` on GPU** |
-| **TTS Audio Latency** | **< 2.0s** | **1.45 seconds** | 1.52 seconds | 🏆 **`[PASS]`** |
+```
+USE_ADVANCED_PIPELINE=false
+```
+
+### 2.5 Cloud GPU (Google Colab + ngrok)
+
+You can also run the backend on a free Colab GPU and point the frontend at it:
+
+1. Open the Colab notebook with a **GPU runtime** (Runtime → Change runtime type → GPU)
+2. Install dependencies and start uvicorn
+3. Start ngrok: `ngrok http 8000` and copy the `https://...ngrok-free.dev` URL
+4. In `frontend/.env`:
+
+```
+VITE_BACKEND_URL=https://your-ngrok-url.ngrok-free.dev
+```
+
+5. Restart `npm run dev` in the frontend.
+
+### 2.6 Troubleshooting GPU
+
+| Problem                          | Fix                                                             |
+| -------------------------------- | --------------------------------------------------------------- |
+| `CUDA available: False`          | Install the CUDA PyTorch build (2.1) or update your driver      |
+| OOM (out of memory)              | Set `WHISPER_USE_GPU=false` or use a smaller Whisper model      |
+| Slow first inference              | First run downloads model weights — subsequent runs are cached  |
+| Advanced pipeline stays DISABLED  | Confirm `torch.cuda.is_available()` is `True`; check `.env` flag|
 
 ---
 
-## 📜 License
+## 3. Testing & Evaluation
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Run from `backend/` with the server up:
+
+```bash
+python tests/run_tests.py                                  # unit tests
+python tests/test_latency.py                               # latency (voice/TTS)
+python tests/test_load.py                                  # load/throughput
+python tests/evaluate_rag.py                               # RAG quality (CSV)
+python tests/evaluate_ragas.py                             # RAGAS metrics (30 questions)
+```
+
+RAGAS metrics: `faithfulness`, `context_recall`, `context_precision`, `answer_correctness`.
+
+---
+
+## 4. Project Structure
+
+```
+backend/
+  app/
+    api/v1/          # REST + WebSocket routers
+    pipeline/        # embedding, hybrid search, reranker, LLM, AgentRAG, QueryExpander, HyDE
+    services/        # audio (whisper/edge-tts), chat, document, session
+    store/           # in-memory sessions, disk file store
+  tests/             # evaluation + latency/load suites
+  chroma_db/         # vector index (generated at runtime)
+frontend/
+  src/components/    # AppShell, ChatWindow, ChatInput, RecordButton, uploads, ...
+  vite.config.ts     # dev proxy /api + /ws → :8000
+docs/                # architecture documentation (PDF)
+```
+
+## 5. Security Notes
+
+- API keys live in `backend/.env` and `frontend/.env` (both `.gitignore`d)
+- Never commit real keys — use `.env.example` as a template
+- Sessions are in-memory and lost on backend restart
