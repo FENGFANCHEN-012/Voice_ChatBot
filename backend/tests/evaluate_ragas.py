@@ -1,16 +1,31 @@
+import os
 import json
 import asyncio
 import aiohttp
-import os
 from datetime import datetime
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+backend_env = Path(__file__).resolve().parent.parent / ".env"
+if backend_env.exists():
+    load_dotenv(backend_env)
+else:
+    load_dotenv()
 
-from google import genai
-from ragas import evaluate, EvaluationDataset
-from ragas.llms import llm_factory
-from ragas.metrics.collections import Faithfulness, ContextRecall, ContextPrecision, AnswerCorrectness
+from datasets import Dataset
+from ragas import evaluate
+from ragas.metrics import faithfulness, answer_correctness, context_precision, context_recall
+from ragas.llms import LangchainLLMWrapper
+
+# ... (down to evaluation execution block)
+
+
+# ... (down to metrics block)
+
+
+
+
+
 
 from pathlib import Path
 
@@ -107,17 +122,32 @@ async def run_ragas_evaluation():
 
     if preferred_provider == "gemini" and gemini_key:
         print("\nInitializing RAGAS evaluator with Google Gemini...")
-        client = genai.Client(api_key=gemini_key)
-        evaluator_llm = llm_factory("gemini-2.0-flash-lite", provider="google", client=client)
+        from langchain_google_genai import ChatGoogleGenerativeAI
+        langchain_llm = ChatGoogleGenerativeAI(
+            model="gemini-1.5-flash",
+            google_api_key=gemini_key,
+            temperature=0.0
+        )
+        evaluator_llm = LangchainLLMWrapper(langchain_llm)
     elif deepseek_key:
         print("\nInitializing RAGAS evaluator with DeepSeek V3 (deepseek-chat)...")
-        from openai import AsyncOpenAI
-        openai_client = AsyncOpenAI(api_key=deepseek_key, base_url="https://api.deepseek.com")
-        evaluator_llm = llm_factory("deepseek-chat", provider="openai", client=openai_client)
+        from langchain_openai import ChatOpenAI
+        langchain_llm = ChatOpenAI(
+            model="deepseek-chat",
+            api_key=deepseek_key,
+            base_url="https://api.deepseek.com",
+            temperature=0.0
+        )
+        evaluator_llm = LangchainLLMWrapper(langchain_llm)
     elif gemini_key:
         print("\nInitializing RAGAS evaluator with Google Gemini...")
-        client = genai.Client(api_key=gemini_key)
-        evaluator_llm = llm_factory("gemini-2.0-flash-lite", provider="google", client=client)
+        from langchain_google_genai import ChatGoogleGenerativeAI
+        langchain_llm = ChatGoogleGenerativeAI(
+            model="gemini-1.5-flash",
+            google_api_key=gemini_key,
+            temperature=0.0
+        )
+        evaluator_llm = LangchainLLMWrapper(langchain_llm)
     else:
         raise ValueError("Please set either DEEPSEEK_API_KEY or GEMINI_API_KEY to run RAGAS evaluation.")
 
@@ -126,20 +156,28 @@ async def run_ragas_evaluation():
     for r in results:
         contexts = [c["content"] for c in r.get("chunks", [])]
         eval_data.append({
-            "user_input": r["question"],
-            "retrieved_contexts": contexts if contexts else ["No context retrieved"],
-            "response": r["generated_answer"],
-            "reference": r["ground_truth"],
+            "question": r["question"],
+            "contexts": contexts if contexts else ["No context retrieved"],
+            "answer": r["generated_answer"],
+            "ground_truth": r["ground_truth"],
         })
 
-    evaluation_dataset = EvaluationDataset.from_list(eval_data)
+    evaluation_dataset = Dataset.from_list(eval_data)
 
-    metrics = [
-        Faithfulness(llm=evaluator_llm),
-        ContextRecall(llm=evaluator_llm),
-        ContextPrecision(llm=evaluator_llm),
-        AnswerCorrectness(llm=evaluator_llm),
-    ]
+    answer_correctness.weights = [1.0, 0.0]
+    metrics = [faithfulness, answer_correctness, context_precision, context_recall]
+    for m in metrics:
+        m.llm = evaluator_llm
+
+    print("\nInitializing local embeddings evaluator (BAAI/bge-m3)...")
+    from langchain_community.embeddings import HuggingFaceEmbeddings
+    from ragas.embeddings import LangchainEmbeddingsWrapper
+    hf_emb = HuggingFaceEmbeddings(model_name="BAAI/bge-m3")
+    evaluator_embeddings = LangchainEmbeddingsWrapper(hf_emb)
+
+    for m in metrics:
+        if hasattr(m, "embeddings"):
+            m.embeddings = evaluator_embeddings
 
     print(f"\nRunning RAGAS evaluation on {len(dataset)} questions...")
     print("This will make ~120 LLM calls (4 metrics x 30 questions)")
@@ -148,25 +186,25 @@ async def run_ragas_evaluation():
     result = evaluate(
         dataset=evaluation_dataset,
         metrics=metrics,
+        embeddings=evaluator_embeddings,
     )
+
+
+
+
 
     print("\n" + "=" * 70)
     print("RAGAS EVALUATION RESULTS")
     print("=" * 70)
 
-    def _to_avg(val):
-        if isinstance(val, (list, tuple)):
-            clean = [x for x in val if x is not None]
-            return sum(clean) / len(clean) if clean else 0.0
-        return float(val) if val is not None else 0.0
+    df = result.to_pandas()
 
     metric_scores = {
-        "faithfulness": _to_avg(result["faithfulness"]),
-        "context_recall": _to_avg(result["context_recall"]),
-        "context_precision": _to_avg(result["context_precision"]),
-        "answer_correctness": _to_avg(result["answer_correctness"]),
+        "faithfulness": float(df["faithfulness"].mean()) if "faithfulness" in df else 0.0,
+        "context_recall": float(df["context_recall"].mean()) if "context_recall" in df else 0.0,
+        "context_precision": float(df["context_precision"].mean()) if "context_precision" in df else 0.0,
+        "answer_correctness": float(df["answer_correctness"].mean()) if "answer_correctness" in df else 0.0,
     }
-
 
     for metric_name, score in metric_scores.items():
         print(f"{metric_name:<25}: {score:.3f}/1.000")
@@ -191,10 +229,13 @@ async def run_ragas_evaluation():
                 "context_precision": [],
                 "answer_correctness": [],
             }
-        category_metrics[cat]["faithfulness"].append(metric_scores["faithfulness"][i])
-        category_metrics[cat]["context_recall"].append(metric_scores["context_recall"][i])
-        category_metrics[cat]["context_precision"].append(metric_scores["context_precision"][i])
-        category_metrics[cat]["answer_correctness"].append(metric_scores["answer_correctness"][i])
+        
+        row = df.iloc[i] if i < len(df) else {}
+        category_metrics[cat]["faithfulness"].append(float(row.get("faithfulness", 0) or 0))
+        category_metrics[cat]["context_recall"].append(float(row.get("context_recall", 0) or 0))
+        category_metrics[cat]["context_precision"].append(float(row.get("context_precision", 0) or 0))
+        category_metrics[cat]["answer_correctness"].append(float(row.get("answer_correctness", 0) or 0))
+
 
     for cat, cat_scores in sorted(category_metrics.items()):
         n = len(cat_scores["faithfulness"])

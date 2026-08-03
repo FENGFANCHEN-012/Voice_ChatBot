@@ -37,11 +37,12 @@ class Settings(BaseSettings):
 
     upload_dir: str = "uploads"
     max_file_size_mb: int = 40
-    chunk_size: int = 512
-    chunk_overlap: int = 64
-    retrieval_top_k: int = 10
-    retrieval_fetch_k: int = 15
-    reranker_top_k: int = 5
+    chunk_size: int = 800
+    chunk_overlap: int = 150
+    retrieval_top_k: int = 25
+    retrieval_fetch_k: int = 35
+    reranker_top_k: int = 10
+
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
