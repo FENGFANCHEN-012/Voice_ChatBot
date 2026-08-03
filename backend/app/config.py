@@ -2,7 +2,13 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    gemini_api_key: str = "***REMOVED***"
+    gemini_api_key: str = ""
+    
+    # LLM Provider: "gemini" (default), "deepseek", or "auto"
+    llm_provider: str = "deepseek"
+    deepseek_api_key: str = ""
+    deepseek_base_url: str = "https://api.deepseek.com"
+    deepseek_model_name: str = "deepseek-chat"
     
     Qdrant_api_key: str = ""
     
@@ -37,7 +43,7 @@ class Settings(BaseSettings):
     retrieval_fetch_k: int = 15
     reranker_top_k: int = 5
 
-    model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
+    model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
 
 settings = Settings()
