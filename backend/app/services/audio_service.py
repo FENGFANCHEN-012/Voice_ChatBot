@@ -95,24 +95,29 @@ class AudioService:
         if cached:
             return cached
 
-        try:
-            async def _stream_tts():
-                communicate = edge_tts.Communicate(text, voice=settings.tts_voice, rate=settings.tts_rate, pitch=settings.tts_pitch)
-                buf = io.BytesIO()
-                async for chunk in communicate.stream():
-                    if chunk["type"] == "audio":
-                        buf.write(chunk["data"])
-                buf.seek(0)
-                return buf.getvalue()
+        voices_to_try = [settings.tts_voice, "en-US-AvaNeural", "en-US-ChristopherNeural"]
+        for v in voices_to_try:
+            try:
+                async def _stream_tts(voice_name: str):
+                    communicate = edge_tts.Communicate(text, voice=voice_name, rate=settings.tts_rate, pitch=settings.tts_pitch)
+                    buf = io.BytesIO()
+                    async for chunk in communicate.stream():
+                        if chunk["type"] == "audio":
+                            buf.write(chunk["data"])
+                    buf.seek(0)
+                    return buf.getvalue()
 
-            audio = await asyncio.wait_for(_stream_tts(), timeout=8.0)
-            if audio:
-                self.tts_cache.set(text, audio)
-            return audio
-        except Exception as e:
-            from loguru import logger
-            logger.warning(f"[TTS] Edge-TTS synthesis failed or timed out: {e}")
-            return b""
+                audio = await asyncio.wait_for(_stream_tts(v), timeout=12.0)
+                if audio and len(audio) > 100:
+                    self.tts_cache.set(text, audio)
+                    return audio
+            except Exception as e:
+                from loguru import logger
+                logger.warning(f"[TTS] Edge-TTS voice {v} failed or timed out: {e}")
+                continue
+
+        return b""
+
 
     async def synthesize_stream(self, text: str):
         text = clean_text_for_tts(text[:500])

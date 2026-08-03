@@ -1,4 +1,5 @@
 import { useRef, useCallback } from "react";
+import { synthesizeSpeech } from "../services/api";
 
 interface PlayItem {
   id: number;
@@ -47,6 +48,22 @@ export function useTtsSocket() {
     audio.play().catch(onEnded);
   }, []);
 
+  const fallbackHttpSynthesize = useCallback(async (target: PlayItem) => {
+    try {
+      const res = await synthesizeSpeech(target.text);
+      target.blob = res.data;
+      target.status = "ready";
+    } catch {
+      target.status = "played";
+    } finally {
+      activeSynthRef.current = false;
+      synthTargetRef.current = null;
+      synthChunksRef.current = [];
+      playSequence();
+      synthesizeNext();
+    }
+  }, [playSequence]);
+
   const synthesizeNext = useCallback(() => {
     if (activeSynthRef.current) return;
 
@@ -92,17 +109,18 @@ export function useTtsSocket() {
     };
 
     ws.onerror = () => {
-      const t = synthTargetRef.current;
-      synthTargetRef.current = null;
-      if (t) t.status = "played";
-      synthChunksRef.current = [];
-      activeSynthRef.current = false;
       try { ws.close(); } catch {}
       wsRef.current = null;
-      playSequence();
-      synthesizeNext();
+      const t = synthTargetRef.current;
+      if (t) {
+        fallbackHttpSynthesize(t);
+      } else {
+        activeSynthRef.current = false;
+        playSequence();
+        synthesizeNext();
+      }
     };
-  }, [playSequence]);
+  }, [playSequence, fallbackHttpSynthesize]);
 
   const play = useCallback(
     (text: string) => {

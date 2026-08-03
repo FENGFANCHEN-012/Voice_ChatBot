@@ -1,5 +1,7 @@
 import { useState } from "react";
 import type { ChunkInfo } from "../../types";
+import { synthesizeSpeech } from "../../services/api";
+import { useAudioPlayer } from "../../hooks/useAudioPlayer";
 
 interface Props {
   role: "user" | "assistant";
@@ -10,9 +12,28 @@ interface Props {
 export function MessageBubble({ role, content, chunks }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [showCitations, setShowCitations] = useState(false);
+  const [loadingAudio, setLoadingAudio] = useState(false);
+  const { isPlaying, play: playAudio, stop: stopAudio } = useAudioPlayer();
+
   const isUser = role === "user";
   const isLong = content.length > 600;
   const hasCitations = !!chunks && chunks.length > 0;
+
+  const handleToggleAudio = async () => {
+    if (isPlaying) {
+      stopAudio();
+      return;
+    }
+    setLoadingAudio(true);
+    try {
+      const res = await synthesizeSpeech(content);
+      playAudio(res.data);
+    } catch {
+      // Audio error
+    } finally {
+      setLoadingAudio(false);
+    }
+  };
 
   return (
     <div className={`flex animate-fade-in ${isUser ? "justify-end" : "justify-start"}`}>
@@ -27,14 +48,41 @@ export function MessageBubble({ role, content, chunks }: Props) {
               <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words text-neutral-800">
                 {expanded ? content : content.length > 600 ? content.slice(0, 600) + "…" : content}
               </p>
-              {isLong && (
+
+              <div className="flex items-center gap-3 mt-3">
+                {isLong && (
+                  <button
+                    onClick={() => setExpanded((e) => !e)}
+                    className="text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors duration-150"
+                  >
+                    {expanded ? "Show less" : "Show more"}
+                  </button>
+                )}
+
                 <button
-                  onClick={() => setExpanded((e) => !e)}
-                  className="text-xs font-medium text-brand-600 hover:text-brand-700 mt-2.5 transition-colors duration-150"
+                  onClick={handleToggleAudio}
+                  disabled={loadingAudio}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors duration-150 disabled:opacity-50"
+                  title="Listen to response"
                 >
-                  {expanded ? "Show less" : "Show more"}
+                  {loadingAudio ? (
+                    <>
+                      <span className="w-2.5 h-2.5 border-2 border-neutral-400 border-t-transparent rounded-full animate-spin" />
+                      <span>Generating voice...</span>
+                    </>
+                  ) : isPlaying ? (
+                    <>
+                      <span className="text-red-500">⏹️</span>
+                      <span>Stop Audio</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>🔊</span>
+                      <span>Play Voice</span>
+                    </>
+                  )}
                 </button>
-              )}
+              </div>
             </div>
             {hasCitations && (
               <div className="border-t border-neutral-100">
@@ -80,3 +128,4 @@ export function MessageBubble({ role, content, chunks }: Props) {
     </div>
   );
 }
+
