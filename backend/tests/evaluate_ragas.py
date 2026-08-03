@@ -12,9 +12,29 @@ from ragas import evaluate, EvaluationDataset
 from ragas.llms import llm_factory
 from ragas.metrics.collections import Faithfulness, ContextRecall, ContextPrecision, AnswerCorrectness
 
-API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000/api/v1")
+from pathlib import Path
+
+def _get_api_base() -> str:
+    env_url = os.getenv("API_BASE_URL")
+    if env_url:
+        return env_url.rstrip("/")
+
+    frontend_env = Path(__file__).resolve().parent.parent.parent / "frontend" / ".env"
+    if frontend_env.exists():
+        with open(frontend_env, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("VITE_BACKEND_URL="):
+                    url = line.split("=", 1)[1].strip()
+                    if url:
+                        return f"{url.rstrip('/')}/api/v1"
+
+    return "http://localhost:8000/api/v1"
+
+
+API_BASE = _get_api_base()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 NUM_QUESTIONS = 30
+
 
 
 async def create_session(session: aiohttp.ClientSession) -> str:
@@ -56,8 +76,10 @@ async def run_ragas_evaluation():
 
     print("\nCollecting RAG responses...")
     results = []
-    async with aiohttp.ClientSession() as session:
+    headers = {"ngrok-skip-browser-warning": "true"}
+    async with aiohttp.ClientSession(headers=headers) as session:
         session_id = await create_session(session)
+
         print(f"Created session: {session_id}")
 
         for i, item in enumerate(dataset):

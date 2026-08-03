@@ -17,12 +17,25 @@ with open(Path(__file__).parent / "voice_test_dataset.json", "r", encoding="utf-
 load_test_config = test_data["load_test_config"]
 
 
-import os
-from dotenv import load_dotenv
+def _get_api_base() -> str:
+    env_url = os.getenv("API_BASE_URL")
+    if env_url:
+        return env_url.rstrip("/")
 
-load_dotenv()
+    frontend_env = Path(__file__).resolve().parent.parent.parent / "frontend" / ".env"
+    if frontend_env.exists():
+        with open(frontend_env, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("VITE_BACKEND_URL="):
+                    url = line.split("=", 1)[1].strip()
+                    if url:
+                        return f"{url.rstrip('/')}/api/v1"
 
-API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000/api/v1")
+    return "http://localhost:8000/api/v1"
+
+
+API_BASE = _get_api_base()
+
 TEST_QUERIES = [
     "What is the mandatory procedure when an employee experiences an SSO lockout error (Error Code ERR-SSO-4039)?",
     "My VPN keeps disconnecting every 10 minutes while working remotely. What should I do?",
@@ -61,8 +74,10 @@ class LoadTester:
 
     async def user_simulation(self, user_id: int, num_queries: int, delay: float) -> list:
         results = []
-        async with aiohttp.ClientSession() as session:
+        headers = {"ngrok-skip-browser-warning": "true"}
+        async with aiohttp.ClientSession(headers=headers) as session:
             session_id = await self.create_session(session)
+
 
             for i in range(num_queries):
                 query = TEST_QUERIES[i % len(TEST_QUERIES)]

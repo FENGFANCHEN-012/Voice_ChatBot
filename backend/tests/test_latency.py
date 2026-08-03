@@ -1,3 +1,4 @@
+import os
 import json
 import asyncio
 import time
@@ -5,6 +6,7 @@ import io
 import tempfile
 from pathlib import Path
 from datetime import datetime
+
 
 import aiohttp
 import edge_tts
@@ -22,7 +24,24 @@ with open(Path(__file__).parent / "voice_test_dataset.json", "r", encoding="utf-
 latency_test_queries = test_data["latency_test_queries"]
 
 
-API_BASE = "http://localhost:8000/api/v1"
+def _get_api_base() -> str:
+    env_url = os.getenv("API_BASE_URL")
+    if env_url:
+        return env_url.rstrip("/")
+
+    frontend_env = Path(__file__).resolve().parent.parent.parent / "frontend" / ".env"
+    if frontend_env.exists():
+        with open(frontend_env, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("VITE_BACKEND_URL="):
+                    url = line.split("=", 1)[1].strip()
+                    if url:
+                        return f"{url.rstrip('/')}/api/v1"
+
+    return "http://localhost:8000/api/v1"
+
+
+API_BASE = _get_api_base()
 
 
 def create_dummy_wav(duration_s: float = 2.0) -> bytes:
@@ -145,10 +164,13 @@ class LatencyTester:
     async def run_all_tests(self):
         print("=" * 70)
         print("END-TO-END LATENCY TEST")
+        print(f"Target API Endpoint: {API_BASE}")
         print("=" * 70)
 
-        async with aiohttp.ClientSession() as session:
+        headers = {"ngrok-skip-browser-warning": "true"}
+        async with aiohttp.ClientSession(headers=headers) as session:
             session_id = await self.create_session(session)
+
             print(f"Created session: {session_id}")
 
             results = []
