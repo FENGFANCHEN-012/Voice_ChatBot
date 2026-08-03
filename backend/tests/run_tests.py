@@ -5,7 +5,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-API_BASE = "http://localhost:8000/api/v1"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000/api/v1")
 
 
 async def clear_cache():

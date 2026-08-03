@@ -5,7 +5,12 @@ import csv
 from datetime import datetime
 
 
-API_BASE = "http://localhost:8000/api/v1"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000/api/v1")
 
 
 async def create_session(session: aiohttp.ClientSession) -> str:

@@ -12,7 +12,7 @@ from ragas import evaluate, EvaluationDataset
 from ragas.llms import llm_factory
 from ragas.metrics.collections import Faithfulness, ContextRecall, ContextPrecision, AnswerCorrectness
 
-API_BASE = "http://localhost:8000/api/v1"
+API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000/api/v1")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 NUM_QUESTIONS = 30
 

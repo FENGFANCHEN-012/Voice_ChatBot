@@ -17,7 +17,12 @@ with open(Path(__file__).parent / "voice_test_dataset.json", "r", encoding="utf-
 load_test_config = test_data["load_test_config"]
 
 
-API_BASE = "http://localhost:8000/api/v1"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000/api/v1")
 TEST_QUERIES = [
     "What is the mandatory procedure when an employee experiences an SSO lockout error (Error Code ERR-SSO-4039)?",
     "My VPN keeps disconnecting every 10 minutes while working remotely. What should I do?",
