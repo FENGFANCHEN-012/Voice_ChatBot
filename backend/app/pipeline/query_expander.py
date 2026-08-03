@@ -6,10 +6,15 @@ from app.pipeline.rate_limiter import gemini_rate_limiter
 
 class QueryExpander:
     def __init__(self, api_key: str):
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel("gemini-3.5-flash-lite")
+        self.model = None
+        if api_key:
+            genai.configure(api_key=api_key)
+            self.model = genai.GenerativeModel("gemini-3.5-flash-lite")
 
     async def _call(self, prompt: str) -> str:
+        if self.model is None:
+            logger.warning("[QueryExpander] No API key configured; skipping expansion")
+            return ""
         for attempt in range(3):
             try:
                 await gemini_rate_limiter.acquire()

@@ -26,7 +26,37 @@ class HybridSearch:
         tokenized = [doc.lower().split() for doc in self._bm25_texts]
         self._bm25 = BM25Okapi(tokenized)
 
-    def search(self, query_text: str, where: dict | None = None) -> list[dict]:
+    def _decompose_query(self, query_text: str) -> list[str]:
+        q_lower = query_text.lower()
+        sub_queries = [query_text]
+
+        # Decompose comparison / multi-entity queries
+        if "between " in q_lower and " and " in q_lower:
+            try:
+                after_between = q_lower.split("between ", 1)[1]
+                parts = after_between.split(" and ", 1)
+                if len(parts) == 2:
+                    clean_a = parts[0].replace("?", "").strip()
+                    clean_b = parts[1].replace("?", "").strip()
+                    sub_queries.append(f"{query_text} {clean_a}")
+                    sub_queries.append(f"{query_text} {clean_b}")
+            except Exception:
+                pass
+        elif " differ" in q_lower or " difference" in q_lower or " compare" in q_lower:
+            tokens = [t.strip() for t in query_text.replace("?", "").split(" and ") if len(t.strip()) > 3]
+            sub_queries.extend(tokens)
+
+        # Remove duplicates while preserving order
+        seen = set()
+        unique_queries = []
+        for q in sub_queries:
+            if q not in seen:
+                seen.add(q)
+                unique_queries.append(q)
+
+        return unique_queries[:3]
+
+    def _single_search(self, query_text: str, where: dict | None = None) -> list[dict]:
         if self._bm25 is None:
             self.rebuild()
 
@@ -35,20 +65,18 @@ class HybridSearch:
 
         if hints.get("chapter") and where is None:
             where = {"chapter": hints["chapter"]}
-            logger.info(f"[HybridSearch] Metadata filter: chapter={hints['chapter']}")
 
         query_vector = self.embedder.embed_query(normalized_query)
         vec_results = self.vector_store.search(query_vector, k=self.k, where=where)
 
         filter_used = where
         if not vec_results and where:
-            logger.info(f"[HybridSearch] No results with filter {where}, retrying without filter")
             vec_results = self.vector_store.search(query_vector, k=self.k, where=None)
             filter_used = None
 
         tokenized_query = normalized_query.lower().split()
-        bm25_scores = self._bm25.get_scores(tokenized_query)
-        
+        bm25_scores = self._bm25.get_scores(tokenized_query) if self._bm25 else []
+
         bm25_ranked = []
         for i, score in enumerate(bm25_scores):
             if score > 0:
@@ -57,11 +85,8 @@ class HybridSearch:
                     if filter_used.get("chapter") and meta.get("chapter") != filter_used["chapter"]:
                         continue
                 bm25_ranked.append((i, score))
-        
-        bm25_ranked = sorted(bm25_ranked, key=lambda x: x[1], reverse=True)[:self.k]
 
-        vec_ranks = {r["text"]: idx for idx, r in enumerate(vec_results)}
-        bm25_texts_map = {t: i for i, t in enumerate(self._bm25_texts)}
+        bm25_ranked = sorted(bm25_ranked, key=lambda x: x[1], reverse=True)[:self.k]
 
         fused = {}
         for idx, result in enumerate(vec_results):
@@ -94,12 +119,20 @@ class HybridSearch:
             r["score"] = float(item["rrf_score"])
             results.append(r)
 
-        logger.info(f"[HybridSearch] Original: {query_text}")
-        logger.info(f"[HybridSearch] Normalized: {normalized_query}")
-        if hints:
-            logger.info(f"[HybridSearch] Hints: {hints}")
-        logger.info(f"[HybridSearch] Retrieved {len(results)} chunks (vec: {len(vec_results)}, bm25: {len(bm25_ranked)})")
-        for i, r in enumerate(results[:3]):
-            logger.info(f"  #{i+1} score={r['score']:.4f} | {r['text'][:100]}...")
-
         return results
+
+    def search(self, query_text: str, where: dict | None = None) -> list[dict]:
+        sub_queries = self._decompose_query(query_text)
+        
+        all_results_map = {}
+        for q in sub_queries:
+            sub_res = self._single_search(q, where=where)
+            for r in sub_res:
+                txt = r["text"]
+                if txt not in all_results_map or r["score"] > all_results_map[txt]["score"]:
+                    all_results_map[txt] = r
+
+        combined = sorted(all_results_map.values(), key=lambda x: x["score"], reverse=True)[:self.k]
+        logger.info(f"[HybridSearch] Multi-query search ({len(sub_queries)} queries) returned {len(combined)} chunks")
+        return combined
+

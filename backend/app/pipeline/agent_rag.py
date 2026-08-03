@@ -16,10 +16,15 @@ class AgentRAG:
     SUMMARIZE = "summarization"
 
     def __init__(self, api_key: str):
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel("gemini-3.5-flash-lite")
+        self.model = None
+        if api_key:
+            genai.configure(api_key=api_key)
+            self.model = genai.GenerativeModel("gemini-3.5-flash-lite")
 
     async def classify(self, query: str) -> str:
+        if self.model is None:
+            logger.warning("[AgentRAG] No API key configured; defaulting to complex_reasoning")
+            return self.COMPLEX
         prompt = f"""Classify this user query into one of these categories. Reply ONLY the category name.
 
 - simple_fact: Short factual question, 1-5 words, seeks specific detail (e.g. "what is the deadline?", "when is the meeting?")

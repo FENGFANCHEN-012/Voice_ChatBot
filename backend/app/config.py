@@ -44,6 +44,11 @@ class Settings(BaseSettings):
     reranker_top_k: int = 10
 
 
+    # Advanced retrieval (AgentRAG classification + QueryExpander). Only used
+    # when running on GPU (CUDA available). Set to false to disable.
+    use_advanced_pipeline: bool = True
+
+
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
 
