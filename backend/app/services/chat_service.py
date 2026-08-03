@@ -32,6 +32,28 @@ class ChatService:
             "chunks": result["chunks"],
         }
 
+    async def query_stream(self, session_id: str, text: str):
+        session = self.session_store.get(session_id)
+        if session is None:
+            from app.models.domain import Session
+            session = Session(session_id=session_id)
+            self.session_store.set(session_id, session)
+
+        session.messages.append(Message(role="user", content=text))
+
+        history = [
+            {"role": m.role, "content": m.content}
+            for m in session.messages[:-1]
+        ]
+
+        full_answer = ""
+        async for event in self.orchestrator.answer_question_stream(text, history=history):
+            if event["type"] == "token":
+                full_answer += event["content"]
+            elif event["type"] == "done":
+                session.messages.append(Message(role="assistant", content=full_answer))
+            yield event
+
     def get_messages(self, session_id: str) -> list[dict]:
         session = self.session_store.get(session_id)
         if session is None:

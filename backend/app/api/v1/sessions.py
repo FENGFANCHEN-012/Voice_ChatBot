@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Form
 from app.models.schemas import SessionResponse
 from app.services.session_service import SessionService
 from app.core.dependencies import get_session_service
@@ -19,6 +19,18 @@ async def list_sessions(
     service: SessionService = Depends(get_session_service),
 ):
     return [SessionResponse(**s) for s in service.list_all()]
+
+
+@router.patch("/{session_id}", response_model=SessionResponse)
+async def rename_session(
+    session_id: str,
+    title: str = Form(...),
+    service: SessionService = Depends(get_session_service),
+):
+    result = service.rename(session_id, title)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return SessionResponse(**result)
 
 
 @router.delete("/{session_id}")

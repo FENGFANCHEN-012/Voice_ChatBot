@@ -14,6 +14,7 @@ class Message:
 class Session:
     session_id: str = field(default_factory=lambda: str(uuid4()))
     created_at: datetime = field(default_factory=datetime.utcnow)
+    title: str = ""
     messages: list[Message] = field(default_factory=list)
 
 

@@ -1,0 +1,213 @@
+{
+  "timestamp": "2026-08-03T17:58:30.078137",
+  "summary": {
+    "text_query": {
+      "min": 0.0032625198364257812,
+      "max": 0.27300238609313965,
+      "avg": 0.15166767438252768,
+      "p50": 0.2639658451080322,
+      "p95": 0.27300238609313965
+    },
+    "voice_query": {
+      "min": 2.4401047229766846,
+      "max": 4.166778802871704,
+      "avg": 3.7825622293684216,
+      "p50": 4.017453908920288,
+      "p95": 4.166778802871704
+    },
+    "tts": {
+      "min": 0.5803542137145996,
+      "max": 4.049685955047607,
+      "avg": 1.4316688211340654,
+      "p50": 1.0911483764648438,
+      "p95": 4.049685955047607
+    },
+    "targets": {
+      "Text query P95 < 5s": true,
+      "Voice query P95 < 8s": true,
+      "TTS avg < 2s": true
+    }
+  },
+  "results": [
+    {
+      "query": "What is the mandatory procedure when an employee experiences an SSO lockout error (Error Code ERR-SSO-4039)?",
+      "type": "text",
+      "latency": 0.004814624786376953,
+      "tts_latency": 4.024845361709595,
+      "answer_length": 798,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the server room temperature alert threshold?",
+      "type": "text",
+      "latency": 0.2698194980621338,
+      "tts_latency": 2.530327796936035,
+      "answer_length": 519,
+      "num_chunks": 2,
+      "error": null
+    },
+    {
+      "query": "My VPN keeps disconnecting every 10 minutes while working remotely. What should I do?",
+      "type": "text",
+      "latency": 0.0032625198364257812,
+      "tts_latency": 1.0911483764648438,
+      "answer_length": 57,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the troubleshooting workflow when a CI/CD pipeline fails during database migration with Error LARAVEL-MIGRATE-FAIL?",
+      "type": "text",
+      "latency": 0.2639658451080322,
+      "tts_latency": 1.1111969947814941,
+      "answer_length": 578,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "How should project leads handle vendor shipments delivered with damaged packaging or missing Certificates of Analysis (CoA)?",
+      "type": "text",
+      "latency": 0.004477977752685547,
+      "tts_latency": 1.1333613395690918,
+      "answer_length": 508,
+      "num_chunks": 4,
+      "error": null
+    },
+    {
+      "query": "What happens if an employee submits a corporate travel expense claim without itemized receipts?",
+      "type": "text",
+      "latency": 0.27300238609313965,
+      "tts_latency": 0.6408040523529053,
+      "answer_length": 57,
+      "num_chunks": 3,
+      "error": null
+    },
+    {
+      "query": "If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy applies?",
+      "type": "text",
+      "latency": 0.005962371826171875,
+      "tts_latency": 0.9256448745727539,
+      "answer_length": 257,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the IPSec MTU issue and how is it fixed?",
+      "type": "text",
+      "latency": 0.27051806449890137,
+      "tts_latency": 0.7874917984008789,
+      "answer_length": 57,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the meaning of life?",
+      "type": "text",
+      "latency": 0.0052835941314697266,
+      "tts_latency": 0.9064960479736328,
+      "answer_length": 57,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What happens if the SSO lockout is unresolved after 15 minutes?",
+      "type": "text",
+      "latency": 0.26871681213378906,
+      "tts_latency": 2.1263346672058105,
+      "answer_length": 57,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the mandatory procedure when an employee experiences an SSO lockout error (Error Code ERR-SSO-4039)?",
+      "type": "voice",
+      "latency": 4.52098822593689,
+      "tts_latency": 4.049685955047607,
+      "answer_length": 278,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the server room temperature alert threshold?",
+      "type": "voice",
+      "latency": 4.128571033477783,
+      "tts_latency": 1.0622303485870361,
+      "answer_length": 519,
+      "num_chunks": 2,
+      "error": null
+    },
+    {
+      "query": "My VPN keeps disconnecting every 10 minutes while working remotely. What should I do?",
+      "type": "voice",
+      "latency": 4.139532089233398,
+      "tts_latency": 2.3131699562072754,
+      "answer_length": 57,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the troubleshooting workflow when a CI/CD pipeline fails during database migration with Error LARAVEL-MIGRATE-FAIL?",
+      "type": "voice",
+      "latency": 4.166778802871704,
+      "tts_latency": 1.9880177974700928,
+      "answer_length": 564,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "How should project leads handle vendor shipments delivered with damaged packaging or missing Certificates of Analysis (CoA)?",
+      "type": "voice",
+      "latency": 4.088078737258911,
+      "tts_latency": 1.330437183380127,
+      "answer_length": 698,
+      "num_chunks": 4,
+      "error": null
+    },
+    {
+      "query": "What happens if an employee submits a corporate travel expense claim without itemized receipts?",
+      "type": "voice",
+      "latency": 3.9416465759277344,
+      "tts_latency": 0.5803542137145996,
+      "answer_length": 57,
+      "num_chunks": 3,
+      "error": null
+    },
+    {
+      "query": "If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy applies?",
+      "type": "voice",
+      "latency": 4.017453908920288,
+      "tts_latency": 0.8092200756072998,
+      "answer_length": 257,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the IPSec MTU issue and how is it fixed?",
+      "type": "voice",
+      "latency": 3.8786420822143555,
+      "tts_latency": 2.105468273162842,
+      "answer_length": 685,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What is the meaning of life?",
+      "type": "voice",
+      "latency": 2.4401047229766846,
+      "tts_latency": 0.7700703144073486,
+      "answer_length": 57,
+      "num_chunks": 5,
+      "error": null
+    },
+    {
+      "query": "What happens if the SSO lockout is unresolved after 15 minutes?",
+      "type": "voice",
+      "latency": 3.2422521114349365,
+      "tts_latency": 0.9402475357055664,
+      "answer_length": 57,
+      "num_chunks": 5,
+      "error": null
+    }
+  ]
+}

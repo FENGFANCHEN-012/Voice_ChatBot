@@ -23,6 +23,9 @@ langchain-community>=0.3.1
 langchain-core>=0.3.15
 langchain-text-splitters>=0.3.2
 
+# LlamaIndex (semantic chunking)
+llama-index-core>=0.12.0
+
 # LLM
 google-generativeai==0.8.3
 

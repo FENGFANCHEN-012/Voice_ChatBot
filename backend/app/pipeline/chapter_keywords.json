@@ -1,0 +1,12 @@
+{
+  "Chapter 1": ["sso", "mfa", "lockout", "network", "802.1x", "packet loss", "nic", "err-sso-4039", "radius", "authentication", "token", "time-sync", "biometric", "self-service portal", "wifi", "ssid", "diagnostic", "port shutdown", "quarantine", "infrastructure"],
+  "Chapter 2": ["vpn", "remote work", "cyber", "phishing", "tunnel", "ipsec", "mtu", "ssl", "udp", "endpoint", "antivirus", "csirt", "patch", "72 hours", "sec-agent-09", "malware", "credential", "quarantine"],
+  "Chapter 3": ["payroll", "salary", "hr", "benefits", "grievance", "compensation", "leave", "hr-pay-102", "ombudsman", "medical certificate", "mc", "insurance", "termination", "onboarding", "anti-retaliation"],
+  "Chapter 4": ["cleanroom", "rfid", "server room", "temperature", "hvac", "crac", "badge", "code-access-denied-9", "alarm-temp-28c", "water leak", "anti-static", "emergency badge", "facility operations manager", "rbac", "safety training"],
+  "Chapter 5": ["vendor", "procurement", "purchase order", "shipment", "coa", "pqi", "50,000", "hold-proc-limit-50k", "anti-bribery", "goods rejection", "penalty", "probationary", "emergency purchase", "fast-track"],
+  "Chapter 6": ["laravel", "react", "cicd", "ci/cd", "migration", "pipeline", "hydration", "laravel-migrate-fail", "rollback", "artisan", "unit test", "85%", "phpunit", "jest", "429", "throttle", "redis", "staging", "synthetic"],
+  "Chapter 7": ["privacy", "gdpr", "data breach", "erasure", "compliance", "dpo", "pii", "cross-border", "breach-data-xborder-01", "cloud-isolate-region", "sha-256", "aes-256", "kms", "right-to-be-forgotten", "priv-req-07", "anonymization", "erasure verification"],
+  "Chapter 8": ["expense", "receipt", "audit", "fraud", "reimbursement", "disbursement", "exp-no-receipt", "fin-audit-dup", "per diem", "85 usd", "cash advance", "reconcile", "vp approval", "missing receipt affidavit", "garnishment", "corporate card"],
+  "Chapter 9": ["evacuation", "fire", "disaster", "dr failover", "rto", "rpo", "power outage", "evac-fire-01", "dr-failover-prod", "180 seconds", "15 seconds", "wal log", "assembly area delta", "floor warden", "ups", "bpg", "dns"],
+  "Chapter 10": ["ai", "dlp", "rag", "prompt", "governance", "clipboard", "hallucination", "ai-gov-01", "sec-dlp-ai-99", "cosine score", "0.72", "faithfulness", "0.98", "context precision", "ragas", "sonarqube", "static scanning", "unmasked pii"]
+}

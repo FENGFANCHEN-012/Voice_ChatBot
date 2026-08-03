@@ -29,7 +29,7 @@ class ChromaVectorStore:
         ids = [str(uuid4()) for _ in embeddings]
         
         documents = [m["text"] for m in metadata]
-        metadatas = [{k: v for k, v in m.items() if k != "text"} for m in metadata]
+        metadatas = [{k: v for k, v in m.items() if k != "text" and v is not None} for m in metadata]
         
         
         # store the embeddings, metadata, and documents in ChromaDB
@@ -41,6 +41,14 @@ class ChromaVectorStore:
     def get_all_texts(self) -> list[str]:
         results = self.collection.get(include=["documents"])
         return results.get("documents", [])
+
+    def get_all_chunks_with_metadata(self) -> list[dict]:
+        results = self.collection.get(include=["documents", "metadatas"])
+        chunks = []
+        for i, doc in enumerate(results.get("documents", [])):
+            meta = results.get("metadatas", [{}])[i] if i < len(results.get("metadatas", [])) else {}
+            chunks.append({"text": doc, "metadata": meta})
+        return chunks
 
     def search(self, query_vector, k=20, where: dict | None = None):
         kwargs = {"query_embeddings": [query_vector], "n_results": k}
@@ -95,6 +103,9 @@ class FaissVectorStore:
 
     def get_all_texts(self) -> list[str]:
         return [m.get("text", "") for m in self.metadata.values()]
+
+    def get_all_chunks_with_metadata(self) -> list[dict]:
+        return [{"text": m.get("text", ""), "metadata": m} for m in self.metadata.values()]
 
     def search(self, query_vector, k=20):
         import faiss

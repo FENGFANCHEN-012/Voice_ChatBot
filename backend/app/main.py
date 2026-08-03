@@ -21,6 +21,7 @@ from app.pipeline.hybrid_search import HybridSearch
 from app.pipeline.fallback import Fallback
 from app.pipeline.agent_rag import AgentRAG
 from app.pipeline.orchestrator import PipelineOrchestrator
+from app.pipeline.hyde import HyDE
 
 from app.services.document_service import DocumentService
 from app.services.session_service import SessionService
@@ -51,10 +52,13 @@ async def lifespan(app: FastAPI):
 
     retriever = Retriever(vector_store, embedder, k=settings.retrieval_top_k)
     hybrid = HybridSearch(vector_store, embedder, k=settings.retrieval_top_k)
+    hybrid.rebuild()
+    logger.info(f"Hybrid search BM25 index built ({len(hybrid._bm25_texts)} chunks)")
     query_expander = QueryExpander(settings.gemini_api_key)
     agent = AgentRAG(settings.gemini_api_key)
-    fallback = Fallback(hybrid, embedder, reranker, query_expander, llm, top_k=settings.retrieval_top_k)
-    orchestrator = PipelineOrchestrator(retriever, reranker, llm, query_expander, hybrid, fallback, agent)
+    hyde = HyDE(llm, hybrid, reranker, embedder)
+    fallback = Fallback(hybrid, embedder, reranker, query_expander, llm, agent_rag=agent, hyde=hyde, top_k=settings.retrieval_top_k)
+    orchestrator = PipelineOrchestrator(retriever, reranker, llm, query_expander, hybrid, fallback, agent, hyde=hyde)
 
     app.state.document_service = DocumentService(file_store, pdf_parser, embedder, vector_store)
     app.state.session_service = SessionService(app.state.session_store)

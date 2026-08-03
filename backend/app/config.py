@@ -10,6 +10,10 @@ class Settings(BaseSettings):
     port: int = 8000
     cors_origins: str = "http://localhost:5173"
     whisper_model_size: str = "base"
+    whisper_use_gpu: bool = True
+    tts_voice: str = "en-US-AndrewMultilingualNeural"
+    tts_rate: str = "+0%"
+    tts_pitch: str = "+0Hz"
     
     # ------------------------------------------
     
@@ -29,8 +33,8 @@ class Settings(BaseSettings):
     max_file_size_mb: int = 40
     chunk_size: int = 512
     chunk_overlap: int = 64
-    retrieval_top_k: int = 20
-    retrieval_fetch_k: int = 40
+    retrieval_top_k: int = 10
+    retrieval_fetch_k: int = 15
     reranker_top_k: int = 5
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}

@@ -4,6 +4,7 @@ from app.services.document_service import DocumentService
 from app.services.chat_service import ChatService
 from app.services.session_service import SessionService
 from app.services.audio_service import AudioService
+from app.pipeline.orchestrator import PipelineOrchestrator
 
 
 def get_document_service(request: Request) -> DocumentService:
@@ -24,6 +25,10 @@ def get_audio_service(request: Request) -> AudioService:
 
 def get_session_store(request: Request) -> SessionStore:
     return request.app.state.session_store
+
+
+def get_orchestrator(request: Request) -> PipelineOrchestrator:
+    return request.app.state.chat_service.orchestrator
 
 
 async def get_current_session(

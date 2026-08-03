@@ -1,9 +1,14 @@
-import time
+import asyncio
 from loguru import logger
 import google.generativeai as genai
+from app.pipeline.rate_limiter import gemini_rate_limiter
 
 
+
+# agent RAG will only be used in fallback stage
 class AgentRAG:
+    
+    # query type return for next step: simple_fact, complex_reasoning, comparison, out_of_scope, summarization
     SIMPLE = "simple_fact"
     COMPLEX = "complex_reasoning"
     COMPARISON = "comparison"
@@ -14,7 +19,7 @@ class AgentRAG:
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel("gemini-3.5-flash-lite")
 
-    def classify(self, query: str) -> str:
+    async def classify(self, query: str) -> str:
         prompt = f"""Classify this user query into one of these categories. Reply ONLY the category name.
 
 - simple_fact: Short factual question, 1-5 words, seeks specific detail (e.g. "what is the deadline?", "when is the meeting?")
@@ -27,15 +32,18 @@ Query: {query}
 Category:"""
         for attempt in range(3):
             try:
+                await gemini_rate_limiter.acquire()
                 resp = self.model.generate_content(prompt)
                 category = resp.text.strip().lower()
                 valid = {self.SIMPLE, self.COMPLEX, self.COMPARISON, self.OUT_OF_SCOPE, self.SUMMARIZE}
                 return category if category in valid else self.COMPLEX
+            
+            
             except Exception as e:
                 if "RESOURCE_EXHAUSTED" in str(e):
-                    wait = 30 * (attempt + 1)
+                    wait = 5 * (attempt + 1)
                     logger.warning(f"[AgentRAG] Quota hit, waiting {wait}s")
-                    time.sleep(wait)
+                    await asyncio.sleep(wait)
                 else:
                     raise
         return self.COMPLEX

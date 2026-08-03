@@ -10,6 +10,7 @@ class HealthResponse(BaseModel):
 class SessionResponse(BaseModel):
     session_id: str
     created_at: datetime
+    title: str = ""
 
 
 class DocumentResponse(BaseModel):
@@ -36,6 +37,7 @@ class QueryResponse(BaseModel):
     answer_text: str
     audio_url: str = ""
     chunks: list[ChunkInfo]
+    processing_time: Optional[float] = None
 
 
 class TranscribeResponse(BaseModel):

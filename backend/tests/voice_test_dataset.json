@@ -1,0 +1,267 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "description": "Voice Agent Test Set for ASR, Latency, and Load Testing",
+    "created": "2026-07-31"
+  },
+  "asr_test_cases": [
+    {
+      "id": 1,
+      "category": "clear_speech",
+      "difficulty": "easy",
+      "expected_text": "What is the SSO authentication lockout procedure?",
+      "keywords": ["SSO", "lockout", "procedure"],
+      "description": "Clear speech, simple document query"
+    },
+    {
+      "id": 2,
+      "category": "clear_speech",
+      "difficulty": "easy",
+      "expected_text": "How do I resolve the VPN timeout error?",
+      "keywords": ["VPN", "timeout", "error"],
+      "description": "Common support query"
+    },
+    {
+      "id": 3,
+      "category": "clear_speech",
+      "difficulty": "easy",
+      "expected_text": "What is the payroll underpayment procedure?",
+      "keywords": ["payroll", "underpayment", "procedure"],
+      "description": "HR-related query"
+    },
+    {
+      "id": 4,
+      "category": "technical_terms",
+      "difficulty": "medium",
+      "expected_text": "What is the IPsec VPN timeout error code?",
+      "keywords": ["IPsec", "VPN", "timeout", "error code"],
+      "description": "Technical terminology"
+    },
+    {
+      "id": 5,
+      "category": "technical_terms",
+      "difficulty": "medium",
+      "expected_text": "Explain the CI/CD pipeline failure for Laravel migration.",
+      "keywords": ["CI/CD", "pipeline", "Laravel", "migration"],
+      "description": "Software development terms"
+    },
+    {
+      "id": 6,
+      "category": "technical_terms",
+      "difficulty": "medium",
+      "expected_text": "What is the SSO authentication lockout procedure?",
+      "keywords": ["SSO", "authentication", "lockout"],
+      "description": "Security terminology"
+    },
+    {
+      "id": 7,
+      "category": "numbers_and_dates",
+      "difficulty": "medium",
+      "expected_text": "The server room temperature alert triggers at 28 degrees Celsius.",
+      "keywords": ["28", "degrees", "Celsius", "temperature"],
+      "description": "Numbers and units"
+    },
+    {
+      "id": 8,
+      "category": "numbers_and_dates",
+      "difficulty": "medium",
+      "expected_text": "I need to submit the expense report within 10 business days.",
+      "keywords": ["expense", "report", "business", "days"],
+      "description": "Time handling"
+    },
+    {
+      "id": 9,
+      "category": "numbers_and_dates",
+      "difficulty": "medium",
+      "expected_text": "The purchase order exceeds fifty thousand dollars.",
+      "keywords": ["fifty", "thousand", "dollars", "purchase order"],
+      "description": "Number words"
+    },
+    {
+      "id": 10,
+      "category": "commands",
+      "difficulty": "easy",
+      "expected_text": "Search for documents about network diagnostics.",
+      "keywords": ["search", "documents", "network", "diagnostics"],
+      "description": "Search command"
+    },
+    {
+      "id": 11,
+      "category": "commands",
+      "difficulty": "easy",
+      "expected_text": "Download the troubleshooting policy document.",
+      "keywords": ["download", "troubleshooting", "policy"],
+      "description": "Download command"
+    },
+    {
+      "id": 12,
+      "category": "commands",
+      "difficulty": "easy",
+      "expected_text": "Summarize the disaster recovery section.",
+      "keywords": ["summarize", "disaster", "recovery"],
+      "description": "Summarization command"
+    },
+    {
+      "id": 13,
+      "category": "multi_turn",
+      "difficulty": "hard",
+      "expected_text": "Tell me more about that.",
+      "keywords": ["tell me more", "about", "that"],
+      "description": "Follow-up reference"
+    },
+    {
+      "id": 14,
+      "category": "multi_turn",
+      "difficulty": "hard",
+      "expected_text": "What about the alternative approach?",
+      "keywords": ["alternative", "approach"],
+      "description": "Context-dependent query"
+    },
+    {
+      "id": 15,
+      "category": "multi_turn",
+      "difficulty": "hard",
+      "expected_text": "How does that compare to the previous method?",
+      "keywords": ["compare", "previous", "method"],
+      "description": "Comparison reference"
+    },
+    {
+      "id": 16,
+      "category": "edge_cases",
+      "difficulty": "hard",
+      "expected_text": "ERR-SSO-4039",
+      "keywords": ["ERR", "SSO", "4039"],
+      "description": "Error code format"
+    },
+    {
+      "id": 17,
+      "category": "edge_cases",
+      "difficulty": "hard",
+      "expected_text": "Form HR-PAY-102",
+      "keywords": ["Form", "HR", "PAY", "102"],
+      "description": "Form number format"
+    },
+    {
+      "id": 18,
+      "category": "edge_cases",
+      "difficulty": "hard",
+      "expected_text": "https://enterprise-portal.example.com/login",
+      "keywords": ["https", "enterprise", "portal", "login"],
+      "description": "URL handling"
+    },
+    {
+      "id": 19,
+      "category": "accent_simulation",
+      "difficulty": "hard",
+      "expected_text": "I need help with the firewall configuration.",
+      "keywords": ["help", "firewall", "configuration"],
+      "description": "Complex consonant cluster"
+    },
+    {
+      "id": 20,
+      "category": "accent_simulation",
+      "difficulty": "hard",
+      "expected_text": "The virtual private network connection dropped.",
+      "keywords": ["virtual", "private", "network", "connection", "dropped"],
+      "description": "Multi-syllable words"
+    },
+    {
+      "id": 21,
+      "category": "noise_robustness",
+      "difficulty": "hard",
+      "expected_text": "What is the mandatory protocol when a facility building-wide fire alarm sounds?",
+      "keywords": ["fire", "alarm", "evacuation"],
+      "description": "Background noise tolerance"
+    },
+    {
+      "id": 22,
+      "category": "noise_robustness",
+      "difficulty": "hard",
+      "expected_text": "How do I access the Class-100 cleanroom facility?",
+      "keywords": ["access", "cleanroom", "facility"],
+      "description": "Ambient noise handling"
+    },
+    {
+      "id": 23,
+      "category": "speed_variations",
+      "difficulty": "medium",
+      "expected_text": "Quick question about the VPN setup.",
+      "keywords": ["quick", "question", "VPN", "setup"],
+      "description": "Fast speech"
+    },
+    {
+      "id": 24,
+      "category": "speed_variations",
+      "difficulty": "medium",
+      "expected_text": "I would like to know about the medical insurance activation.",
+      "keywords": ["medical", "insurance", "activation"],
+      "description": "Slow, deliberate speech"
+    },
+    {
+      "id": 25,
+      "category": "filler_words",
+      "difficulty": "medium",
+      "expected_text": "Um, what is the MFA bypass policy?",
+      "keywords": ["MFA", "bypass", "policy"],
+      "description": "Contains filler word"
+    },
+    {
+      "id": 26,
+      "category": "filler_words",
+      "difficulty": "medium",
+      "expected_text": "So, I need to know about the data retention rules.",
+      "keywords": ["data", "retention", "rules"],
+      "description": "Contains filler phrase"
+    },
+    {
+      "id": 27,
+      "category": "incomplete_sentences",
+      "difficulty": "hard",
+      "expected_text": "VPN timeout error.",
+      "keywords": ["VPN", "timeout", "error"],
+      "description": "Partial sentence"
+    },
+    {
+      "id": 28,
+      "category": "incomplete_sentences",
+      "difficulty": "hard",
+      "expected_text": "Server room temperature.",
+      "keywords": ["server", "room", "temperature"],
+      "description": "Fragment query"
+    },
+    {
+      "id": 29,
+      "category": "long_queries",
+      "difficulty": "medium",
+      "expected_text": "What is the complete procedure for handling a cybersecurity incident including notification steps and documentation requirements?",
+      "keywords": ["cybersecurity", "incident", "notification", "documentation"],
+      "description": "Long complex query"
+    },
+    {
+      "id": 30,
+      "category": "long_queries",
+      "difficulty": "medium",
+      "expected_text": "I need to understand the disaster recovery failover process from primary data center to secondary DR site including DNS routing and RTO targets.",
+      "keywords": ["disaster", "recovery", "failover", "DNS", "RTO"],
+      "description": "Technical long query"
+    }
+  ],
+  "latency_test_queries": [
+    "What is the mandatory procedure when an employee experiences an SSO lockout error (Error Code ERR-SSO-4039)?",
+    "What is the server room temperature alert threshold?",
+    "My VPN keeps disconnecting every 10 minutes while working remotely. What should I do?",
+    "What is the troubleshooting workflow when a CI/CD pipeline fails during database migration with Error LARAVEL-MIGRATE-FAIL?",
+    "How should project leads handle vendor shipments delivered with damaged packaging or missing Certificates of Analysis (CoA)?",
+    "What happens if an employee submits a corporate travel expense claim without itemized receipts?",
+    "If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy applies?",
+    "What is the IPSec MTU issue and how is it fixed?",
+    "What is the meaning of life?",
+    "What happens if the SSO lockout is unresolved after 15 minutes?"
+  ],
+  "load_test_config": {
+    "concurrent_users": [1, 5, 10, 20],
+    "queries_per_user": 5,
+    "ramp_up_seconds": 5,
+    "timeout_seconds": 30
+  }
+}

@@ -43,7 +43,7 @@ class DocumentService:
     async def upload(self, filename: str, file_bytes: bytes) -> dict:
         doc_id, file_path = self.file_store.save(filename, file_bytes)
 
-        chunks = self.pdf_parser.parse(file_path, doc_id, strategy="recursive")
+        chunks = self.pdf_parser.parse(file_path, doc_id, strategy="semantic", embedding_fn=self.embedder.embed)
 
         now = datetime.now(timezone.utc).isoformat()
         doc_info = {
@@ -75,7 +75,7 @@ class DocumentService:
                 embeddings = self.embedder.embed(texts)
 
                 meta_list = [
-                    {"doc_id": c["doc_id"], "page": c["page"], "chunk_index": c["chunk_index"], "text": c["text"]}
+                    {"doc_id": c["doc_id"], "page": c["page"], "chunk_index": c["chunk_index"], "text": c["text"], "chapter": c.get("chapter", "")}
                     for c in batch
                 ]
 

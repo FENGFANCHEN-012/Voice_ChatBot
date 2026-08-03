@@ -1,10 +1,12 @@
 export interface Session {
   session_id: string;
   created_at: string;
+  title?: string;
   message_count?: number;
 }
 
 export interface Message {
+  id?: string;
   role: "user" | "assistant";
   content: string;
   timestamp: string;
@@ -22,7 +24,7 @@ export interface Document {
 
 export interface ChunkInfo {
   content: string;
-  page: number;
+  page: number | null;
   score: number;
 }
 

@@ -41,11 +41,65 @@ export async function deleteSession(sessionId: string) {
   return api.delete(`/sessions/${sessionId}`);
 }
 
+export async function renameSession(sessionId: string, title: string) {
+  const form = new FormData();
+  form.append("title", title);
+  return api.patch(`/sessions/${sessionId}`, form);
+}
+
 export async function queryChat(sessionId: string, text: string) {
   const form = new FormData();
   form.append("session_id", sessionId);
   form.append("text", text);
   return api.post("/chats/query", form);
+}
+
+export async function queryChatStream(
+  sessionId: string,
+  text: string,
+  onToken: (token: string) => void,
+  onDone: (chunks: Array<{content: string; page: number | null; score: number}>) => void,
+): Promise<void> {
+  const form = new FormData();
+  form.append("session_id", sessionId);
+  form.append("text", text);
+
+  const response = await fetch("/api/v1/chats/query/stream", {
+    method: "POST",
+    body: form,
+  });
+
+  if (!response.ok) throw new Error("Query failed");
+
+  const reader = response.body?.getReader();
+  if (!reader) throw new Error("No response body");
+
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() || "";
+
+    for (const line of lines) {
+      if (line.startsWith("data: ")) {
+        try {
+          const event = JSON.parse(line.slice(6));
+          if (event.type === "token") {
+            onToken(event.content);
+          } else if (event.type === "done") {
+            onDone(event.chunks);
+          }
+        } catch (e) {
+          console.error("Failed to parse SSE event:", e);
+        }
+      }
+    }
+  }
 }
 
 export async function getMessages(sessionId: string) {

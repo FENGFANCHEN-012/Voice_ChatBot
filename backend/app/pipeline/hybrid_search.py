@@ -1,10 +1,9 @@
 import numpy as np
 from loguru import logger
 from rank_bm25 import BM25Okapi
+from app.pipeline.query_normalizer import normalize_query, extract_metadata_hints
 
 
-
-# hybrid search that combines vector search and BM25 ranking using Reciprocal Rank Fusion (RRF)
 class HybridSearch:
     def __init__(self, vector_store, embedder, k: int = 20, rrf_k: int = 60):
         self.vector_store = vector_store
@@ -13,12 +12,17 @@ class HybridSearch:
         self.rrf_k = rrf_k
         self._bm25 = None
         self._bm25_texts = []
+        self._bm25_metadata = []
 
     def rebuild(self):
-        self._bm25_texts = self.vector_store.get_all_texts()
-        if not self._bm25_texts:
+        all_chunks = self.vector_store.get_all_chunks_with_metadata()
+        if not all_chunks:
             self._bm25 = None
+            self._bm25_texts = []
+            self._bm25_metadata = []
             return
+        self._bm25_texts = [c["text"] for c in all_chunks]
+        self._bm25_metadata = [c.get("metadata", {}) for c in all_chunks]
         tokenized = [doc.lower().split() for doc in self._bm25_texts]
         self._bm25 = BM25Okapi(tokenized)
 
@@ -26,15 +30,35 @@ class HybridSearch:
         if self._bm25 is None:
             self.rebuild()
 
-        query_vector = self.embedder.embed_query(query_text)
+        normalized_query = normalize_query(query_text)
+        hints = extract_metadata_hints(normalized_query)
+
+        if hints.get("chapter") and where is None:
+            where = {"chapter": hints["chapter"]}
+            logger.info(f"[HybridSearch] Metadata filter: chapter={hints['chapter']}")
+
+        query_vector = self.embedder.embed_query(normalized_query)
         vec_results = self.vector_store.search(query_vector, k=self.k, where=where)
 
-        tokenized_query = query_text.lower().split()
+        filter_used = where
+        if not vec_results and where:
+            logger.info(f"[HybridSearch] No results with filter {where}, retrying without filter")
+            vec_results = self.vector_store.search(query_vector, k=self.k, where=None)
+            filter_used = None
+
+        tokenized_query = normalized_query.lower().split()
         bm25_scores = self._bm25.get_scores(tokenized_query)
-        bm25_ranked = sorted(
-            [(i, score) for i, score in enumerate(bm25_scores) if score > 0],
-            key=lambda x: x[1], reverse=True
-        )[:self.k]
+        
+        bm25_ranked = []
+        for i, score in enumerate(bm25_scores):
+            if score > 0:
+                if filter_used and self._bm25_metadata:
+                    meta = self._bm25_metadata[i] if i < len(self._bm25_metadata) else {}
+                    if filter_used.get("chapter") and meta.get("chapter") != filter_used["chapter"]:
+                        continue
+                bm25_ranked.append((i, score))
+        
+        bm25_ranked = sorted(bm25_ranked, key=lambda x: x[1], reverse=True)[:self.k]
 
         vec_ranks = {r["text"]: idx for idx, r in enumerate(vec_results)}
         bm25_texts_map = {t: i for i, t in enumerate(self._bm25_texts)}
@@ -70,7 +94,10 @@ class HybridSearch:
             r["score"] = float(item["rrf_score"])
             results.append(r)
 
-        logger.info(f"[HybridSearch] Query: {query_text}")
+        logger.info(f"[HybridSearch] Original: {query_text}")
+        logger.info(f"[HybridSearch] Normalized: {normalized_query}")
+        if hints:
+            logger.info(f"[HybridSearch] Hints: {hints}")
         logger.info(f"[HybridSearch] Retrieved {len(results)} chunks (vec: {len(vec_results)}, bm25: {len(bm25_ranked)})")
         for i, r in enumerate(results[:3]):
             logger.info(f"  #{i+1} score={r['score']:.4f} | {r['text'][:100]}...")

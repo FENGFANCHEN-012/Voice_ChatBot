@@ -19,5 +19,12 @@ class SessionStore:
     def delete(self, session_id: str) -> bool:
         return self._sessions.pop(session_id, None) is not None
 
+    def rename(self, session_id: str, title: str) -> Session | None:
+        session = self._sessions.get(session_id)
+        if session is None:
+            return None
+        session.title = title
+        return session
+
     def list_all(self) -> list[Session]:
         return list(self._sessions.values())

@@ -1,17 +1,17 @@
 import type { ButtonHTMLAttributes } from "react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "secondary" | "danger" | "ghost";
+  size?: "sm" | "md" | "lg";
 }
 
-export function Button({ variant = "primary", className, ...props }: Props) {
-  const base = "px-4 py-2 rounded-lg font-medium text-sm transition-colors";
-  const variants = {
-    primary: "bg-blue-500 text-white hover:bg-blue-600",
-    secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
-    danger: "bg-red-500 text-white hover:bg-red-600",
-  };
-  return (
-    <button className={`${base} ${variants[variant]} ${className}`} {...props} />
-  );
+const sizes = {
+  sm: "h-8 px-3 text-[13px]",
+  md: "h-9 px-4",
+  lg: "h-11 px-5",
+};
+
+export function Button({ variant = "primary", size = "md", className = "", ...props }: Props) {
+  const variantClass = `btn-${variant}`;
+  return <button className={`${variantClass} ${sizes[size]} ${className}`} {...props} />;
 }
