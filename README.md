@@ -1,29 +1,69 @@
-# Voice RAG Assistant
+# Enterprise Real-Time Voice RAG ChatBot 🎙️🤖
 
-A full-stack **retrieval-augmented generation (RAG)** chatbot that answers questions about enterprise policy documents using **voice**. Upload PDFs, ask questions by speaking, and get streamed text + spoken answers (edge-tts).
+An enterprise-grade, real-time **Voice Retrieval-Augmented Generation (RAG) Assistant** designed for low-latency, high-accuracy document intelligence and conversational speech interaction.
 
-## Features
+The system integrates **Faster-Whisper ASR**, **BM25 + BGE-M3 Hybrid Search**, **BGE-Reranker-v2-m3 Cross-Encoder Reranking**, **Dual LLM Engines (DeepSeek-V3 & Google Gemini)**, and **Streaming Edge-TTS Audio Output**.
 
-- 🎤 **Voice-first** — record a question, get a spoken answer (WebM → faster-whisper → RAG → edge-tts)
-- 📄 **PDF ingestion** — upload PDFs, chunked & embedded into a vector store (ChromaDB default / FAISS optional)
-- 🔍 **Hybrid retrieval** — vector (BAAI/bge-m3) + BM25 fused with Reciprocal Rank Fusion, re-ranked by `BAAI/bge-reranker-v2-m3`
-- 💬 **Streaming chat** — SSE text streaming + WebSocket TTS with sentence-boundary speech
-- 🧠 **Advanced pipeline (GPU only)** — AgentRAG query classification + QueryExpander for comparison & multi-hop queries
-- 🔁 **Provider fallback** — DeepSeek (default) with automatic Gemini fallback
+---
 
-## Architecture
+## 🌟 Key Features
 
+* ⚡ **Ultra-Low Spoken Latency (< 2.8s)**: Audio streaming begins out-loud while the LLM is still generating subsequent sentences.
+* 🎯 **Hybrid Retrieval (RAG)**: Combines dense vector similarity (`BAAI/bge-m3`) and sparse keyword search (`rank-bm25`) using Reciprocal Rank Fusion (RRF).
+* 🔬 **Cross-Encoder Reranking**: Re-ranks top candidate chunks using `BAAI/bge-reranker-v2-m3` for maximum precision.
+* 🔀 **Sub-Query Decomposition**: Automatically splits multi-entity & comparison queries into sub-queries to achieve high Context Recall across document chapters.
+* 🧠 **Dual LLM Provider System (DeepSeek-V3 + Gemini)**:
+  * **DeepSeek-V3 (`deepseek-chat`)**: High-throughput streaming via REST API with 128k context window and strict system prompt compliance.
+  * **Google Gemini**: Full multi-modal fallback support.
+* 🎙️ **Real-Time Voice Pipeline**:
+  * **Speech-to-Text (ASR)**: Uses `faster-whisper` (base/medium models) with PyTorch CUDA GPU acceleration.
+  * **Text-to-Speech (TTS)**: Streams MP3 audio chunks via WebSocket (`/ws/tts`) using a sequence-locked queue for natural out-loud speech.
+  * **TTS Sanitization**: Automatic regex cleaning converts slashes (`/`, `\`) and markdown symbols into natural spoken phrases.
+* ☁️ **Dual Execution Architecture**:
+  * **Cloud GPU (Google Colab T4)**: Sub-3s voice latency with CUDA acceleration (~35ms rerank time).
+  * **Local CPU/GPU**: For offline local development.
+
+---
+
+## 📐 System Architecture
+
+```mermaid
+graph TD
+    User([User Voice / Text Input]) --> Frontend[React + Vite Frontend\nlocalhost:5173]
+    
+    subgraph Frontend Layer
+        Frontend -->|Audio Blob| ASR_Call[POST /api/v1/audio/transcribe]
+        Frontend -->|Stream Token| SSE_Call[POST /api/v1/chats/query/stream]
+        Frontend -->|Audio Segment| WS_Call[WebSocket /ws/tts]
+    end
+
+    subgraph Backend Orchestration Layer (FastAPI)
+        ASR_Call --> FasterWhisper[Faster-Whisper ASR\nbase / medium int8/float16]
+        FasterWhisper --> QueryEngine[Pipeline Orchestrator]
+        SSE_Call --> QueryEngine
+        
+        QueryEngine -->|1. Sub-Query Decomposition| MultiQuery[Query Expander]
+        MultiQuery -->|Keyword Search| BM25[BM25 Index]
+        MultiQuery -->|Dense Vector Search| Chroma[ChromaDB Vector Store]
+        
+        BM25 --> Hybrid[Hybrid Search RRF Fusion\nTop 35 Candidates]
+        Chroma --> Hybrid
+        
+        Hybrid --> Reranker[CrossEncoder Reranker\nBAAI/bge-reranker-v2-m3\n⚡ 35ms on GPU]
+        Reranker --> TopDocs[Top 10 Context Chunks]
+        
+        TopDocs --> LLMEngine[LLM Provider Engine\nDeepSeek-V3 / Gemini]
+        LLMEngine -->|Streaming Tokens| Frontend
+    end
+
+    subgraph Audio Output Layer
+        WS_Call --> EdgeTTS[Edge-TTS Streamer]
+        EdgeTTS -->|MP3 Audio Chunks| Playback[Sequence-Locked Audio Queue]
+    end
 ```
-Frontend (React/Vite :5173)              Backend (FastAPI :8000)
-  App.tsx / ChatInput / Visualizer  ──►  /api/v1/sessions
-  FileDropzone / FileList            ──►  /api/v1/documents
-  ChatWindow / MessageBubble  (SSE)  ──►  /api/v1/chats/query/stream
-  TTS audio            (WebSocket)   ──►  /ws/tts
-```
 
-Pipeline: **PDF → PyMuPDF parse → semantic/recursive chunking → bge-m3 embeddings → ChromaDB → hybrid (vector+BM25) search → rerank → DeepSeek/Gemini generation → stream + TTS**
+> 📘 **Full Architecture Documentation**: [`docs/Voice_RAG_Architecture_v2.2.pdf`](file:///C:/Users/johny/OneDrive%20-%20Ngee%20Ann%20Polytechnic/Desktop/Voice_ChatBot/docs/Voice_RAG_Architecture_v2.2.pdf)
 
-> Full architecture document: `docs/Voice_RAG_Architecture_v2.2.pdf`
 
 ---
 
