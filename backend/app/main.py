@@ -102,6 +102,7 @@ app.include_router(api_router, prefix="/api/v1")
 @app.websocket("/ws/tts")
 async def websocket_tts(websocket: WebSocket):
     await websocket.accept()
+    audio_service = app.state.audio_service
     try:
         while True:
             data = await websocket.receive_text()
@@ -109,10 +110,11 @@ async def websocket_tts(websocket: WebSocket):
             text = msg.get("text", "")
             if not text:
                 continue
-            async for chunk in app.state.audio_service.synthesize_stream(text):
-                import base64
+            # format tells the client how to decode the frames (wav | mpeg)
+            fmt = getattr(audio_service, "tts_format", "mpeg")
+            async for chunk in audio_service.synthesize_stream(text):
                 await websocket.send_bytes(chunk)
-            await websocket.send_text(json.dumps({"status": "done"}))
+            await websocket.send_text(json.dumps({"status": "done", "format": fmt}))
     except WebSocketDisconnect:
         pass
     except Exception as e:

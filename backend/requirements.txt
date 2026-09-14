@@ -32,6 +32,8 @@ google-genai>=1.0.0
 
 # Text-to-speech
 edge-tts==6.1.3
+kokoro>=0.9.4
+misaki[en]>=0.9.4
 
 # Audio processing
 soundfile==0.12.1

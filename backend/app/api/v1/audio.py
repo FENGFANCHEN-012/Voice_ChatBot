@@ -32,7 +32,8 @@ async def synthesize_speech(
 ):
     try:
         audio_bytes = await service.synthesize(text)
-        return Response(content=audio_bytes, media_type="audio/mpeg")
+        media_type = "audio/wav" if getattr(service, "tts_format", "mpeg") == "wav" else "audio/mpeg"
+        return Response(content=audio_bytes, media_type=media_type)
     except Exception as e:
         logger.error(f"Synthesize failed: {e}")
         raise HTTPException(status_code=500, detail=f"Speech synthesis failed: {str(e)}")
@@ -44,9 +45,10 @@ async def synthesize_speech_stream(
     service: AudioService = Depends(get_audio_service),
 ):
     try:
+        media_type = "audio/wav" if getattr(service, "tts_format", "mpeg") == "wav" else "audio/mpeg"
         return StreamingResponse(
             service.synthesize_stream(text),
-            media_type="audio/mpeg",
+            media_type=media_type,
             headers={"Cache-Control": "no-cache"},
         )
     except Exception as e:

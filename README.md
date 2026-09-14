@@ -1,251 +1,197 @@
-# Enterprise Real-Time Voice RAG ChatBot 🎙️🤖
+# Voice RAG ChatBot
 
-An enterprise-grade, real-time **Voice Retrieval-Augmented Generation (RAG) Assistant** designed for low-latency, high-accuracy document intelligence and conversational speech interaction.
+Upload a PDF, then ask questions about it by voice. The app transcribes your question, finds the
+relevant parts of the document, has an LLM answer from those parts only, and speaks the answer back
+while it is still being written.
 
-The system integrates **Faster-Whisper ASR**, **BM25 + BGE-M3 Hybrid Search**, **BGE-Reranker-v2-m3 Cross-Encoder Reranking**, **Dual LLM Engines (DeepSeek-V3 & Google Gemini)**, and **Streaming Edge-TTS Audio Output**.
+I built this in about a week (28 Jul – 4 Aug 2026) as a take-home assessment for an AI Builder
+internship. The test document was an enterprise IT troubleshooting and policy manual full of error codes,
+thresholds and procedures — the kind of thing staff would rather ask than search.
 
----
+## What it does
 
-## 🌟 Key Features
+- **Document upload** — drag in a PDF; it is parsed, split into chunks, embedded and indexed.
+  Progress is streamed to the UI while embedding runs in the background.
+- **Voice or text questions** — record with the mic or type. Answers stream in token by token.
+- **Spoken answers with low delay** — the frontend cuts the streamed answer into sentences and sends
+  each one for speech as soon as it's complete, so audio starts before the full answer is finished.
+- **Answers grounded in the document** — each answer comes with the chunks and page numbers it used.
+- **Chat sessions** — create, rename and delete conversations; follow-up questions use the history.
+- **Runs on CPU or GPU** — everything detects CUDA and falls back to CPU. On a GPU it also turns on
+  extra query analysis (see below). I ran the GPU version on Google Colab and exposed it with ngrok.
 
-* ⚡ **Ultra-Low Spoken Latency (< 2.8s)**: Audio streaming begins out-loud while the LLM is still generating subsequent sentences.
-* 🎯 **Hybrid Retrieval (RAG)**: Combines dense vector similarity (`BAAI/bge-m3`) and sparse keyword search (`rank-bm25`) using Reciprocal Rank Fusion (RRF).
-* 🔬 **Cross-Encoder Reranking**: Re-ranks top candidate chunks using `BAAI/bge-reranker-v2-m3` for maximum precision.
-* 🔀 **Sub-Query Decomposition**: Automatically splits multi-entity & comparison queries into sub-queries to achieve high Context Recall across document chapters.
-* 🧠 **Dual LLM Provider System (DeepSeek-V3 + Gemini)**:
-  * **DeepSeek-V3 (`deepseek-chat`)**: High-throughput streaming via REST API with 128k context window and strict system prompt compliance.
-  * **Google Gemini**: Full multi-modal fallback support.
-* 🎙️ **Real-Time Voice Pipeline**:
-  * **Speech-to-Text (ASR)**: Uses `faster-whisper` (base/medium models) with PyTorch CUDA GPU acceleration.
-  * **Text-to-Speech (TTS)**: Streams MP3 audio chunks via WebSocket (`/ws/tts`) using a sequence-locked queue for natural out-loud speech.
-  * **TTS Sanitization**: Automatic regex cleaning converts slashes (`/`, `\`) and markdown symbols into natural spoken phrases.
-* ☁️ **Dual Execution Architecture**:
-  * **Cloud GPU (Google Colab T4)**: Sub-3s voice latency with CUDA acceleration (~35ms rerank time).
-  * **Local CPU/GPU**: For offline local development.
+## How a question is answered
 
----
-
-## 📐 System Architecture
-
-```mermaid
-graph TD
-    User([User Voice / Text Input]) --> Frontend[React + Vite Frontend\nlocalhost:5173]
-    
-    subgraph Frontend Layer
-        Frontend -->|Audio Blob| ASR_Call[POST /api/v1/audio/transcribe]
-        Frontend -->|Stream Token| SSE_Call[POST /api/v1/chats/query/stream]
-        Frontend -->|Audio Segment| WS_Call[WebSocket /ws/tts]
-    end
-
-    subgraph Backend Orchestration Layer (FastAPI)
-        ASR_Call --> FasterWhisper[Faster-Whisper ASR\nbase / medium int8/float16]
-        FasterWhisper --> QueryEngine[Pipeline Orchestrator]
-        SSE_Call --> QueryEngine
-        
-        QueryEngine -->|1. Sub-Query Decomposition| MultiQuery[Query Expander]
-        MultiQuery -->|Keyword Search| BM25[BM25 Index]
-        MultiQuery -->|Dense Vector Search| Chroma[ChromaDB Vector Store]
-        
-        BM25 --> Hybrid[Hybrid Search RRF Fusion\nTop 35 Candidates]
-        Chroma --> Hybrid
-        
-        Hybrid --> Reranker[CrossEncoder Reranker\nBAAI/bge-reranker-v2-m3\n⚡ 35ms on GPU]
-        Reranker --> TopDocs[Top 10 Context Chunks]
-        
-        TopDocs --> LLMEngine[LLM Provider Engine\nDeepSeek-V3 / Gemini]
-        LLMEngine -->|Streaming Tokens| Frontend
-    end
-
-    subgraph Audio Output Layer
-        WS_Call --> EdgeTTS[Edge-TTS Streamer]
-        EdgeTTS -->|MP3 Audio Chunks| Playback[Sequence-Locked Audio Queue]
-    end
+```
+mic (webm) ──► POST /audio/transcribe ──► faster-whisper (VAD on, beam 1)
+                                               │ text
+                                               ▼
+                         POST /chats/query/stream (Server-Sent Events)
+                                               │
+                     query cache hit? ── yes ──► return cached answer
+                                               │ no
+               ┌───────────── GPU only ────────┴──────── CPU ─────────────┐
+               │ AgentRAG: classify query                                  │
+               │   (fact / reasoning / comparison / summary / off-topic)   │
+               │ QueryExpander: rewrite into sub-queries                   │
+               └───────────────────────────┬──────────────────────────────┘
+                                           ▼
+             Hybrid search per query:  BGE-M3 vectors (ChromaDB)  +  BM25 keywords
+                                       merged with Reciprocal Rank Fusion
+                                           ▼
+                        BGE-reranker-v2-m3 cross-encoder → top 15 chunks
+                                           ▼
+                  DeepSeek-V3 (primary) or Gemini (fallback) streams the answer
+                                           ▼
+  frontend splits into sentences ──► WebSocket /ws/tts ──► Kokoro (GPU) or Edge TTS (CPU)
+                                           ▼
+                         ordered playback queue in the browser
 ```
 
-> 📘 **Full Architecture Documentation**: [`docs/Voice_RAG_Architecture_v2.2.pdf`](file:///C:/Users/johny/OneDrive%20-%20Ngee%20Ann%20Polytechnic/Desktop/Voice_ChatBot/docs/Voice_RAG_Architecture_v2.2.pdf)
+Before searching, the query is normalised (abbreviations expanded, error codes and chapter hints
+pulled out) so that exact strings like `ERR-SSO-4039` still match.
 
+## Tech stack
 
----
+| Layer | Tools |
+| --- | --- |
+| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Axios, MediaRecorder + Web Audio API |
+| Backend | Python, FastAPI, Uvicorn, Pydantic Settings, Loguru, SSE and WebSockets |
+| PDF parsing | PyMuPDF, LangChain `RecursiveCharacterTextSplitter` (800 chars, 150 overlap), optional LlamaIndex semantic splitter |
+| Embeddings | `BAAI/bge-m3` via sentence-transformers |
+| Vector store | ChromaDB (FAISS also supported) |
+| Keyword search | `rank-bm25` |
+| Reranker | `BAAI/bge-reranker-v2-m3` cross-encoder |
+| LLM | DeepSeek-V3 (`deepseek-chat`) over its REST API; Google Gemini with model fallback on quota errors |
+| Speech to text | faster-whisper (`base`), CUDA float16 or CPU int8 |
+| Text to speech | Kokoro on GPU, Edge TTS on CPU, with an in-memory audio cache |
+| Evaluation | RAGAS, custom latency / load / ASR test scripts |
+| Deployment | Docker Compose for local, Google Colab + ngrok for GPU |
 
-## Prerequisites
+## Results
 
-- Python **3.11+**
-- Node.js **18+**
-- API keys (at least one):
-  - **DeepSeek** — https://platform.deepseek.com (primary)
-  - **Google Gemini** — https://aistudio.google.com/app/apikey (fallback / advanced pipeline)
-- (Optional) **NVIDIA GPU + CUDA** for accelerated inference
+All numbers come from my own test runs, saved as JSON in this repo.
 
----
+**Answer quality — RAGAS, 30 test questions** (`ragas_results_20260804_203612.json`)
 
-## 1. Setup
+| Metric | Score |
+| --- | --- |
+| Faithfulness | 0.90 |
+| Context precision | 0.55 |
+| Context recall | 0.41 |
+| Answer correctness | 0.27 |
 
-### Backend
+Faithfulness is high: the model rarely makes things up and sticks to what it's given. The weak point
+is retrieval. Recall of 0.41 means the right chunk often isn't in the context at all, and it's worst
+on comparison and multi-hop questions, where the answer is spread across chapters.
+
+**Latency** (`backend/tests/latency_results(*).json`)
+
+| | Voice question → answer (median) | p95 | TTS per sentence (avg) |
+| --- | --- | --- | --- |
+| GPU (Colab) | 2.7 s | 7.4 s | 1.8 s |
+| CPU (laptop) | 4.0 s | 4.2 s | 1.4 s |
+
+Targets were p95 under 8 s for voice and under 2 s average for TTS, and both runs met them.
+The GPU run has a longer tail, most likely from the extra classification and expansion LLM calls it makes.
+
+**Speech recognition — 30 test clips** (`backend/tests/asr_results_*.json`)
+
+Keyword accuracy 90%, character error rate 9.5%, word error rate 38%, about 2.3 s per clip.
+
+## Running it
+
+Needs Python 3.11+, Node 18+, and a DeepSeek or Gemini API key.
 
 ```bash
+# backend
 cd backend
 python -m venv .venv
-.venv\Scripts\activate          # Windows
-# source .venv/bin/activate    # macOS / Linux
-
+.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env           # then fill in your API keys
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-```
-
-### Configuration
-
-Edit `backend/.env`:
-
-| Setting                | Default                    | Purpose                                  |
-| ---------------------- | -------------------------- | ---------------------------------------- |
-| `LLM_PROVIDER`         | `deepseek`                 | `deepseek`, `gemini`, or `auto`          |
-| `DEEPSEEK_API_KEY`     | —                          | Primary LLM                              |
-| `GEMINI_API_KEY`       | —                          | Fallback LLM + AgentRAG/QueryExpander    |
-| `WHISPER_USE_GPU`      | `true`                     | Run faster-whisper on GPU (auto-fallback)|
-| `VECTOR_STORE_TYPE`    | `chroma`                   | `chroma` or `faiss`                      |
-
-### Run
-
-```bash
-# Terminal 1 — backend
-cd backend
+copy .env.example .env          # macOS/Linux: cp; then add your API key
 uvicorn app.main:app --reload --port 8000
 
-# Terminal 2 — frontend
+# frontend (second terminal)
 cd frontend
-npm run dev     # http://localhost:5173
+npm install
+npm run dev                     # http://localhost:5173
 ```
 
-Open `http://localhost:5173`, upload a PDF, and ask a question by voice.
+A `docker-compose.yml` is included too, but I haven't re-tested it since the GPU/Colab changes.
 
----
+The first start downloads the embedding, reranker and Whisper models, so give it a few minutes.
+For a GPU, install the CUDA build of PyTorch
+(`pip install torch --index-url https://download.pytorch.org/whl/cu121`); the app picks it up by itself.
 
-## 2. GPU Setup
+Main settings in `backend/.env`:
 
-### 2.1 Requirements
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `LLM_PROVIDER` | `deepseek` | `deepseek`, `gemini` or `auto` |
+| `DEEPSEEK_API_KEY` / `GEMINI_API_KEY` | — | at least one is needed |
+| `VECTOR_STORE_TYPE` | `chroma` | `chroma` or `faiss` |
+| `WHISPER_MODEL_SIZE` | `base` | any faster-whisper size |
+| `TTS_PROVIDER` | `auto` | `auto` (Kokoro if CUDA), `kokoro` or `edge` |
+| `USE_ADVANCED_PIPELINE` | `true` | query classification + expansion, GPU only |
 
-- NVIDIA GPU with CUDA compute capability **7.5+** (RTX 20-series or newer recommended)
-- [NVIDIA Driver](https://www.nvidia.com/drivers)
-- [CUDA Toolkit 12.x](https://developer.nvidia.com/cuda-downloads)
-- Install **PyTorch with CUDA** (not the CPU build):
+To use a Colab backend, set `VITE_BACKEND_URL` in `frontend/.env` to your ngrok URL.
+
+Tests and evaluation, from `backend/` with the server running:
 
 ```bash
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+python tests/run_tests.py
+python tests/test_latency.py
+python tests/test_load.py
+python tests/test_asr.py
+python tests/evaluate_ragas.py
 ```
 
-> `pip install -r requirements.txt` installs a CPU-compatible torch by default. The command above replaces it with the CUDA build.
-
-### 2.2 Verify GPU is detected
-
-```bash
-python -c "import torch; print('CUDA available:', torch.cuda.is_available()); print('GPU:', torch.cuda.get_device_name(0))"
-```
-
-Expected output:
+## Project layout
 
 ```
-CUDA available: True
-GPU: NVIDIA GeForce RTX 3060
+backend/app/
+  api/v1/      REST routes: documents, chats (incl. streaming), sessions, audio, health
+  pipeline/    pdf_parser, embedder, vector_store, hybrid_search, reranker, llm,
+               agent_rag, query_expander, query_normalizer, hyde, query_cache, tts_engine
+  services/    document, chat, session and audio services
+  store/       session and file storage
+backend/tests/ latency, load, ASR and RAGAS evaluation + datasets and results
+frontend/src/  React components, hooks (recorder, TTS socket, sessions), API client
+docs/          architecture, design flow and development workflow write-ups (PDF)
+colab_backend.ipynb, GPU_testing_Final.ipynb   running and testing on Colab GPU
 ```
 
-If it prints `False`, the CPU fallback is used automatically — no code changes needed.
+More detail is in [ARCHITECTURE.md](ARCHITECTURE.md) and [docs/Voice_RAG_Architecture_v2.2.pdf](docs/Voice_RAG_Architecture_v2.2.pdf).
 
-### 2.3 What runs on the GPU
+## What I learned
 
-Everything auto-detects CUDA at startup and falls back to CPU if unavailable:
+- **Measure retrieval and generation separately.** A single "is the answer right" score hides where
+  things go wrong. RAGAS showed faithfulness at 0.90 but context recall at 0.41, which told me to work
+  on search and chunking, not on the prompt.
+- **Vector search alone misses exact terms.** Embeddings are good at meaning but blur strings like
+  error codes and temperature thresholds. Adding BM25 and merging the two lists with Reciprocal Rank
+  Fusion covers both, without having to tune weights between two different score scales.
+- **A reranker is worth its cost, but it is the slow step on CPU.** Scoring each query–chunk pair with
+  a cross-encoder is much more precise than vector distance, and it's the main reason the GPU version
+  is faster.
+- **Every extra LLM call adds latency.** Query classification and expansion help with comparison
+  questions, but they add round trips, so I only switch them on when there's a GPU to make up the time.
+- **Perceived speed is about when audio starts.** If the bot waits for the whole answer before
+  speaking, the user sits in silence for the full generation time. Streaming tokens, cutting sentences on the frontend and
+  synthesising each one right away gets audio playing early, but sentences can finish synthesising out
+  of order, so playback needs a sequence queue.
+- **Free API tiers shape the design.** Gemini's free tier allows 15 requests a minute, so there's a
+  rate limiter, automatic fallback to other Gemini models on quota errors, a query cache, and DeepSeek
+  as the main provider.
+- **Pick metrics that match the use.** Word error rate for ASR looked bad at 38%, but WER punishes every
+  small wording difference. What matters here is whether the important terms survive, and keyword
+  accuracy (90%) says more about whether the search will still find the right section.
+- **You don't need to own a GPU to test on one.** Colab plus ngrok let me run the full backend on a GPU
+  and point my local frontend at it.
 
-| Component                  | GPU behavior                                                    |
-| -------------------------- | --------------------------------------------------------------- |
-| **faster-whisper (ASR)**   | `WHISPER_USE_GPU=true` → CUDA + FP16; falls back to CPU + int8  |
-| **Embedder (bge-m3)**      | `torch.cuda.is_available()` → CUDA                              |
-| **Reranker (bge-reranker)**| `torch.cuda.is_available()` → CUDA                              |
-| **Advanced pipeline**      | AgentRAG + QueryExpander **only enabled when CUDA is available**|
+## Limitations
 
-Startup log confirms it:
-
-```
-[Pipeline] Advanced retrieval (AgentRAG + QueryExpander): ENABLED
-```
-
-### 2.4 Advanced pipeline (AgentRAG + QueryExpander)
-
-When a CUDA GPU is detected, the pipeline classifies each query with **AgentRAG** (simple_fact / complex_reasoning / comparison / summarization / out_of_scope) and rewrites it with **QueryExpander** before retrieval. This significantly improves **comparison** and **multi-hop** questions.
-
-- Auto-enabled when `torch.cuda.is_available()` is `True`
-- Disable manually in `backend/.env`:
-
-```
-USE_ADVANCED_PIPELINE=false
-```
-
-### 2.5 Cloud GPU (Google Colab + ngrok)
-
-You can also run the backend on a free Colab GPU and point the frontend at it:
-
-1. Open the Colab notebook with a **GPU runtime** (Runtime → Change runtime type → GPU)
-2. Install dependencies and start uvicorn
-3. Start ngrok: `ngrok http 8000` and copy the `https://...ngrok-free.dev` URL
-4. In `frontend/.env`:
-
-```
-VITE_BACKEND_URL=https://your-ngrok-url.ngrok-free.dev
-```
-
-5. Restart `npm run dev` in the frontend.
-
-### 2.6 Troubleshooting GPU
-
-| Problem                          | Fix                                                             |
-| -------------------------------- | --------------------------------------------------------------- |
-| `CUDA available: False`          | Install the CUDA PyTorch build (2.1) or update your driver      |
-| OOM (out of memory)              | Set `WHISPER_USE_GPU=false` or use a smaller Whisper model      |
-| Slow first inference              | First run downloads model weights — subsequent runs are cached  |
-| Advanced pipeline stays DISABLED  | Confirm `torch.cuda.is_available()` is `True`; check `.env` flag|
-
----
-
-## 3. Testing & Evaluation
-
-Run from `backend/` with the server up:
-
-```bash
-python tests/run_tests.py                                  # unit tests
-python tests/test_latency.py                               # latency (voice/TTS)
-python tests/test_load.py                                  # load/throughput
-python tests/evaluate_rag.py                               # RAG quality (CSV)
-python tests/evaluate_ragas.py                             # RAGAS metrics (30 questions)
-```
-
-RAGAS metrics: `faithfulness`, `context_recall`, `context_precision`, `answer_correctness`.
-
----
-
-## 4. Project Structure
-
-```
-backend/
-  app/
-    api/v1/          # REST + WebSocket routers
-    pipeline/        # embedding, hybrid search, reranker, LLM, AgentRAG, QueryExpander, HyDE
-    services/        # audio (whisper/edge-tts), chat, document, session
-    store/           # in-memory sessions, disk file store
-  tests/             # evaluation + latency/load suites
-  chroma_db/         # vector index (generated at runtime)
-frontend/
-  src/components/    # AppShell, ChatWindow, ChatInput, RecordButton, uploads, ...
-  vite.config.ts     # dev proxy /api + /ws → :8000
-docs/                # architecture documentation (PDF)
-```
-
-## 5. Security Notes
-
-- API keys live in `backend/.env` and `frontend/.env` (both `.gitignore`d)
-- Never commit real keys — use `.env.example` as a template
-- Sessions are in-memory and lost on backend restart
+- Sessions and the query cache live in memory and reset when the backend restarts.
+- Retrieval on multi-part and comparison questions is still weak (see recall above).
+- Built and tested around one document; large multi-document collections weren't tested.

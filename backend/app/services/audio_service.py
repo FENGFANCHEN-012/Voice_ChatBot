@@ -1,14 +1,18 @@
 import asyncio
-import io
 import os
 import re
-import hashlib
 import tempfile
 from pathlib import Path
 
-import edge_tts
 from faster_whisper import WhisperModel
+from loguru import logger
 from app.config import settings
+from app.pipeline.tts_engine import (
+    EdgeTTSProvider,
+    KokoroTTS,
+    cache_key,
+    create_tts_provider,
+)
 
 _ffmpeg_dirs = [
     str(Path(__file__).resolve().parent.parent.parent.parent / "venv" / "Lib" / "site-packages" / "imageio_ffmpeg" / "binaries"),
@@ -36,17 +40,14 @@ class TTSCache:
         self._cache: dict[str, bytes] = {}
         self._max_size = max_size
 
-    def _key(self, text: str) -> str:
-        return hashlib.md5(text.encode()).hexdigest()
+    def get(self, key: str) -> bytes | None:
+        return self._cache.get(key)
 
-    def get(self, text: str) -> bytes | None:
-        return self._cache.get(self._key(text))
-
-    def set(self, text: str, audio: bytes):
+    def set(self, key: str, audio: bytes):
         if len(self._cache) >= self._max_size:
             oldest = next(iter(self._cache))
             del self._cache[oldest]
-        self._cache[self._key(text)] = audio
+        self._cache[key] = audio
 
     def clear(self):
         self._cache.clear()
@@ -66,7 +67,25 @@ class AudioService:
             device = "cpu"
             compute = "int8"
         self.whisper = WhisperModel(model_size, device=device, compute_type=compute)
+
+        self.provider = create_tts_provider(settings)
+        logger.info(f"[TTS] Provider selected: {type(self.provider).__name__} (format={self.provider.format})")
+
+        # edge-tts kept as emergency fallback so the bot never goes silent
+        # if kokoro fails (e.g. GPU OOM mid-session)
+        if isinstance(self.provider, KokoroTTS):
+            self.fallback_provider = EdgeTTSProvider(
+                voice=settings.tts_voice, rate=settings.tts_rate, pitch=settings.tts_pitch
+            )
+        else:
+            self.fallback_provider = None
+
         self.tts_cache = TTSCache(max_size=100)
+        self._tts_lock = asyncio.Lock()
+
+    @property
+    def tts_format(self) -> str:
+        return self.provider.format
 
     async def transcribe(self, audio_data: bytes, filename: str = "audio.webm") -> dict:
         suffix = Path(filename).suffix or ".webm"
@@ -77,7 +96,12 @@ class AudioService:
 
         try:
             def _do_transcribe():
-                segments, info = self.whisper.transcribe(tmp_path, beam_size=1)
+                segments, info = self.whisper.transcribe(
+                    tmp_path,
+                    beam_size=1,
+                    vad_filter=True,
+                    condition_on_previous_text=False,
+                )
                 text = " ".join(seg.text for seg in segments)
                 return text.strip(), info.language, info.duration
 
@@ -86,60 +110,46 @@ class AudioService:
         finally:
             Path(tmp_path).unlink(missing_ok=True)
 
+    async def _synth_via(self, provider, text: str) -> bytes:
+        chunks = []
+        async for chunk in provider.synthesize_stream(text):
+            chunks.append(chunk)
+        return b"".join(chunks)
+
     async def synthesize(self, text: str) -> bytes:
+        """Full synthesis used by REST endpoint and WS stream."""
         text = clean_text_for_tts(text[:500])
         if not text:
             return b""
 
-        cached = self.tts_cache.get(text)
-        if cached:
+        key = cache_key(text, type(self.provider).__name__, getattr(self.provider, "voice", settings.tts_voice))
+        cached = self.tts_cache.get(key)
+        if cached is not None:
             return cached
 
-        voices_to_try = [settings.tts_voice, "en-US-AvaNeural", "en-US-ChristopherNeural"]
-        for v in voices_to_try:
+        async with self._tts_lock:
+            cached = self.tts_cache.get(key)
+            if cached is not None:
+                return cached
             try:
-                async def _stream_tts(voice_name: str):
-                    communicate = edge_tts.Communicate(text, voice=voice_name, rate=settings.tts_rate, pitch=settings.tts_pitch)
-                    buf = io.BytesIO()
-                    async for chunk in communicate.stream():
-                        if chunk["type"] == "audio":
-                            buf.write(chunk["data"])
-                    buf.seek(0)
-                    return buf.getvalue()
-
-                audio = await asyncio.wait_for(_stream_tts(v), timeout=12.0)
-                if audio and len(audio) > 100:
-                    self.tts_cache.set(text, audio)
-                    return audio
+                audio = await self._synth_via(self.provider, text)
+                if not audio:
+                    raise RuntimeError("empty synthesis output")
             except Exception as e:
-                from loguru import logger
-                logger.warning(f"[TTS] Edge-TTS voice {v} failed or timed out: {e}")
-                continue
-
-        return b""
-
+                logger.warning(f"[TTS] {type(self.provider).__name__} failed ({e}); trying edge-tts fallback")
+                if self.fallback_provider is None:
+                    return b""
+                try:
+                    audio = await self._synth_via(self.fallback_provider, text)
+                except Exception as e2:
+                    logger.warning(f"[TTS] edge-tts fallback also failed: {e2}")
+                    return b""
+            self.tts_cache.set(key, audio)
+            return audio
 
     async def synthesize_stream(self, text: str):
-        text = clean_text_for_tts(text[:500])
-        if not text:
+        audio = await self.synthesize(text)
+        if not audio:
             return
-
-        cached = self.tts_cache.get(text)
-        if cached:
-            yield cached
-            return
-
-        try:
-            communicate = edge_tts.Communicate(text, voice=settings.tts_voice, rate=settings.tts_rate, pitch=settings.tts_pitch)
-            buf = io.BytesIO()
-            async for chunk in communicate.stream():
-                if chunk["type"] == "audio":
-                    buf.write(chunk["data"])
-                    yield chunk["data"]
-            buf.seek(0)
-            audio = buf.getvalue()
-            if audio:
-                self.tts_cache.set(text, audio)
-        except Exception as e:
-            from loguru import logger
-            logger.warning(f"[TTS] Edge-TTS stream failed: {e}")
+        for i in range(0, len(audio), 8192):
+            yield audio[i : i + 8192]

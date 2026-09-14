@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     tts_voice: str = "en-US-AndrewMultilingualNeural"
     tts_rate: str = "+0%"
     tts_pitch: str = "+0Hz"
+    # TTS provider: "auto" (kokoro when CUDA available, else edge), "kokoro", or "edge"
+    tts_provider: str = "auto"
+    tts_kokoro_voice: str = "af_heart"
+    tts_kokoro_speed: float = 1.0
     
     # ------------------------------------------
     
@@ -39,9 +43,10 @@ class Settings(BaseSettings):
     max_file_size_mb: int = 40
     chunk_size: int = 800
     chunk_overlap: int = 150
-    retrieval_top_k: int = 25
-    retrieval_fetch_k: int = 35
-    reranker_top_k: int = 10
+    retrieval_top_k: int = 30
+    retrieval_fetch_k: int = 40
+    reranker_top_k: int = 15
+
 
 
     # Advanced retrieval (AgentRAG classification + QueryExpander). Only used

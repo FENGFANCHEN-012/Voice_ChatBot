@@ -1,0 +1,941 @@
+{
+  "summary": {
+    "total_questions": 30,
+    "overall_score": 0.531888321557644,
+    "metrics": {
+      "faithfulness": 0.8973695286195286,
+      "context_recall": 0.4055555555555556,
+      "context_precision": 0.5499999999466667,
+      "answer_correctness": 0.27462820210882516
+    }
+  },
+  "by_category": {
+    "fact_retrieval": {
+      "faithfulness": 0.8958333333333334,
+      "context_recall": 0.5,
+      "context_precision": 0.6249999999375,
+      "answer_correctness": 0.3
+    },
+    "multi_hop_reasoning": {
+      "faithfulness": 0.8769097222222222,
+      "context_recall": 0.25,
+      "context_precision": 0.56249999995,
+      "answer_correctness": 0.3168737060041408
+    },
+    "comparison": {
+      "faithfulness": 0.9166666666666666,
+      "context_recall": 0.3333333333333333,
+      "context_precision": 0.0,
+      "answer_correctness": 0.09677419354838711
+    },
+    "numerical": {
+      "faithfulness": 1.0,
+      "context_recall": 0.6666666666666666,
+      "context_precision": 0.6666666666,
+      "answer_correctness": 0.31746031746031744
+    },
+    "definition": {
+      "faithfulness": 0.7978282828282828,
+      "context_recall": 0.2333333333333333,
+      "context_precision": 0.59999999994,
+      "answer_correctness": 0.22175438596491226
+    }
+  },
+  "detailed_results": [
+    {
+      "id": 1,
+      "category": "fact_retrieval",
+      "question": "What error code is displayed when an employee experiences an SSO authentication lockout?",
+      "generated_answer": "I cannot find this information in the uploaded documents. The provided context does not specify an error code for SSO authentication lockouts. It references Directive ERR-SSO-4039 for out-of-band biometric verification during evacuations and mentions Chapter 7 (Directive BREACH-DATA-XBORDER-01) for cross-border data access violations, but no specific lockout error code is listed.",
+      "ground_truth": "ERR-SSO-4039",
+      "chunks": [
+        {
+          "content": "Q9.5: If a physical facility evacuation in Chapter 9 prevents access to hardware MFA tokens, how do employees \nlog in under Chapter 1? \nDuring physical facility evacuations, employees must utilize out-of-band mobile biometric verification via the Identity Self-\nService Portal as defined in Chapter 1 (Directive ERR-SSO-4039). \nQ9.4: How often are unannounced Disaster Recovery failover drills conducted across engineering teams? \nDR failover drills are conducted unannounced twice per fiscal year . All operational teams must achieve their \ndesignated RTO and RPO benchmarks during these drills. \n",
+          "page": 12,
+          "score": 0.21516869962215424
+        },
+        {
+          "content": "Q1.5: If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy \napplies? \nIf an SSO lockout involves unauthorized cross-border data requests, support staff must immediately initiate the Data \nBreach Isolation Protocol detailed in Chapter 7 (Directive BREACH-DATA-XBORDER-01).",
+          "page": 4,
+          "score": 0.12876659631729126
+        },
+        {
+          "content": "Q1.4: What occurs automatically when an unauthorized personal hot-spot or router is plugged into an office \nEthernet port? \nAutomated 802.1X Port Security triggers within 3 seconds, executing an administrative port shutdown and placing the \nphysical port into isolation quarantine. \nQ1.3: How should network engineers diagnose persistent packet loss exceeding 5% on corporate Wi-Fi SSIDs? \n",
+          "page": 3,
+          "score": 0.00025941236526705325
+        },
+        {
+          "content": "Q1.2: I forgot my MFA token and I cannot complete login. ",
+          "page": 3,
+          "score": 0.00013387548096943647
+        },
+        {
+          "content": "No. Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee \nmust complete out-of-band biometric verification or request a temporary hardware token issuance. \n",
+          "page": 3,
+          "score": 0.00012313704064581543
+        },
+        {
+          "content": "Execute diagnostic script net-diag-v4.sh on the access point. If 5GHz channel utilization exceeds 75%, trigger \ndynamic channel switching to non-overlapping channels (36, 44, 149, or 157). If packet loss persists, submit a hardware \ncheck under SOP-NET-882 . \n",
+          "page": 3,
+          "score": 5.0731916417134926e-05
+        }
+      ],
+      "num_chunks": 6
+    },
+    {
+      "id": 2,
+      "category": "fact_retrieval",
+      "question": "What cross-domain dependency is triggered by ERR-RADIUS-8021X?",
+      "generated_answer": "I cannot find this information in the uploaded documents. The provided context does not specify any cross-domain dependency for error code ERR-RADIUS-8021X. \n\nThe context references:\n- **ERR-SSO-4039** (Chapter 1) for out-of-band biometric verification during evacuations.\n- **BREACH-DATA-XBORDER-01** (Chapter 7) for cross-border data access violations linked to SSO lockouts.\n- **SOP-NET-882** for hardware checks on persistent Wi-Fi packet loss.\n\nNo mention of ERR-RADIUS-8021X or its cross-domain dependencies appears in the available material.",
+      "ground_truth": "DLP alert (See Chapter 10)",
+      "chunks": [
+        {
+          "content": "Q1.4: What occurs automatically when an unauthorized personal hot-spot or router is plugged into an office \nEthernet port? \nAutomated 802.1X Port Security triggers within 3 seconds, executing an administrative port shutdown and placing the \nphysical port into isolation quarantine. \nQ1.3: How should network engineers diagnose persistent packet loss exceeding 5% on corporate Wi-Fi SSIDs? \n",
+          "page": 3,
+          "score": 0.0044121574610471725
+        },
+        {
+          "content": "Execute diagnostic script net-diag-v4.sh on the access point. If 5GHz channel utilization exceeds 75%, trigger \ndynamic channel switching to non-overlapping channels (36, 44, 149, or 157). If packet loss persists, submit a hardware \ncheck under SOP-NET-882 . \n",
+          "page": 3,
+          "score": 9.590905392542481e-05
+        },
+        {
+          "content": "Q9.5: If a physical facility evacuation in Chapter 9 prevents access to hardware MFA tokens, how do employees \nlog in under Chapter 1? \nDuring physical facility evacuations, employees must utilize out-of-band mobile biometric verification via the Identity Self-\nService Portal as defined in Chapter 1 (Directive ERR-SSO-4039). \nQ9.4: How often are unannounced Disaster Recovery failover drills conducted across engineering teams? \nDR failover drills are conducted unannounced twice per fiscal year . All operational teams must achieve their \ndesignated RTO and RPO benchmarks during these drills. \n",
+          "page": 12,
+          "score": 9.375742956763133e-05
+        },
+        {
+          "content": "Q1.5: If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy \napplies? \nIf an SSO lockout involves unauthorized cross-border data requests, support staff must immediately initiate the Data \nBreach Isolation Protocol detailed in Chapter 7 (Directive BREACH-DATA-XBORDER-01).",
+          "page": 4,
+          "score": 4.138051735935733e-05
+        },
+        {
+          "content": "No. Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee \nmust complete out-of-band biometric verification or request a temporary hardware token issuance. \n",
+          "page": 3,
+          "score": 1.6324220268870704e-05
+        },
+        {
+          "content": "Q1.2: I forgot my MFA token and I cannot complete login. ",
+          "page": 3,
+          "score": 1.614675420569256e-05
+        }
+      ],
+      "num_chunks": 6
+    },
+    {
+      "id": 3,
+      "category": "fact_retrieval",
+      "question": "How many seconds does it take for automated 802.1X port shutdown?",
+      "generated_answer": "Based on the provided context, the automated 802.1X Port Security triggers within **3 seconds**, executing an administrative port shutdown and placing the physical port into isolation quarantine.",
+      "ground_truth": "3 seconds",
+      "chunks": [
+        {
+          "content": "Q1.4: What occurs automatically when an unauthorized personal hot-spot or router is plugged into an office \nEthernet port? \nAutomated 802.1X Port Security triggers within 3 seconds, executing an administrative port shutdown and placing the \nphysical port into isolation quarantine. \nQ1.3: How should network engineers diagnose persistent packet loss exceeding 5% on corporate Wi-Fi SSIDs? \n",
+          "page": 3,
+          "score": 0.9960874319076538
+        },
+        {
+          "content": "Q9.5: If a physical facility evacuation in Chapter 9 prevents access to hardware MFA tokens, how do employees \nlog in under Chapter 1? \nDuring physical facility evacuations, employees must utilize out-of-band mobile biometric verification via the Identity Self-\nService Portal as defined in Chapter 1 (Directive ERR-SSO-4039). \nQ9.4: How often are unannounced Disaster Recovery failover drills conducted across engineering teams? \nDR failover drills are conducted unannounced twice per fiscal year . All operational teams must achieve their \ndesignated RTO and RPO benchmarks during these drills. \n",
+          "page": 12,
+          "score": 0.00022458931198343635
+        },
+        {
+          "content": "Execute diagnostic script net-diag-v4.sh on the access point. If 5GHz channel utilization exceeds 75%, trigger \ndynamic channel switching to non-overlapping channels (36, 44, 149, or 157). If packet loss persists, submit a hardware \ncheck under SOP-NET-882 . \n",
+          "page": 3,
+          "score": 0.00012363743735477328
+        },
+        {
+          "content": "Q1.5: If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy \napplies? \nIf an SSO lockout involves unauthorized cross-border data requests, support staff must immediately initiate the Data \nBreach Isolation Protocol detailed in Chapter 7 (Directive BREACH-DATA-XBORDER-01).",
+          "page": 4,
+          "score": 6.8081688368693e-05
+        },
+        {
+          "content": "No. Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee \nmust complete out-of-band biometric verification or request a temporary hardware token issuance. \n",
+          "page": 3,
+          "score": 2.165109799534548e-05
+        },
+        {
+          "content": "Q1.2: I forgot my MFA token and I cannot complete login. ",
+          "page": 3,
+          "score": 1.62980559252901e-05
+        }
+      ],
+      "num_chunks": 6
+    },
+    {
+      "id": 4,
+      "category": "fact_retrieval",
+      "question": "What is the primary root cause of VPN-TIMEOUT-60?",
+      "generated_answer": "I cannot find this information in the uploaded documents. The provided context does not specify a root cause for error code **VPN-TIMEOUT-60**. \n\nThe context references:\n- **Chapter 2** for VPN disconnections every 10 minutes, which may overlap with local ISP blocking or security incident containment.\n- **Chapter 10 (Directive SEC-DLP-AI-99)** for automated endpoint quarantine verification during VPN issues.\n- **Chapter 9 (DR Runbook DR-FAILOVER-PROD)** for cloud database endpoint isolation during cyber containment.\n- **Directive SEC-AGENT-09** prohibiting disabling endpoint security agents.\n- **72-hour patch validation** and **7-day critical patch remediation VLAN** requirements.\n\nNo mention of VPN-TIMEOUT-60 or its root cause appears in the available material.",
+      "ground_truth": "IPsec Keep-Alive mismatch or UDP Port 500/4500 blocking by local ISP",
+      "chunks": [
+        {
+          "content": "Disconnect the device from Wi-Fi and Ethernet within 60 seconds to stop malware propagation. Notify the Cyber \nSecurity Incident Response Team (CSIRT) immediately via hotline EXT-9110 or SMS alert. CSIRT will execute \ncredential revocation under Directive SEC-REVOKE-01 . \nQ2.1: My VPN keeps disconnecting every 10 minutes while working remotely. ",
+          "page": 5,
+          "score": 0.004890888929367065
+        },
+        {
+          "content": "VPN connectivity issues often overlap with underlying local ISP blocking or security incident containment. If a VPN \ndisconnection is accompanied by unexpected endpoint security alerts, technicians must verify whether automated endpoint \nquarantine was triggered under Chapter 10 (Directive SEC-DLP-AI-99) before attempting tunnel re-configuration.",
+          "page": 5,
+          "score": 0.0013056315947324038
+        },
+        {
+          "content": "Q2.5: If a cybersecurity incident in Chapter 2 causes an intentional shutdown of cloud database endpoints, \nwhich DR runbook in Chapter 9 is triggered? \nIf cyber containment requires isolating primary cloud database endpoints, the IT Infrastructure team must execute DR \nRunbook DR-FAILOVER-PROD in Chapter 9 to switch active services to Secondary DR Site Beta. \nQ2.4: Can remote staff disable endpoint antivirus software to speed up heavy local software builds? \n",
+          "page": 5,
+          "score": 9.26605353015475e-05
+        },
+        {
+          "content": "No. Disabling endpoint security agent software is strictly prohibited under Enterprise Cyber Directive SEC-AGENT-09 . \nViolations result in automatic revocation of remote VPN access rights. \n",
+          "page": 5,
+          "score": 9.245426917914301e-05
+        },
+        {
+          "content": "Q2.3: How frequently must corporate remote laptops undergo security patch validation? \nLaptops must undergo automated patch validation every 72 hours. Devices failing to apply critical OS security patches \nwithin 7 days of release will be relegated to a remediation VLAN with restricted internal network access. \nQ2.2: What is the exact protocol if an employee accidentally clicks a link in a suspicious email and enters their \ncorporate credentials? \n",
+          "page": 5,
+          "score": 1.6488927940372378e-05
+        }
+      ],
+      "num_chunks": 5
+    },
+    {
+      "id": 5,
+      "category": "fact_retrieval",
+      "question": "What form must be submitted for a Payroll Correction Request?",
+      "generated_answer": "Based on the provided context, the form that must be submitted for a Payroll Correction Request is **Form HR-PAY-102**.\n\nThe context states: \"Submit a Payroll Correction Request via the Enterprise HR Portal within 5 business days of pay stub issuance, attaching Form HR-PAY-102 approved by your line manager.\"",
+      "ground_truth": "Form HR-PAY-102",
+      "chunks": [
+        {
+          "content": "Benefits activate on the 1st calendar day of the month following employment. If a hospital reports \"Active Coverage Not \nFound\", the employee must request a temporary Insurance Guarantee Letter (Form HR-MED-09) from the \nBenefits Specialist to guarantee corporate liability for valid claims. \nQ3.1: What is the mandatory workflow if an employee identifies a salary underpayment anomaly exceeding 5% \non their pay stub? \nSubmit a Payroll Correction Request via the Enterprise HR Portal within 5 business days of pay stub issuance, attaching \nForm HR-PAY-102 approved by your line manager. Payroll will audit biometric logs. ",
+          "page": 6,
+          "score": 0.985566258430481
+        },
+        {
+          "content": "Q3.5: How does employee termination in Chapter 3 impact data retention rules specified in Chapter 7? \nUpon employee termination, HR triggers Directive HR-OFFBOARD-01 , which notifies the Data Compliance team to begin \nthe 30-day personal data purging countdown detailed in Chapter 7 (Right-to-be-Forgotten Protocol). \nQ3.4: What documentation is required when taking extended medical leave exceeding 3 consecutive business \ndays? \nThe employee must submit a certified Medical Certificate (MC) from an accredited medical institution alongside Form \nHR-LEAVE-04 to the HR Portal within 48 hours of medical leave commencement. \nQ3.3: What is the maximum timeframe for an HR Ombudsman to initiate an inquiry into a workplace grievance? \nGrievance submissions must be reviewed by an impartial HR Ombudsman within 3 business days under the \nEnterprise Anti-Retaliation Charter (Policy HR-ETHICS-2026 ). \nQ3.2: How are medical insurance coverage activation delays handled for newly onboarded personnel? \n",
+          "page": 6,
+          "score": 0.002605750458315015
+        },
+        {
+          "content": "Q8.5: How do fraudulent expense claims in Chapter 8 interact with HR disciplinary procedures in Chapter 3? \nConfirmed financial fraud triggers immediate payroll wage garnishment for recovery and initiates formal disciplinary \nreview under Chapter 3 (HR Ombudsman Charter HR-ETHICS-2026). \n",
+          "page": 11,
+          "score": 0.0003583042707759887
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 6,
+      "category": "fact_retrieval",
+      "question": "What error code indicates cleanroom RFID access denial?",
+      "generated_answer": "Based on the provided context, the error code that indicates cleanroom RFID access denial is **CODE-ACCESS-DENIED-9**.\n\nThe context states: \"CODE-ACCESS-DENIED-9 indicates an expired Cleanroom Safety Training certification or missing RBAC permissions.\"",
+      "ground_truth": "CODE-ACCESS-DENIED-9",
+      "chunks": [
+        {
+          "content": "If temperature reaches 32 degrees Celsius, non-\nessential compute workloads must be shut down within 10 minutes. \nQ4.1: What must an employee do if their RFID badge is denied entry at a Class-100 Cleanroom door (Error \nCODE-ACCESS-DENIED-9)? \nCODE-ACCESS-DENIED-9 indicates an expired Cleanroom Safety Training certification or missing RBAC permissions. \nCheck LMS portal to ensure Module SAF-CR-201 was completed within the past 365 days. ",
+          "page": 7,
+          "score": 0.996052086353302
+        },
+        {
+          "content": "Procurement operations automatically transition to cloud-hosted \nERP fallback instances governed by the Purchase Order Hold policies in Chapter 5 (Directive HOLD-PROC-\nLIMIT-50K). \nQ4.4: Who has the authority to issue emergency badges for third-party facility contractors? \nOnly the Facility Operations Manager or On-Duty Security Director can authorize temporary vendor access badges via \nForm FAC-VENDOR-99 following background verification. \nQ4.3: What is the procedure if a water leak is detected near primary server racks (Alert WATER-LEAK-ZONE-4)? \nImmediately isolate the zone water shut-off valve, notify Facility Dispatch via EXT-4400 , and cover vulnerable hardware \nracks with anti-static protective tarps under Protocol FAC-HYD-12 . \nQ4.2: How should facility technicians react if a server room temperature alert triggers at 28 degrees Celsius? \nUpon receiving alert ALARM-TEMP-28C , verify if the primary CRAC unit compressor is running. If failed, activate backup \nIn-Row Cooling Unit #2 and set chilled water valve to 100% open. ",
+          "page": 7,
+          "score": 0.00016449447139166296
+        }
+      ],
+      "num_chunks": 2
+    },
+    {
+      "id": 7,
+      "category": "fact_retrieval",
+      "question": "What form is issued when rejecting non-conforming vendor shipments?",
+      "generated_answer": "Based on the provided context, the form issued when rejecting non-conforming vendor shipments is **Form PROC-REJ-88** (Goods Rejection Notice).\n\nThe context states: \"Warehouse staff must reject non-conforming shipments using Goods Rejection Notice (Form PROC-REJ-88).\"",
+      "ground_truth": "Form PROC-REJ-88",
+      "chunks": [
+        {
+          "content": "Q5.2: How should project leads handle vendor shipments delivered with damaged packaging or missing \nCertificates of Analysis (CoA)? \nWarehouse staff must reject non-conforming shipments using Goods Rejection Notice (Form PROC-REJ-88 ). Notify the \nvendor within 48 hours. ",
+          "page": 8,
+          "score": 0.9967321157455444
+        },
+        {
+          "content": "Q5.5: How does vendor invoice non-compliance in Chapter 5 cross-reference with the financial auditing rules in \nChapter 8? \nIf a vendor invoice contains disputed charges or lacks a valid CoA under Chapter 5, the Finance team must flag the \ntransaction in the accounting system as FIN-AUDIT-DISPUTED (See Chapter 8), freezing disbursements until resolved. \nQ5.4: What is the mandatory approval tier required for emergency software license purchases under $10,000 \nUSD? \nEmergency software purchases under $10,000 USD require written approval from the Department Vice President and IT \nAsset Manager via Fast-Track Procurement Form PROC-FAST-01 . \nQ5.3: What is the minimum score a vendor must maintain on the Procurement Quality Index (PQI) to avoid \nprobationary status? \n",
+          "page": 8,
+          "score": 0.020889637991786003
+        },
+        {
+          "content": "Replacements must include a fresh CoA, alongside a $500 USD penalty fee assessed under \nClause 14.2 of the Master Vendor Agreement. \nQ5.1: What is the required protocol when a Purchase Order (PO) exceeds $50,000 USD and is placed on \nAdministrative Hold? \nPOs exceeding $50,000 USD trigger HOLD-PROC-LIMIT-50K pending 3 independent competitive vendor quotes and a \nSigned Anti-Bribery Declaration (Form PROC-ETH-03 ). Upload quotes to ERP. ",
+          "page": 8,
+          "score": 0.009498454630374908
+        },
+        {
+          "content": "Vendors must maintain a PQI score of at least 80% . Vendors scoring below 80% are placed on probationary status and \nbarred from participating in new contract tenders. \n",
+          "page": 8,
+          "score": 0.000758311536628753
+        }
+      ],
+      "num_chunks": 4
+    },
+    {
+      "id": 8,
+      "category": "fact_retrieval",
+      "question": "What cross-domain dependency must be coordinated before server room power isolation?",
+      "generated_answer": "Based on the provided context, I cannot find specific information about a cross-domain dependency that must be coordinated before server room power isolation.\n\nThe context covers facility procedures for water leaks (Protocol FAC-HYD-12), temperature alerts (ALARM-TEMP-28C), and RFID access denial (CODE-ACCESS-DENIED-9), but it does not mention any procedure or requirement for server room power isolation.\n\nI cannot find this information in the uploaded documents.",
+      "ground_truth": "Graceful shutdown of Laravel background queue workers (See Chapter 6)",
+      "chunks": [
+        {
+          "content": "Procurement operations automatically transition to cloud-hosted \nERP fallback instances governed by the Purchase Order Hold policies in Chapter 5 (Directive HOLD-PROC-\nLIMIT-50K). \nQ4.4: Who has the authority to issue emergency badges for third-party facility contractors? \nOnly the Facility Operations Manager or On-Duty Security Director can authorize temporary vendor access badges via \nForm FAC-VENDOR-99 following background verification. \nQ4.3: What is the procedure if a water leak is detected near primary server racks (Alert WATER-LEAK-ZONE-4)? \nImmediately isolate the zone water shut-off valve, notify Facility Dispatch via EXT-4400 , and cover vulnerable hardware \nracks with anti-static protective tarps under Protocol FAC-HYD-12 . \nQ4.2: How should facility technicians react if a server room temperature alert triggers at 28 degrees Celsius? \nUpon receiving alert ALARM-TEMP-28C , verify if the primary CRAC unit compressor is running. If failed, activate backup \nIn-Row Cooling Unit #2 and set chilled water valve to 100% open. ",
+          "page": 7,
+          "score": 0.0007171868928708136
+        },
+        {
+          "content": "If temperature reaches 32 degrees Celsius, non-\nessential compute workloads must be shut down within 10 minutes. \nQ4.1: What must an employee do if their RFID badge is denied entry at a Class-100 Cleanroom door (Error \nCODE-ACCESS-DENIED-9)? \nCODE-ACCESS-DENIED-9 indicates an expired Cleanroom Safety Training certification or missing RBAC permissions. \nCheck LMS portal to ensure Module SAF-CR-201 was completed within the past 365 days. ",
+          "page": 7,
+          "score": 2.4159036911441945e-05
+        }
+      ],
+      "num_chunks": 2
+    },
+    {
+      "id": 9,
+      "category": "multi_hop_reasoning",
+      "question": "An employee has SSO lockout (ERR-SSO-4039) but their HR status shows inactive. What must support staff do before granting temporary access?",
+      "generated_answer": "Based on the provided context, I cannot find specific information about what support staff must do before granting temporary access when an employee has SSO lockout (ERR-SSO-4039) but their HR status shows inactive.\n\nThe context mentions ERR-SSO-4039 only in relation to out-of-band mobile biometric verification during physical facility evacuations (Q9.5), and it does not address the scenario of an inactive HR status combined with an SSO lockout.\n\nI cannot find this information in the uploaded documents.",
+      "ground_truth": "Support staff must cross-reference security authorizations against the HR Active Status Matrix in Chapter 3 before granting temporary access overrides. If HR status is inactive, they cannot grant access until HR status is resolved.",
+      "chunks": [
+        {
+          "content": "Q1.5: If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy \napplies? \nIf an SSO lockout involves unauthorized cross-border data requests, support staff must immediately initiate the Data \nBreach Isolation Protocol detailed in Chapter 7 (Directive BREACH-DATA-XBORDER-01).",
+          "page": 4,
+          "score": 0.6172013282775879
+        },
+        {
+          "content": "Q9.5: If a physical facility evacuation in Chapter 9 prevents access to hardware MFA tokens, how do employees \nlog in under Chapter 1? \nDuring physical facility evacuations, employees must utilize out-of-band mobile biometric verification via the Identity Self-\nService Portal as defined in Chapter 1 (Directive ERR-SSO-4039). \nQ9.4: How often are unannounced Disaster Recovery failover drills conducted across engineering teams? \nDR failover drills are conducted unannounced twice per fiscal year . All operational teams must achieve their \ndesignated RTO and RPO benchmarks during these drills. \n",
+          "page": 12,
+          "score": 0.03134910762310028
+        },
+        {
+          "content": "No. Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee \nmust complete out-of-band biometric verification or request a temporary hardware token issuance. \n",
+          "page": 3,
+          "score": 0.0024116761051118374
+        },
+        {
+          "content": "Execute diagnostic script net-diag-v4.sh on the access point. If 5GHz channel utilization exceeds 75%, trigger \ndynamic channel switching to non-overlapping channels (36, 44, 149, or 157). If packet loss persists, submit a hardware \ncheck under SOP-NET-882 . \n",
+          "page": 3,
+          "score": 3.0139002774376422e-05
+        },
+        {
+          "content": "Q1.4: What occurs automatically when an unauthorized personal hot-spot or router is plugged into an office \nEthernet port? \nAutomated 802.1X Port Security triggers within 3 seconds, executing an administrative port shutdown and placing the \nphysical port into isolation quarantine. \nQ1.3: How should network engineers diagnose persistent packet loss exceeding 5% on corporate Wi-Fi SSIDs? \n",
+          "page": 3,
+          "score": 2.9611543141072616e-05
+        },
+        {
+          "content": "Q1.2: I forgot my MFA token and I cannot complete login. ",
+          "page": 3,
+          "score": 1.670801611908246e-05
+        }
+      ],
+      "num_chunks": 6
+    },
+    {
+      "id": 10,
+      "category": "multi_hop_reasoning",
+      "question": "Server room temperature reaches 32°C and Laravel background queue workers are running. What is the complete shutdown sequence across Facility and Software teams?",
+      "generated_answer": "Based on the provided context, I can only provide the Facility team's required action. The context does not specify a shutdown sequence for Laravel background queue workers or any other software team procedures.\n\n**Facility Team Action:**\nWhen the server room temperature reaches 32 degrees Celsius, the context states: \"non-essential compute workloads must be shut down within 10 minutes.\"\n\n**Software Team Action:**\nI cannot find this information in the uploaded documents. The context does not provide any specific shutdown sequence for Laravel background queue workers or any other software-level procedures related to temperature alerts.",
+      "ground_truth": "1) Facility engineers receive ALARM-TEMP-28C alert. 2) If temperature reaches 32°C, they must coordinate with software engineering team. 3) Software team performs graceful shutdown of Laravel background queue workers (Chapter 6). 4) After workers are stopped, facility team initiates main power isolation.",
+      "chunks": [
+        {
+          "content": "Procurement operations automatically transition to cloud-hosted \nERP fallback instances governed by the Purchase Order Hold policies in Chapter 5 (Directive HOLD-PROC-\nLIMIT-50K). \nQ4.4: Who has the authority to issue emergency badges for third-party facility contractors? \nOnly the Facility Operations Manager or On-Duty Security Director can authorize temporary vendor access badges via \nForm FAC-VENDOR-99 following background verification. \nQ4.3: What is the procedure if a water leak is detected near primary server racks (Alert WATER-LEAK-ZONE-4)? \nImmediately isolate the zone water shut-off valve, notify Facility Dispatch via EXT-4400 , and cover vulnerable hardware \nracks with anti-static protective tarps under Protocol FAC-HYD-12 . \nQ4.2: How should facility technicians react if a server room temperature alert triggers at 28 degrees Celsius? \nUpon receiving alert ALARM-TEMP-28C , verify if the primary CRAC unit compressor is running. If failed, activate backup \nIn-Row Cooling Unit #2 and set chilled water valve to 100% open. ",
+          "page": 7,
+          "score": 0.03831800818443298
+        },
+        {
+          "content": "If temperature reaches 32 degrees Celsius, non-\nessential compute workloads must be shut down within 10 minutes. \nQ4.1: What must an employee do if their RFID badge is denied entry at a Class-100 Cleanroom door (Error \nCODE-ACCESS-DENIED-9)? \nCODE-ACCESS-DENIED-9 indicates an expired Cleanroom Safety Training certification or missing RBAC permissions. \nCheck LMS portal to ensure Module SAF-CR-201 was completed within the past 365 days. ",
+          "page": 7,
+          "score": 0.030149362981319427
+        }
+      ],
+      "num_chunks": 2
+    },
+    {
+      "id": 11,
+      "category": "multi_hop_reasoning",
+      "question": "An expense claim is missing receipts and the audit finds duplicate submissions. What procedures apply from Chapter 8?",
+      "generated_answer": "Based on the provided context, I can only provide partial information from Chapter 8. The context does not specify a procedure for expense claims missing receipts.\n\n**Procedures from Chapter 8 that apply:**\n\n1. **Duplicate Submissions (Flag FIN-AUDIT-DUP):** Duplicate submissions trigger an immediate financial hold. Internal Audit conducts a review within **5 business days**.\n\n2. **International Travel Meals (Schedule FIN-TRAVEL-INTL):** If the expense claim involves international travel meals, the maximum allowable daily per diem rate is capped at **$85 USD per day**, requiring itemized expense logging in the Enterprise Expense Portal.\n\n3. **Cash Advances (Q8.4):** If the claim relates to corporate travel, all unspent cash advances and travel receipts must be fully reconciled in the portal within **10 business days** of returning from approved business travel.\n\n**Missing Information:** I cannot find this information in the uploaded documents regarding the specific procedure for an expense claim that is missing receipts. The context does not address this scenario.",
+      "ground_truth": "1) Missing receipts: Claim rejected for >$25, need duplicate invoice or Missing Receipt Affidavit (Form FIN-EXP-05) signed by VP (max 2/year). 2) Duplicates: Both claims on financial hold (Flag FIN-AUDIT-DUP), Internal Audit reviews within 5 business days.",
+      "chunks": [
+        {
+          "content": "Duplicate submissions trigger an immediate financial hold under Flag FIN-AUDIT-DUP . Internal Audit conducts a review \nwithin 5 business days. ",
+          "page": 11,
+          "score": 0.19934026896953583
+        },
+        {
+          "content": "Q8.3: What is the maximum allowable daily per diem rate for international business travel meals? \nThe standard international per diem rate for meals is capped at $85 USD per day , requiring itemized expense logging \nin the Enterprise Expense Portal under Schedule FIN-TRAVEL-INTL . \nQ8.2: What is the escalation workflow when an automated audit identifies duplicate expense submissions \nacross different employees? \n",
+          "page": 11,
+          "score": 0.05782086029648781
+        },
+        {
+          "content": "Q8.4: How quickly must unspent cash advances be reconciled following the completion of corporate travel? \nAll unspent cash advances and travel receipts must be fully reconciled in the portal within 10 business days of \nreturning from approved business travel. \n",
+          "page": 11,
+          "score": 0.0007984419353306293
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 12,
+      "category": "multi_hop_reasoning",
+      "question": "During a building fire alarm, the primary data center experiences total power blackout. What are the emergency procedures across both scenarios?",
+      "generated_answer": "Based on the provided context, I can provide the emergency procedures for both scenarios as they are described in the document.\n\n**1. Building Fire Alarm (Alarm EVAC-FIRE-01):**\nUpon activation of EVAC-FIRE-01, the mandatory protocol is to:\n- Cease work immediately.\n- Secure chemical containers if safe.\n- Proceed to Assembly Area Delta via stairwells.\n- Note: Elevators are automatically disabled.\n\n**2. Primary Data Center Total Power Blackout (Q9.2):**\nIf primary utility power fails and UPS battery capacity drops below 20% without generator pickup, the Infrastructure Lead must:\n- Execute DR Runbook **DR-FAILOVER-PROD**.\n- Global DNS updates via automated BGP route injection redirect client traffic to DR Site Beta within **180 seconds** (RTO < 5 minutes).\n\n**Note on Cross-Domain Dependency:** The context does not specify a combined or sequenced procedure for when both events occur simultaneously (e.g., a fire alarm during a power blackout). The two procedures are provided as separate, standalone protocols.",
+      "ground_truth": "1) Fire evacuation: Cease work, secure chemicals, proceed to Assembly Area Delta via stairwells, Floor Wardens headcount within 10 min. 2) DR failover: If UPS <20%, execute DR-FAILOVER-PROD, update DNS via BGP within 180 sec, achieve RTO <5 min.",
+      "chunks": [
+        {
+          "content": "Q9.3: What is the target Recovery Point Objective (RPO) for critical customer SQL database transaction logs? \nThe mandatory RPO for core relational database transaction logs is configured to 15 seconds via continuous WAL log \nshipping to Secondary DR Storage Buckets. \nQ9.2: How is a Primary Data Center failover to Secondary DR Site executed during a total power blackout? \nIf primary utility power fails and UPS battery capacity drops below 20% without generator pickup, Infrastructure Lead \nexecutes DR Runbook DR-FAILOVER-PROD . Global DNS updates via automated BGP route injection redirect client \ntraffic to DR Site Beta within 180 seconds (RTO < 5 minutes). \n",
+          "page": 12,
+          "score": 0.11653664708137512
+        },
+        {
+          "content": "Q9.1: What is the mandatory protocol when a facility building-wide fire alarm sounds (Alarm EVAC-FIRE-01)? \n",
+          "page": 12,
+          "score": 0.008035654202103615
+        },
+        {
+          "content": "Upon activation of EVAC-FIRE-01 , cease work immediately, secure chemical containers if safe, and proceed to \nAssembly Area Delta via stairwells. Elevators are automatically disabled. ",
+          "page": 12,
+          "score": 0.0009397732792422175
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 13,
+      "category": "multi_hop_reasoning",
+      "question": "A facility technician finds tailgating at a cleanroom and receives a vendor delivery with missing CoA. What actions are required?",
+      "generated_answer": "Based on the provided context, I can only provide the action required for the vendor delivery with a missing CoA. The context does not specify a procedure for tailgating at a cleanroom.\n\n**Vendor Delivery with Missing CoA:**\nI cannot find this information in the uploaded documents. The context does not address procedures for vendor deliveries or Certificates of Analysis (CoA).\n\n**Tailgating at a Cleanroom:**\nI cannot find this information in the uploaded documents. The context does not specify a procedure for tailgating incidents.\n\n**Note on Related Cleanroom Access:** The context does mention cleanroom access control in Q4.1 (Error CODE-ACCESS-DENIED-9), which covers expired training or missing RBAC permissions, but this does not address tailgating or vendor delivery procedures.",
+      "ground_truth": "1) Tailgating: Results in immediate badge suspension for 14 days. 2) Missing CoA: Reject shipment with Form PROC-REJ-88, notify vendor within 48 hours, require fresh CoA stamped by accredited lab + $500 penalty under Clause 14.2.",
+      "chunks": [
+        {
+          "content": "If temperature reaches 32 degrees Celsius, non-\nessential compute workloads must be shut down within 10 minutes. \nQ4.1: What must an employee do if their RFID badge is denied entry at a Class-100 Cleanroom door (Error \nCODE-ACCESS-DENIED-9)? \nCODE-ACCESS-DENIED-9 indicates an expired Cleanroom Safety Training certification or missing RBAC permissions. \nCheck LMS portal to ensure Module SAF-CR-201 was completed within the past 365 days. ",
+          "page": 7,
+          "score": 0.002743602031841874
+        },
+        {
+          "content": "Procurement operations automatically transition to cloud-hosted \nERP fallback instances governed by the Purchase Order Hold policies in Chapter 5 (Directive HOLD-PROC-\nLIMIT-50K). \nQ4.4: Who has the authority to issue emergency badges for third-party facility contractors? \nOnly the Facility Operations Manager or On-Duty Security Director can authorize temporary vendor access badges via \nForm FAC-VENDOR-99 following background verification. \nQ4.3: What is the procedure if a water leak is detected near primary server racks (Alert WATER-LEAK-ZONE-4)? \nImmediately isolate the zone water shut-off valve, notify Facility Dispatch via EXT-4400 , and cover vulnerable hardware \nracks with anti-static protective tarps under Protocol FAC-HYD-12 . \nQ4.2: How should facility technicians react if a server room temperature alert triggers at 28 degrees Celsius? \nUpon receiving alert ALARM-TEMP-28C , verify if the primary CRAC unit compressor is running. If failed, activate backup \nIn-Row Cooling Unit #2 and set chilled water valve to 100% open. ",
+          "page": 7,
+          "score": 0.002570655196905136
+        }
+      ],
+      "num_chunks": 2
+    },
+    {
+      "id": 14,
+      "category": "multi_hop_reasoning",
+      "question": "A developer pushes code that fails CI/CD coverage gates and has a legacy database foreign key issue. What steps must be taken?",
+      "generated_answer": "Based on the provided context, here are the steps that must be taken for a developer who pushes code that fails CI/CD coverage gates and has a legacy database foreign key issue:\n\n**1. Address the CI/CD Coverage Gate Failure (Q6.3):**\n- The code will be **automatically rejected** by the pipeline because all software releases must maintain automated unit test code coverage of **at least 85%**, verified by PHPUnit and Jest suites.\n\n**2. Address the Legacy Database Foreign Key Issue (Q6.1):**\n- The error **LARAVEL-MIGRATE-FAIL** occurs when a migration conflicts with existing legacy column definitions or unindexed foreign keys.\n- **Step 1:** Inspect `storage/logs/laravel.log` to identify the conflict.\n- **Step 2:** Execute `php artisan migrate:rollback --step=1` in the staging environment.\n- **Step 3:** Verify that foreign key constraints utilize `ON DELETE CASCADE`.\n\n**3. Important Restriction (Q6.1 context):**\n- **Do NOT** force production migrations using `--force` without Lead Architect sign-off.\n\n**Note on Cross-Domain Dependency:** The context does not specify a combined or sequenced procedure for when both the coverage gate failure and the migration error occur simultaneously. The two procedures are provided as separate, standalone protocols.",
+      "ground_truth": "1) Coverage: Code coverage must be above 85% verified by PHPUnit and Jest suites, failing gates are rejected automatically. 2) Foreign key: Verify all legacy constraints use ON DELETE CASCADE or explicit nullification rules. Production migrations must not use --force without Lead Database Architect sign-off.",
+      "chunks": [
+        {
+          "content": "Q6.1: What is the troubleshooting workflow when a CI/CD pipeline fails during database migration with Error \nLARAVEL-MIGRATE-FAIL? \nLARAVEL-MIGRATE-FAIL occurs when a migration conflicts with existing legacy column definitions or unindexed foreign \nkeys. Inspect storage/logs/laravel.log , execute php artisan migrate:rollback --step=1 in staging, and \nverify foreign key constraints utilize ON DELETE CASCADE . ",
+          "page": 9,
+          "score": 0.8214707374572754
+        },
+        {
+          "content": "Table of Contents \n \nChapter 1 \nIT Infrastructure, Network Diagnostics & Identity Auth Lockouts \nChapter 2 \nRemote Work, VPN Tunnels, MTU Limits & Cyber Incident Escalation \nChapter 3 \nHR Protocols, Payroll Underpayment & Employee Benefits Escalation \nChapter 4 \nFacility Management, Cleanroom RFID Security & HVAC Server Alarms \n \nChapter 5 \nProcurement Controls, Order Holds & Master Vendor Disputes \nChapter 6 \nSoftware CI/CD Pipeline Failures, Laravel Migration & React Hydration \nChapter 7 \nData Privacy, Cross-Border Transfers & Right-to-be-Forgotten Purges \nChapter 8 \nFinancial Auditing, Expense Receipt Missing & Fraud Escalations \nChapter 9 \nCrisis Management, Building Evacuation & Secondary DR Failover \nChapter 10 \nEnterprise AI Governance, Clipboard DLP & RAG Grounding Audits",
+          "page": 2,
+          "score": 0.016082510352134705
+        },
+        {
+          "content": "Wrap client-only side \neffects inside useEffect() hooks. \nQ6.3: What is the mandatory automated unit test code coverage percentage required before merging code into \nthe production branch? \nAll software releases must maintain automated unit test code coverage of at least 85% verified by PHPUnit and Jest \nsuites. Pipelines failing this gate are automatically rejected. \n",
+          "page": 9,
+          "score": 0.012329061515629292
+        },
+        {
+          "content": "Never force production migrations using --force without \nLead Architect sign-off. \nQ6.2: How should frontend engineers resolve React state hydration mismatches during Server-Side Rendering \n(SSR)? \nIf React throws Hydration Failed Error #418 , server-rendered HTML differs from client-side initial render tree. \nCheck for browser-only globals (like window or localStorage ) accessed during initial render. ",
+          "page": 9,
+          "score": 6.979944737395272e-05
+        },
+        {
+          "content": "Q6.4: How should API rate-limiting errors (HTTP 429 Too Many Requests) between React frontends and Laravel \nbackends be mitigated? \nConfigure Axios/Fetch clients to implement exponential backoff with jitter and verify that Laravel Redis throttle \nmiddleware ( throttle:api ) limits are set to at least 600 requests per minute for authenticated user tokens. \nQ6.5: What cross-domain protocol governs software engineers attempting to test live production customer data \nin staging environments? \n",
+          "page": 9,
+          "score": 5.2045837946934626e-05
+        }
+      ],
+      "num_chunks": 5
+    },
+    {
+      "id": 15,
+      "category": "multi_hop_reasoning",
+      "question": "Voice-RAG returns low confidence and an AI ethics audit is pending. What should the user do?",
+      "generated_answer": "Based on the provided context, here is the guidance for the two scenarios you mentioned:\n\n**1. Voice-RAG Returns Low Confidence (Q10.2):**\nIf the enterprise Voice-RAG system returns an answer stating \"I am unable to answer based on the provided document corpus,\" this output indicates that retrieved vector chunks failed the similarity threshold (Cosine Score < 0.72), successfully preventing a hallucination. The context does not specify any further user action required in this scenario.\n\n**2. AI Ethics Audit is Pending:**\nI cannot find this information in the uploaded documents. The context does not specify a procedure for pending AI ethics audits.\n\n**Note on Cross-Domain Dependency:** The context does not specify a combined or sequenced procedure for when both a low-confidence Voice-RAG response and a pending AI ethics audit occur simultaneously. The two items are addressed as separate, standalone protocols.",
+      "ground_truth": "1) Voice-RAG: Rephrase query with specific terms, document IDs, or SOP codes. Verify document is ingested. 2) AI audit: All AI tools undergo quarterly bias, accuracy, and safety audits by AI Ethics Governance Board. AI-generated code must pass peer review before production.",
+      "chunks": [
+        {
+          "content": "Q10.5: If an AI tool inadvertently generates an output containing unmasked customer PII, which cross-domain \nbreach protocol must be logged? \nInadvertent generation of unmasked PII triggers immediate logging of a Data Privacy Breach under Chapter 7 (Directive \nPRIV-REQ-07), requiring notification to the Data Protection Officer within 2 hours. \nQ10.4: Are developers allowed to use AI-generated code snippets in production software repositories? \nYes, provided that all AI-generated code snippets undergo mandatory peer code review, pass static security scanning \n( SonarQube ), and maintain unit test coverage above 85% as mandated in Chapter 6. \nQ10.3: What is the minimum Faithfulness (Grounding) score an enterprise AI pipeline must maintain during \nquarterly evaluation audits? \nAI pipelines must achieve a minimum Faithfulness Score of 0.98 (98% grounded claims) and Context Precision of \n0.92 evaluated via Ragas framework tools under Standard EVAL-METRIC-2026 . \nQ10.2: How should users respond if the enterprise Voice-RAG system returns an answer stating \"I am unable to \nanswer based on the provided document corpus\"? \nThis output indicates that retrieved vector chunks failed the similarity threshold ( Cosine Score < 0.72 ), successfully \npreventing a hallucination. ",
+          "page": 13,
+          "score": 0.5762221217155457
+        },
+        {
+          "content": "Software engineers building AI integration \npipelines must ensure prompt templates comply with the enterprise AI governance directives in Chapter 10.",
+          "page": 9,
+          "score": 9.34282797970809e-05
+        },
+        {
+          "content": "Q10.1: What is the policy regarding pasting proprietary software code or customer contracts into commercial, \nunapproved public AI chatbots? \nPasting unencrypted code, financial metrics, or customer PII into public AI services is strictly prohibited under Policy AI-\nGOV-01 . Automated DLP agents monitor endpoint clipboard activity. ",
+          "page": 13,
+          "score": 5.267793676466681e-05
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 16,
+      "category": "multi_hop_reasoning",
+      "question": "An employee has SSO lockout, VPN timeout, and needs to report a security incident. What is the complete workflow?",
+      "generated_answer": "Based on the provided context, I cannot provide a complete workflow that combines all three of these items (SSO lockout, VPN timeout, and security incident reporting). The context addresses these topics only in separate, standalone protocols.\n\nHere is the specific guidance available for each item:\n\n**1. SSO Lockout (Chapter 1):**\n- If the SSO lockout is linked to a **cross-border data access violation**, support staff must immediately initiate the **Data Breach Isolation Protocol** detailed in **Chapter 7 (Directive BREACH-DATA-XBORDER-01)** (Q1.5).\n- If the SSO lockout occurs during a **physical facility evacuation** that prevents access to hardware MFA tokens, employees must utilize **out-of-band mobile biometric verification** via the Identity Self-Service Portal as defined in **Chapter 1 (Directive ERR-SSO-4039)** (Q9.5).\n- **Important restriction:** Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee must complete out-of-band biometric verification or request a temporary hardware token issuance.\n\n**2. VPN Timeout:**\nI cannot find this information in the uploaded documents. The context does not specify a procedure for VPN timeouts.\n\n**3. Security Incident Reporting:**\nI cannot find this information in the uploaded documents. The context does not specify a general security incident reporting procedure.\n\n**Note on Cross-Domain Dependency:** The context does not specify a combined or sequenced workflow for when an SSO lockout, VPN timeout, and security incident reporting occur simultaneously. The procedures above are provided as separate, standalone protocols.",
+      "ground_truth": "1) SSO: Verify token sync, access portal via cellular, biometric verification, MFA reset. If >15 min, call Service Desk with P3-IDENTITY. 2) VPN: Toggle to SSL/TLS, adjust MTU to 1360. 3) Security: Disconnect networks within 60 sec, notify CSIRT via EXT-9110.",
+      "chunks": [
+        {
+          "content": "Q1.5: If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy \napplies? \nIf an SSO lockout involves unauthorized cross-border data requests, support staff must immediately initiate the Data \nBreach Isolation Protocol detailed in Chapter 7 (Directive BREACH-DATA-XBORDER-01).",
+          "page": 4,
+          "score": 0.02800195850431919
+        },
+        {
+          "content": "Q9.5: If a physical facility evacuation in Chapter 9 prevents access to hardware MFA tokens, how do employees \nlog in under Chapter 1? \nDuring physical facility evacuations, employees must utilize out-of-band mobile biometric verification via the Identity Self-\nService Portal as defined in Chapter 1 (Directive ERR-SSO-4039). \nQ9.4: How often are unannounced Disaster Recovery failover drills conducted across engineering teams? \nDR failover drills are conducted unannounced twice per fiscal year . All operational teams must achieve their \ndesignated RTO and RPO benchmarks during these drills. \n",
+          "page": 12,
+          "score": 0.0015211051795631647
+        },
+        {
+          "content": "No. Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee \nmust complete out-of-band biometric verification or request a temporary hardware token issuance. \n",
+          "page": 3,
+          "score": 0.0005165228503756225
+        },
+        {
+          "content": "Q1.4: What occurs automatically when an unauthorized personal hot-spot or router is plugged into an office \nEthernet port? \nAutomated 802.1X Port Security triggers within 3 seconds, executing an administrative port shutdown and placing the \nphysical port into isolation quarantine. \nQ1.3: How should network engineers diagnose persistent packet loss exceeding 5% on corporate Wi-Fi SSIDs? \n",
+          "page": 3,
+          "score": 6.313032645266503e-05
+        },
+        {
+          "content": "Execute diagnostic script net-diag-v4.sh on the access point. If 5GHz channel utilization exceeds 75%, trigger \ndynamic channel switching to non-overlapping channels (36, 44, 149, or 157). If packet loss persists, submit a hardware \ncheck under SOP-NET-882 . \n",
+          "page": 3,
+          "score": 3.201553045073524e-05
+        },
+        {
+          "content": "Q1.2: I forgot my MFA token and I cannot complete login. ",
+          "page": 3,
+          "score": 1.633499596209731e-05
+        }
+      ],
+      "num_chunks": 6
+    },
+    {
+      "id": 17,
+      "category": "comparison",
+      "question": "How do the cross-domain dependencies differ between ERR-SSO-4039 and ERR-RADIUS-8021X?",
+      "generated_answer": "Based on the provided context, I can only provide details for **ERR-SSO-4039**. I cannot find information on **ERR-RADIUS-8021X** in the uploaded documents.\n\nHere is the specific cross-domain dependency for **ERR-SSO-4039**:\n\n- **Primary Directive:** ERR-SSO-4039 (Chapter 1) governs SSO lockout and MFA login procedures.\n- **Cross-Domain Dependency 1 (Chapter 7):** If the SSO lockout is linked to a **cross-border data access violation**, support staff must immediately initiate the **Data Breach Isolation Protocol** detailed in **Chapter 7 (Directive BREACH-DATA-XBORDER-01)** (Q1.5).\n- **Cross-Domain Dependency 2 (Chapter 9):** If a **physical facility evacuation** (Chapter 9) prevents access to hardware MFA tokens, employees must utilize **out-of-band mobile biometric verification** via the Identity Self-Service Portal as defined in Chapter 1 (Directive ERR-SSO-4039) (Q9.5).\n\n**Regarding ERR-RADIUS-8021X:** I cannot find this information in the uploaded documents. The context references \"Automated 802.1X Port Security\" (Q1.4) but does not provide a directive code or cross-domain dependency for it.\n\n**Note on Comparison:** Since the context does not contain information on ERR-RADIUS-8021X, I cannot compare the cross-domain dependencies between the two directives. The available information only covers ERR-SSO-4039's dependencies on Chapters 7 and 9.",
+      "ground_truth": "ERR-SSO-4039: Requires active HR status (Chapter 3) - identity dependency. ERR-RADIUS-8021X: Triggers DLP alert (Chapter 10) - security dependency. One requires HR validation, the other triggers security response.",
+      "chunks": [
+        {
+          "content": "Q9.5: If a physical facility evacuation in Chapter 9 prevents access to hardware MFA tokens, how do employees \nlog in under Chapter 1? \nDuring physical facility evacuations, employees must utilize out-of-band mobile biometric verification via the Identity Self-\nService Portal as defined in Chapter 1 (Directive ERR-SSO-4039). \nQ9.4: How often are unannounced Disaster Recovery failover drills conducted across engineering teams? \nDR failover drills are conducted unannounced twice per fiscal year . All operational teams must achieve their \ndesignated RTO and RPO benchmarks during these drills. \n",
+          "page": 12,
+          "score": 0.03626178577542305
+        },
+        {
+          "content": "Q1.5: If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy \napplies? \nIf an SSO lockout involves unauthorized cross-border data requests, support staff must immediately initiate the Data \nBreach Isolation Protocol detailed in Chapter 7 (Directive BREACH-DATA-XBORDER-01).",
+          "page": 4,
+          "score": 0.00012016054824925959
+        },
+        {
+          "content": "Q1.4: What occurs automatically when an unauthorized personal hot-spot or router is plugged into an office \nEthernet port? \nAutomated 802.1X Port Security triggers within 3 seconds, executing an administrative port shutdown and placing the \nphysical port into isolation quarantine. \nQ1.3: How should network engineers diagnose persistent packet loss exceeding 5% on corporate Wi-Fi SSIDs? \n",
+          "page": 3,
+          "score": 0.00010607293370412663
+        },
+        {
+          "content": "Execute diagnostic script net-diag-v4.sh on the access point. If 5GHz channel utilization exceeds 75%, trigger \ndynamic channel switching to non-overlapping channels (36, 44, 149, or 157). If packet loss persists, submit a hardware \ncheck under SOP-NET-882 . \n",
+          "page": 3,
+          "score": 1.816484655137174e-05
+        },
+        {
+          "content": "No. Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee \nmust complete out-of-band biometric verification or request a temporary hardware token issuance. \n",
+          "page": 3,
+          "score": 1.6193818737519905e-05
+        },
+        {
+          "content": "Q1.2: I forgot my MFA token and I cannot complete login. ",
+          "page": 3,
+          "score": 1.6034751752158627e-05
+        }
+      ],
+      "num_chunks": 6
+    },
+    {
+      "id": 18,
+      "category": "comparison",
+      "question": "What is the difference between facility emergency and DR failover procedures?",
+      "generated_answer": "Based on the provided context, I can outline the specific facility emergency procedures, but I cannot find information on DR (Disaster Recovery) failover procedures in the uploaded documents. Therefore, I cannot provide a complete comparison.\n\nHere is the specific guidance available for **facility emergency procedures**:\n\n**1. Water Leak Near Server Racks (Alert WATER-LEAK-ZONE-4) — Q4.3:**\n- Immediately isolate the zone water shut-off valve.\n- Notify Facility Dispatch via EXT-4400.\n- Cover vulnerable hardware racks with anti-static protective tarps under **Protocol FAC-HYD-12**.\n\n**2. Server Room Temperature Alert at 28°C (ALARM-TEMP-28C) — Q4.2:**\n- Verify if the primary CRAC unit compressor is running.\n- If failed, activate backup In-Row Cooling Unit #2 and set chilled water valve to 100% open.\n- **Critical threshold:** If temperature reaches 32°C, non-essential compute workloads must be shut down within 10 minutes.\n\n**3. RFID Badge Denied at Class-100 Cleanroom Door (CODE-ACCESS-DENIED-9) — Q4.1:**\n- This indicates an expired Cleanroom Safety Training certification or missing RBAC permissions.\n- Check LMS portal to ensure Module SAF-CR-201 was completed within the past 365 days.\n\n**Regarding DR Failover Procedures:** I cannot find this information in the uploaded documents. The context mentions that \"Procurement operations automatically transition to cloud-hosted ERP fallback instances governed by the Purchase Order Hold policies in Chapter 5 (Directive HOLD-PROC-LIMIT-50K),\" but this is a procurement-specific fallback, not a general DR failover procedure.\n\n**Note on Comparison:** Since the context does not contain a general DR failover procedure, I cannot compare facility emergency procedures against DR failover procedures. The available information only covers the facility emergency protocols listed above.",
+      "ground_truth": "Facility emergency: Physical safety first, evacuate to Assembly Area Delta, headcount within 10 min. DR failover: Digital recovery, execute DR-FAILOVER-PROD, update DNS via BGP within 180 sec, achieve RTO <5 min.",
+      "chunks": [
+        {
+          "content": "Procurement operations automatically transition to cloud-hosted \nERP fallback instances governed by the Purchase Order Hold policies in Chapter 5 (Directive HOLD-PROC-\nLIMIT-50K). \nQ4.4: Who has the authority to issue emergency badges for third-party facility contractors? \nOnly the Facility Operations Manager or On-Duty Security Director can authorize temporary vendor access badges via \nForm FAC-VENDOR-99 following background verification. \nQ4.3: What is the procedure if a water leak is detected near primary server racks (Alert WATER-LEAK-ZONE-4)? \nImmediately isolate the zone water shut-off valve, notify Facility Dispatch via EXT-4400 , and cover vulnerable hardware \nracks with anti-static protective tarps under Protocol FAC-HYD-12 . \nQ4.2: How should facility technicians react if a server room temperature alert triggers at 28 degrees Celsius? \nUpon receiving alert ALARM-TEMP-28C , verify if the primary CRAC unit compressor is running. If failed, activate backup \nIn-Row Cooling Unit #2 and set chilled water valve to 100% open. ",
+          "page": 7,
+          "score": 0.0011638224823400378
+        },
+        {
+          "content": "If temperature reaches 32 degrees Celsius, non-\nessential compute workloads must be shut down within 10 minutes. \nQ4.1: What must an employee do if their RFID badge is denied entry at a Class-100 Cleanroom door (Error \nCODE-ACCESS-DENIED-9)? \nCODE-ACCESS-DENIED-9 indicates an expired Cleanroom Safety Training certification or missing RBAC permissions. \nCheck LMS portal to ensure Module SAF-CR-201 was completed within the past 365 days. ",
+          "page": 7,
+          "score": 1.838955176935997e-05
+        }
+      ],
+      "num_chunks": 2
+    },
+    {
+      "id": 19,
+      "category": "comparison",
+      "question": "How do software development and AI governance requirements differ?",
+      "generated_answer": "Based on the provided context, software development and AI governance requirements differ in their focus areas, specific metrics, and cross-domain dependencies. Here is a detailed comparison:\n\n**1. Core Focus & Primary Directives:**\n- **Software Development (Chapter 6):** Governs CI/CD pipeline failures, legacy stack modernization (Laravel 11, React), and deployment gates. Key directive: **Q6.3** mandates automated unit test code coverage of **at least 85%** verified by PHPUnit and Jest suites before merging into production. Pipelines failing this gate are automatically rejected.\n- **AI Governance (Chapter 10):** Governs LLM/RAG tool usage, clipboard DLP, and data grounding audits. Key directive: **Policy AI-GOV-01** strictly prohibits pasting unencrypted code, financial metrics, or customer PII into public AI services, with automated DLP agents monitoring endpoint clipboard activity.\n\n**2. Specific Metrics & Thresholds:**\n- **Software Development:** Requires **85% unit test coverage** (Q6.3) and mandates API rate-limiting mitigation via exponential backoff with jitter, with Laravel Redis throttle limits set to **at least 600 requests per minute** for authenticated tokens (Q6.4).\n- **AI Governance:** Requires a minimum **Faithfulness Score of 0.98** (98% grounded claims) and **Context Precision of 0.92**, evaluated via Ragas framework tools under **Standard EVAL-METRIC-2026** (Q10.3). Additionally, if the Voice-RAG system returns \"I am unable to answer based on the provided document corpus,\" it indicates retrieved vector chunks failed the similarity threshold (**Cosine Score < 0.72**), successfully preventing hallucination (Q10.2).\n\n**3. Code Usage Rules:**\n- **Software Development:** AI-generated code snippets are permitted in production repositories **provided they undergo mandatory peer code review, pass static security scanning (SonarQube), and maintain unit test coverage above 85%** as mandated in Chapter 6 (Q10.4).\n- **AI Governance:** Pasting proprietary code into unapproved public AI chatbots is **strictly prohibited** under Policy AI-GOV-01 (Q10.1).\n\n**4. Cross-Domain Dependencies:**\n- **Software Development:** References **Chapter 7** — testing live production PII in non-production staging environments is strictly prohibited under **Data Privacy Directive PRIV-STAGING-09** (Q6.5). Engineers must utilize synthetic anonymized seed datasets.\n- **AI Governance:** References **Chapter 7** — if an AI tool inadvertently generates unmasked customer PII, it triggers immediate logging of a Data Privacy Breach under **Directive PRIV-REQ-07**, requiring notification to the Data Protection Officer **within 2 hours** (Q10.5). Additionally, violations trigger network quarantine and log **Security Incident SEC-DLP-AI-99**.\n\n**5. Violation Consequences:**\n- **Software Development:** Pipeline failures are automatically rejected at the coverage gate (Q6.3).\n- **AI Governance:** Violations trigger network quarantine and log **Security Incident SEC-DLP-AI-99** (Chapter 10 preamble).\n\n**Note on Cross-Domain Dependency:** Both domains explicitly depend on **Chapter 7** for data privacy compliance, but with different directives: software development uses **PRIV-STAGING-09** for staging environment restrictions, while AI governance uses **PRIV-REQ-07** for PII breach notification.",
+      "ground_truth": "Software development: CI/CD pipelines, 85% code coverage, PHPUnit/Jest testing. AI governance: Prompt template compliance, enterprise RAG only, quarterly bias/accuracy audits. One focuses on code quality, other on AI safety.",
+      "chunks": [
+        {
+          "content": "Software engineers building AI integration \npipelines must ensure prompt templates comply with the enterprise AI governance directives in Chapter 10.",
+          "page": 9,
+          "score": 0.049487464129924774
+        },
+        {
+          "content": "Table of Contents \n \nChapter 1 \nIT Infrastructure, Network Diagnostics & Identity Auth Lockouts \nChapter 2 \nRemote Work, VPN Tunnels, MTU Limits & Cyber Incident Escalation \nChapter 3 \nHR Protocols, Payroll Underpayment & Employee Benefits Escalation \nChapter 4 \nFacility Management, Cleanroom RFID Security & HVAC Server Alarms \n \nChapter 5 \nProcurement Controls, Order Holds & Master Vendor Disputes \nChapter 6 \nSoftware CI/CD Pipeline Failures, Laravel Migration & React Hydration \nChapter 7 \nData Privacy, Cross-Border Transfers & Right-to-be-Forgotten Purges \nChapter 8 \nFinancial Auditing, Expense Receipt Missing & Fraud Escalations \nChapter 9 \nCrisis Management, Building Evacuation & Secondary DR Failover \nChapter 10 \nEnterprise AI Governance, Clipboard DLP & RAG Grounding Audits",
+          "page": null,
+          "score": 0.008398137055337429
+        },
+        {
+          "content": "Violations trigger network quarantine and log \nSecurity Incident SEC-DLP-AI-99 . \nChapter 10: Enterprise AI Governance, Clipboard DLP & RAG \nGrounding Audits \n \nAs enterprise workflows integrate Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG) tools, \nemployees must strictly follow AI safety protocols to prevent confidential intellectual property leaks and ensure data \ngrounding.",
+          "page": 13,
+          "score": 0.0059814127162098885
+        },
+        {
+          "content": "Q10.1: What is the policy regarding pasting proprietary software code or customer contracts into commercial, \nunapproved public AI chatbots? \nPasting unencrypted code, financial metrics, or customer PII into public AI services is strictly prohibited under Policy AI-\nGOV-01 . Automated DLP agents monitor endpoint clipboard activity. ",
+          "page": 13,
+          "score": 0.0011179758002981544
+        },
+        {
+          "content": "Q10.5: If an AI tool inadvertently generates an output containing unmasked customer PII, which cross-domain \nbreach protocol must be logged? \nInadvertent generation of unmasked PII triggers immediate logging of a Data Privacy Breach under Chapter 7 (Directive \nPRIV-REQ-07), requiring notification to the Data Protection Officer within 2 hours. \nQ10.4: Are developers allowed to use AI-generated code snippets in production software repositories? \nYes, provided that all AI-generated code snippets undergo mandatory peer code review, pass static security scanning \n( SonarQube ), and maintain unit test coverage above 85% as mandated in Chapter 6. \nQ10.3: What is the minimum Faithfulness (Grounding) score an enterprise AI pipeline must maintain during \nquarterly evaluation audits? \nAI pipelines must achieve a minimum Faithfulness Score of 0.98 (98% grounded claims) and Context Precision of \n0.92 evaluated via Ragas framework tools under Standard EVAL-METRIC-2026 . \nQ10.2: How should users respond if the enterprise Voice-RAG system returns an answer stating \"I am unable to \nanswer based on the provided document corpus\"? \nThis output indicates that retrieved vector chunks failed the similarity threshold ( Cosine Score < 0.72 ), successfully \npreventing a hallucination. ",
+          "page": 13,
+          "score": 0.001016560709103942
+        },
+        {
+          "content": "Chapter 7: Data Privacy, Cross-Border Transfers & Right-to-be-\nForgotten Purges \n \nCompliance with global data protection regulations (such as GDPR, CCPA, and regional personal data protection acts) is \nmandatory across all data processing software systems, customer databases, and AI pipelines.",
+          "page": 10,
+          "score": 0.0006568318931385875
+        },
+        {
+          "content": "Testing live production PII in non-production staging environments is strictly prohibited under Data Privacy Directive \nPRIV-STAGING-09 in Chapter 7. Engineers must utilize synthetic anonymized seed datasets. \nChapter 6: Software CI/CD Pipeline Failures, Laravel Migration & \nReact Hydration \n \nModernizing legacy software stacks—such as upgrading facilities management codebases to modern Laravel 11 and \nReact architectures—requires rigid deployment pipelines, automated testing gates, and detailed rollback strategies. \n \nSoftware development workflows must strictly observe data protection guidelines. ",
+          "page": 9,
+          "score": 0.0005039491225033998
+        },
+        {
+          "content": "Wrap client-only side \neffects inside useEffect() hooks. \nQ6.3: What is the mandatory automated unit test code coverage percentage required before merging code into \nthe production branch? \nAll software releases must maintain automated unit test code coverage of at least 85% verified by PHPUnit and Jest \nsuites. Pipelines failing this gate are automatically rejected. \n",
+          "page": 9,
+          "score": 6.965110515011474e-05
+        },
+        {
+          "content": "Q6.4: How should API rate-limiting errors (HTTP 429 Too Many Requests) between React frontends and Laravel \nbackends be mitigated? \nConfigure Axios/Fetch clients to implement exponential backoff with jitter and verify that Laravel Redis throttle \nmiddleware ( throttle:api ) limits are set to at least 600 requests per minute for authenticated user tokens. \nQ6.5: What cross-domain protocol governs software engineers attempting to test live production customer data \nin staging environments? \n",
+          "page": 9,
+          "score": 4.435059236129746e-05
+        },
+        {
+          "content": "Q5.5: How does vendor invoice non-compliance in Chapter 5 cross-reference with the financial auditing rules in \nChapter 8? \nIf a vendor invoice contains disputed charges or lacks a valid CoA under Chapter 5, the Finance team must flag the \ntransaction in the accounting system as FIN-AUDIT-DISPUTED (See Chapter 8), freezing disbursements until resolved. \nQ5.4: What is the mandatory approval tier required for emergency software license purchases under $10,000 \nUSD? \nEmergency software purchases under $10,000 USD require written approval from the Department Vice President and IT \nAsset Manager via Fast-Track Procurement Form PROC-FAST-01 . \nQ5.3: What is the minimum score a vendor must maintain on the Procurement Quality Index (PQI) to avoid \nprobationary status? \n",
+          "page": 8,
+          "score": 3.2003867090679705e-05
+        }
+      ],
+      "num_chunks": 10
+    },
+    {
+      "id": 20,
+      "category": "numerical",
+      "question": "How many business days does an employee have to submit a Payroll Correction Request?",
+      "generated_answer": "Based on the provided context, an employee has **5 business days** to submit a Payroll Correction Request.\n\nThis is detailed in **Q3.1**: \"Submit a Payroll Correction Request via the Enterprise HR Portal within 5 business days of pay stub issuance, attaching Form HR-PAY-102 approved by your line manager.\"",
+      "ground_truth": "5 business days",
+      "chunks": [
+        {
+          "content": "Benefits activate on the 1st calendar day of the month following employment. If a hospital reports \"Active Coverage Not \nFound\", the employee must request a temporary Insurance Guarantee Letter (Form HR-MED-09) from the \nBenefits Specialist to guarantee corporate liability for valid claims. \nQ3.1: What is the mandatory workflow if an employee identifies a salary underpayment anomaly exceeding 5% \non their pay stub? \nSubmit a Payroll Correction Request via the Enterprise HR Portal within 5 business days of pay stub issuance, attaching \nForm HR-PAY-102 approved by your line manager. Payroll will audit biometric logs. ",
+          "page": 6,
+          "score": 0.9935222268104553
+        },
+        {
+          "content": "Q3.5: How does employee termination in Chapter 3 impact data retention rules specified in Chapter 7? \nUpon employee termination, HR triggers Directive HR-OFFBOARD-01 , which notifies the Data Compliance team to begin \nthe 30-day personal data purging countdown detailed in Chapter 7 (Right-to-be-Forgotten Protocol). \nQ3.4: What documentation is required when taking extended medical leave exceeding 3 consecutive business \ndays? \nThe employee must submit a certified Medical Certificate (MC) from an accredited medical institution alongside Form \nHR-LEAVE-04 to the HR Portal within 48 hours of medical leave commencement. \nQ3.3: What is the maximum timeframe for an HR Ombudsman to initiate an inquiry into a workplace grievance? \nGrievance submissions must be reviewed by an impartial HR Ombudsman within 3 business days under the \nEnterprise Anti-Retaliation Charter (Policy HR-ETHICS-2026 ). \nQ3.2: How are medical insurance coverage activation delays handled for newly onboarded personnel? \n",
+          "page": 6,
+          "score": 0.014397939667105675
+        },
+        {
+          "content": "Q8.5: How do fraudulent expense claims in Chapter 8 interact with HR disciplinary procedures in Chapter 3? \nConfirmed financial fraud triggers immediate payroll wage garnishment for recovery and initiates formal disciplinary \nreview under Chapter 3 (HR Ombudsman Charter HR-ETHICS-2026). \n",
+          "page": 11,
+          "score": 0.00023440296354237944
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 21,
+      "category": "numerical",
+      "question": "What is the minimum code coverage percentage required for software releases?",
+      "generated_answer": "Based on the provided context, the minimum automated unit test code coverage required for software releases is **at least 85%**.\n\nThis is mandated in **Q6.3**: \"All software releases must maintain automated unit test code coverage of at least 85% verified by PHPUnit and Jest suites. Pipelines failing this gate are automatically rejected.\"",
+      "ground_truth": "85%",
+      "chunks": [
+        {
+          "content": "Wrap client-only side \neffects inside useEffect() hooks. \nQ6.3: What is the mandatory automated unit test code coverage percentage required before merging code into \nthe production branch? \nAll software releases must maintain automated unit test code coverage of at least 85% verified by PHPUnit and Jest \nsuites. Pipelines failing this gate are automatically rejected. \n",
+          "page": 9,
+          "score": 0.9943161606788635
+        },
+        {
+          "content": "Table of Contents \n \nChapter 1 \nIT Infrastructure, Network Diagnostics & Identity Auth Lockouts \nChapter 2 \nRemote Work, VPN Tunnels, MTU Limits & Cyber Incident Escalation \nChapter 3 \nHR Protocols, Payroll Underpayment & Employee Benefits Escalation \nChapter 4 \nFacility Management, Cleanroom RFID Security & HVAC Server Alarms \n \nChapter 5 \nProcurement Controls, Order Holds & Master Vendor Disputes \nChapter 6 \nSoftware CI/CD Pipeline Failures, Laravel Migration & React Hydration \nChapter 7 \nData Privacy, Cross-Border Transfers & Right-to-be-Forgotten Purges \nChapter 8 \nFinancial Auditing, Expense Receipt Missing & Fraud Escalations \nChapter 9 \nCrisis Management, Building Evacuation & Secondary DR Failover \nChapter 10 \nEnterprise AI Governance, Clipboard DLP & RAG Grounding Audits",
+          "page": 2,
+          "score": 0.0001512422604719177
+        },
+        {
+          "content": "Q6.4: How should API rate-limiting errors (HTTP 429 Too Many Requests) between React frontends and Laravel \nbackends be mitigated? \nConfigure Axios/Fetch clients to implement exponential backoff with jitter and verify that Laravel Redis throttle \nmiddleware ( throttle:api ) limits are set to at least 600 requests per minute for authenticated user tokens. \nQ6.5: What cross-domain protocol governs software engineers attempting to test live production customer data \nin staging environments? \n",
+          "page": 9,
+          "score": 8.76586782396771e-05
+        },
+        {
+          "content": "Never force production migrations using --force without \nLead Architect sign-off. \nQ6.2: How should frontend engineers resolve React state hydration mismatches during Server-Side Rendering \n(SSR)? \nIf React throws Hydration Failed Error #418 , server-rendered HTML differs from client-side initial render tree. \nCheck for browser-only globals (like window or localStorage ) accessed during initial render. ",
+          "page": 9,
+          "score": 2.3663251340622082e-05
+        },
+        {
+          "content": "Q6.1: What is the troubleshooting workflow when a CI/CD pipeline fails during database migration with Error \nLARAVEL-MIGRATE-FAIL? \nLARAVEL-MIGRATE-FAIL occurs when a migration conflicts with existing legacy column definitions or unindexed foreign \nkeys. Inspect storage/logs/laravel.log , execute php artisan migrate:rollback --step=1 in staging, and \nverify foreign key constraints utilize ON DELETE CASCADE . ",
+          "page": 9,
+          "score": 1.7890395611175336e-05
+        }
+      ],
+      "num_chunks": 5
+    },
+    {
+      "id": 22,
+      "category": "numerical",
+      "question": "How many calendar days does the Data Compliance team have to process a Right-to-be-Forgotten request?",
+      "generated_answer": "Based on the provided context, the Data Compliance team has **exactly 30 calendar days** to process a Right-to-be-Forgotten (Data Erasure) request.\n\nThis is detailed in **Q7.2**: \"Upon receiving Form PRIV-REQ-07, the Data Compliance team has exactly 30 calendar days to purge PII from primary SQL databases, vector databases, and analytics storage. Financial transaction records required for statutory 7-year audit retention must be anonymized using cryptographic hashing (SHA-256).\"",
+      "ground_truth": "30 calendar days",
+      "chunks": [
+        {
+          "content": "Q7.4: What encryption standard is mandatory for personal data stored at rest within enterprise cloud \ndatabases? \nAll databases containing PII or sensitive personal records must enforce AES-256 encryption at rest, with cryptographic \nkeys managed via AWS KMS or Azure Key Vault under KMS Policy SEC-KEY-256 . \nQ7.3: What penalty applies to employees who execute unauthorized bulk exports of customer PII to local \ndrives? \nExecuting unauthorized bulk exports of customer PII results in immediate employment termination, revocation of all \nsystem credentials, and potential legal prosecution under statutory data privacy laws. \nQ7.2: How are customer Right-to-be-Forgotten (Data Erasure) requests processed across production \ndatabases? \nUpon receiving Form PRIV-REQ-07 , the Data Compliance team has exactly 30 calendar days to purge PII from \nprimary SQL databases, vector databases, and analytics storage. Financial transaction records required for statutory 7-\nyear audit retention must be anonymized using cryptographic hashing ( SHA-256 ). \nQ7.1: What is the mandatory operational response if employee personal data is inadvertently transferred to an \nunapproved cross-border cloud region? \n",
+          "page": 10,
+          "score": 0.9877572059631348
+        },
+        {
+          "content": "Q7.5: How does a data breach under Chapter 7 trigger crisis management protocols in Chapter 9? \nIf a data privacy breach affects more than 10,000 data subjects, the DPO must elevate the incident to Category 1 \nEmergency, activating the Crisis Management Team and Public Relations protocols in Chapter 9 (Directive CRISIS-\nPR-01). \n",
+          "page": 10,
+          "score": 0.0007054892485029995
+        },
+        {
+          "content": "Inadvertent cross-border transfers trigger BREACH-DATA-XBORDER-01 . The Cloud Architect must execute automated \nisolation script cloud-isolate-region.py to terminate public bucket endpoints, delete non-compliant storage \nreplicas, and issue an erasure verification log. Notify the Data Protection Officer (DPO) within 2 hours. \n",
+          "page": 10,
+          "score": 0.000414559239288792
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 23,
+      "category": "numerical",
+      "question": "How many minutes must Floor Wardens take to complete a headcount during fire evacuation?",
+      "generated_answer": "Based on the provided context, I cannot find this information in the uploaded documents.\n\nThe context only states that upon activation of EVAC-FIRE-01, employees must cease work, secure chemical containers if safe, and proceed to Assembly Area Delta via stairwells, and that elevators are automatically disabled. It does not specify a time limit for Floor Wardens to complete a headcount.",
+      "ground_truth": "10 minutes",
+      "chunks": [
+        {
+          "content": "Upon activation of EVAC-FIRE-01 , cease work immediately, secure chemical containers if safe, and proceed to \nAssembly Area Delta via stairwells. Elevators are automatically disabled. ",
+          "page": 12,
+          "score": 0.0002007662842515856
+        },
+        {
+          "content": "Q9.3: What is the target Recovery Point Objective (RPO) for critical customer SQL database transaction logs? \nThe mandatory RPO for core relational database transaction logs is configured to 15 seconds via continuous WAL log \nshipping to Secondary DR Storage Buckets. \nQ9.2: How is a Primary Data Center failover to Secondary DR Site executed during a total power blackout? \nIf primary utility power fails and UPS battery capacity drops below 20% without generator pickup, Infrastructure Lead \nexecutes DR Runbook DR-FAILOVER-PROD . Global DNS updates via automated BGP route injection redirect client \ntraffic to DR Site Beta within 180 seconds (RTO < 5 minutes). \n",
+          "page": 12,
+          "score": 0.00015559034363832325
+        },
+        {
+          "content": "Q9.1: What is the mandatory protocol when a facility building-wide fire alarm sounds (Alarm EVAC-FIRE-01)? \n",
+          "page": 12,
+          "score": 3.367611861904152e-05
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 24,
+      "category": "numerical",
+      "question": "What is the Recovery Time Objective (RTO) target during a DR failover?",
+      "generated_answer": "Based on the provided context, the Recovery Time Objective (RTO) target during a DR failover is **less than 5 minutes** (RTO < 5 minutes).\n\nThis is specified in **Q9.2**: \"Global DNS updates via automated BGP route injection redirect client traffic to DR Site Beta within 180 seconds (RTO < 5 minutes).\"",
+      "ground_truth": "< 5 minutes",
+      "chunks": [
+        {
+          "content": "Q9.3: What is the target Recovery Point Objective (RPO) for critical customer SQL database transaction logs? \nThe mandatory RPO for core relational database transaction logs is configured to 15 seconds via continuous WAL log \nshipping to Secondary DR Storage Buckets. \nQ9.2: How is a Primary Data Center failover to Secondary DR Site executed during a total power blackout? \nIf primary utility power fails and UPS battery capacity drops below 20% without generator pickup, Infrastructure Lead \nexecutes DR Runbook DR-FAILOVER-PROD . Global DNS updates via automated BGP route injection redirect client \ntraffic to DR Site Beta within 180 seconds (RTO < 5 minutes). \n",
+          "page": 12,
+          "score": 0.9415315389633179
+        },
+        {
+          "content": "Upon activation of EVAC-FIRE-01 , cease work immediately, secure chemical containers if safe, and proceed to \nAssembly Area Delta via stairwells. Elevators are automatically disabled. ",
+          "page": 12,
+          "score": 2.0350158592918888e-05
+        },
+        {
+          "content": "Q9.1: What is the mandatory protocol when a facility building-wide fire alarm sounds (Alarm EVAC-FIRE-01)? \n",
+          "page": 12,
+          "score": 1.6303280062857084e-05
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 25,
+      "category": "numerical",
+      "question": "What is the maximum dollar amount for individual transactions that can use a Missing Receipt Affidavit?",
+      "generated_answer": "Based on the provided context, I cannot find this information in the uploaded documents.\n\nThe context covers international per diem rates (Q8.3), duplicate expense escalation (Q8.2), and cash advance reconciliation (Q8.4), but it does not mention a maximum dollar amount for individual transactions that can use a Missing Receipt Affidavit.",
+      "ground_truth": "$25 USD",
+      "chunks": [
+        {
+          "content": "Q8.3: What is the maximum allowable daily per diem rate for international business travel meals? \nThe standard international per diem rate for meals is capped at $85 USD per day , requiring itemized expense logging \nin the Enterprise Expense Portal under Schedule FIN-TRAVEL-INTL . \nQ8.2: What is the escalation workflow when an automated audit identifies duplicate expense submissions \nacross different employees? \n",
+          "page": 11,
+          "score": 0.001010893494822085
+        },
+        {
+          "content": "Q8.4: How quickly must unspent cash advances be reconciled following the completion of corporate travel? \nAll unspent cash advances and travel receipts must be fully reconciled in the portal within 10 business days of \nreturning from approved business travel. \n",
+          "page": 11,
+          "score": 0.0005747998948208988
+        },
+        {
+          "content": "Duplicate submissions trigger an immediate financial hold under Flag FIN-AUDIT-DUP . Internal Audit conducts a review \nwithin 5 business days. ",
+          "page": 11,
+          "score": 4.568432996165939e-05
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 26,
+      "category": "definition",
+      "question": "What is SSO and why is it critical for enterprise productivity?",
+      "generated_answer": "Based on the provided context, I cannot find this information in the uploaded documents.\n\nThe context covers specific technical procedures (e.g., MFA token issues in Q1.2, network diagnostics in Q1.3, port security in Q1.4, and cross-border data violations in Q1.5), but it does not provide a general definition of SSO (Single Sign-On) or explain why it is critical for enterprise productivity.",
+      "ground_truth": "SSO (Single Sign-On) is a unified authentication system that allows employees to access multiple enterprise applications with one set of credentials. It is critical because stable, secure network access and unified authentication are foundational to enterprise productivity.",
+      "chunks": [
+        {
+          "content": "Q9.5: If a physical facility evacuation in Chapter 9 prevents access to hardware MFA tokens, how do employees \nlog in under Chapter 1? \nDuring physical facility evacuations, employees must utilize out-of-band mobile biometric verification via the Identity Self-\nService Portal as defined in Chapter 1 (Directive ERR-SSO-4039). \nQ9.4: How often are unannounced Disaster Recovery failover drills conducted across engineering teams? \nDR failover drills are conducted unannounced twice per fiscal year . All operational teams must achieve their \ndesignated RTO and RPO benchmarks during these drills. \n",
+          "page": 12,
+          "score": 0.0035594820510596037
+        },
+        {
+          "content": "Q1.5: If an SSO lockout is linked to a cross-border data access violation, which secondary chapter policy \napplies? \nIf an SSO lockout involves unauthorized cross-border data requests, support staff must immediately initiate the Data \nBreach Isolation Protocol detailed in Chapter 7 (Directive BREACH-DATA-XBORDER-01).",
+          "page": 4,
+          "score": 0.0009188088006339967
+        },
+        {
+          "content": "Q1.4: What occurs automatically when an unauthorized personal hot-spot or router is plugged into an office \nEthernet port? \nAutomated 802.1X Port Security triggers within 3 seconds, executing an administrative port shutdown and placing the \nphysical port into isolation quarantine. \nQ1.3: How should network engineers diagnose persistent packet loss exceeding 5% on corporate Wi-Fi SSIDs? \n",
+          "page": 3,
+          "score": 3.181146894348785e-05
+        },
+        {
+          "content": "No. Supervisors are strictly unauthorized to manually bypass MFA requirements under any circumstance. The employee \nmust complete out-of-band biometric verification or request a temporary hardware token issuance. \n",
+          "page": 3,
+          "score": 1.6739946659072302e-05
+        },
+        {
+          "content": "Execute diagnostic script net-diag-v4.sh on the access point. If 5GHz channel utilization exceeds 75%, trigger \ndynamic channel switching to non-overlapping channels (36, 44, 149, or 157). If packet loss persists, submit a hardware \ncheck under SOP-NET-882 . \n",
+          "page": 3,
+          "score": 1.672507460170891e-05
+        },
+        {
+          "content": "Q1.2: I forgot my MFA token and I cannot complete login. ",
+          "page": 3,
+          "score": 1.6032319763326086e-05
+        }
+      ],
+      "num_chunks": 6
+    },
+    {
+      "id": 27,
+      "category": "definition",
+      "question": "What is DLP and how does it protect enterprise data?",
+      "generated_answer": "Based on the provided context, I cannot find a general definition of DLP (Data Loss Prevention) or a detailed explanation of how it protects enterprise data.\n\nThe context only mentions DLP in passing within **Q10.1**, stating: \"Automated DLP agents monitor endpoint clipboard activity\" as part of the prohibition on pasting proprietary code or customer PII into public AI services under **Policy AI-GOV-01**. It does not provide a broader definition of DLP or its overall protective mechanisms.",
+      "ground_truth": "DLP stands for Data Leak Prevention. It is a security system that monitors endpoint clipboard activity to detect unauthorized data transfers. DLP agents automatically detect when proprietary code or customer PII is pasted into unapproved AI chatbots.",
+      "chunks": [
+        {
+          "content": "Q10.1: What is the policy regarding pasting proprietary software code or customer contracts into commercial, \nunapproved public AI chatbots? \nPasting unencrypted code, financial metrics, or customer PII into public AI services is strictly prohibited under Policy AI-\nGOV-01 . Automated DLP agents monitor endpoint clipboard activity. ",
+          "page": 13,
+          "score": 0.002645928878337145
+        },
+        {
+          "content": "Q10.5: If an AI tool inadvertently generates an output containing unmasked customer PII, which cross-domain \nbreach protocol must be logged? \nInadvertent generation of unmasked PII triggers immediate logging of a Data Privacy Breach under Chapter 7 (Directive \nPRIV-REQ-07), requiring notification to the Data Protection Officer within 2 hours. \nQ10.4: Are developers allowed to use AI-generated code snippets in production software repositories? \nYes, provided that all AI-generated code snippets undergo mandatory peer code review, pass static security scanning \n( SonarQube ), and maintain unit test coverage above 85% as mandated in Chapter 6. \nQ10.3: What is the minimum Faithfulness (Grounding) score an enterprise AI pipeline must maintain during \nquarterly evaluation audits? \nAI pipelines must achieve a minimum Faithfulness Score of 0.98 (98% grounded claims) and Context Precision of \n0.92 evaluated via Ragas framework tools under Standard EVAL-METRIC-2026 . \nQ10.2: How should users respond if the enterprise Voice-RAG system returns an answer stating \"I am unable to \nanswer based on the provided document corpus\"? \nThis output indicates that retrieved vector chunks failed the similarity threshold ( Cosine Score < 0.72 ), successfully \npreventing a hallucination. ",
+          "page": 13,
+          "score": 0.0007708842749707401
+        },
+        {
+          "content": "Software engineers building AI integration \npipelines must ensure prompt templates comply with the enterprise AI governance directives in Chapter 10.",
+          "page": 9,
+          "score": 2.3375620003207587e-05
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 28,
+      "category": "definition",
+      "question": "What is RAG in the context of enterprise AI tools?",
+      "generated_answer": "Based on the provided context, I can explain RAG (Retrieval-Augmented Generation) specifically as it relates to the enterprise Voice-RAG system mentioned in **Q10.2**.\n\nIn this context, RAG refers to a system that retrieves relevant information from a document corpus before generating an answer. The enterprise Voice-RAG system works as follows:\n\n- **Retrieval mechanism**: The system retrieves vector chunks from a document corpus to ground its responses.\n- **Similarity threshold**: Retrieved chunks must meet a **Cosine Score of ≥ 0.72** to be used in generating an answer.\n- **Hallucination prevention**: If the retrieved vector chunks fail this similarity threshold (Cosine Score < 0.72), the system returns the output: *\"I am unable to answer based on the provided document corpus\"* — this is a deliberate safeguard that successfully prevents hallucination.\n\n**Cross-domain dependency**: RAG systems are governed by the enterprise AI governance directives in **Chapter 10**, which software engineers building AI integration pipelines must comply with (as noted in the context preceding Q10.1).\n\nThe context does not provide a broader definition of RAG beyond this enterprise Voice-RAG implementation, nor does it detail other RAG architectures or components.",
+      "ground_truth": "RAG stands for Retrieval-Augmented Generation. It is an AI architecture that combines document retrieval with language model generation to provide grounded, accurate answers based on enterprise document corpus.",
+      "chunks": [
+        {
+          "content": "Q10.5: If an AI tool inadvertently generates an output containing unmasked customer PII, which cross-domain \nbreach protocol must be logged? \nInadvertent generation of unmasked PII triggers immediate logging of a Data Privacy Breach under Chapter 7 (Directive \nPRIV-REQ-07), requiring notification to the Data Protection Officer within 2 hours. \nQ10.4: Are developers allowed to use AI-generated code snippets in production software repositories? \nYes, provided that all AI-generated code snippets undergo mandatory peer code review, pass static security scanning \n( SonarQube ), and maintain unit test coverage above 85% as mandated in Chapter 6. \nQ10.3: What is the minimum Faithfulness (Grounding) score an enterprise AI pipeline must maintain during \nquarterly evaluation audits? \nAI pipelines must achieve a minimum Faithfulness Score of 0.98 (98% grounded claims) and Context Precision of \n0.92 evaluated via Ragas framework tools under Standard EVAL-METRIC-2026 . \nQ10.2: How should users respond if the enterprise Voice-RAG system returns an answer stating \"I am unable to \nanswer based on the provided document corpus\"? \nThis output indicates that retrieved vector chunks failed the similarity threshold ( Cosine Score < 0.72 ), successfully \npreventing a hallucination. ",
+          "page": 13,
+          "score": 0.6521720290184021
+        },
+        {
+          "content": "Software engineers building AI integration \npipelines must ensure prompt templates comply with the enterprise AI governance directives in Chapter 10.",
+          "page": 9,
+          "score": 0.0012144631473347545
+        },
+        {
+          "content": "Q10.1: What is the policy regarding pasting proprietary software code or customer contracts into commercial, \nunapproved public AI chatbots? \nPasting unencrypted code, financial metrics, or customer PII into public AI services is strictly prohibited under Policy AI-\nGOV-01 . Automated DLP agents monitor endpoint clipboard activity. ",
+          "page": 13,
+          "score": 9.283937106374651e-05
+        }
+      ],
+      "num_chunks": 3
+    },
+    {
+      "id": 29,
+      "category": "definition",
+      "question": "What is RBAC and how does it relate to cleanroom access?",
+      "generated_answer": "Based on the provided context, I can explain RBAC specifically as it relates to cleanroom access.\n\n**RBAC (Role-Based Access Control)** is referenced in **Q4.1** as a permission system that controls access to the Class-100 Cleanroom door. When an employee's RFID badge is denied entry (Error **CODE-ACCESS-DENIED-9**), the cause is either:\n\n1. **Expired Cleanroom Safety Training certification** — the employee must verify via the LMS portal that Module **SAF-CR-201** was completed within the past **365 days**.\n2. **Missing RBAC permissions** — the employee lacks the role-based permissions required for cleanroom entry.\n\n**How RBAC relates to cleanroom access**: RBAC governs whether an employee's role grants them the necessary permissions to enter the Class-100 Cleanroom. If the RBAC permissions are missing or misconfigured, the RFID badge will be denied entry, triggering **CODE-ACCESS-DENIED-9**.\n\n**Cross-domain dependency**: The context does not provide a broader definition of RBAC beyond this cleanroom access scenario, nor does it detail how RBAC permissions are assigned, revoked, or managed. For general RBAC policy details, you would need to consult the access control directives referenced in the broader security framework (not included in the provided context).",
+      "ground_truth": "RBAC stands for Role-Based Access Control. It is a security mechanism that assigns access permissions based on an employee's role. For cleanroom access, RBAC permissions determine whether an employee can enter Class-100 Cleanroom areas.",
+      "chunks": [
+        {
+          "content": "If temperature reaches 32 degrees Celsius, non-\nessential compute workloads must be shut down within 10 minutes. \nQ4.1: What must an employee do if their RFID badge is denied entry at a Class-100 Cleanroom door (Error \nCODE-ACCESS-DENIED-9)? \nCODE-ACCESS-DENIED-9 indicates an expired Cleanroom Safety Training certification or missing RBAC permissions. \nCheck LMS portal to ensure Module SAF-CR-201 was completed within the past 365 days. ",
+          "page": 7,
+          "score": 0.23943474888801575
+        },
+        {
+          "content": "Procurement operations automatically transition to cloud-hosted \nERP fallback instances governed by the Purchase Order Hold policies in Chapter 5 (Directive HOLD-PROC-\nLIMIT-50K). \nQ4.4: Who has the authority to issue emergency badges for third-party facility contractors? \nOnly the Facility Operations Manager or On-Duty Security Director can authorize temporary vendor access badges via \nForm FAC-VENDOR-99 following background verification. \nQ4.3: What is the procedure if a water leak is detected near primary server racks (Alert WATER-LEAK-ZONE-4)? \nImmediately isolate the zone water shut-off valve, notify Facility Dispatch via EXT-4400 , and cover vulnerable hardware \nracks with anti-static protective tarps under Protocol FAC-HYD-12 . \nQ4.2: How should facility technicians react if a server room temperature alert triggers at 28 degrees Celsius? \nUpon receiving alert ALARM-TEMP-28C , verify if the primary CRAC unit compressor is running. If failed, activate backup \nIn-Row Cooling Unit #2 and set chilled water valve to 100% open. ",
+          "page": 7,
+          "score": 5.5667434935458004e-05
+        }
+      ],
+      "num_chunks": 2
+    },
+    {
+      "id": 30,
+      "category": "definition",
+      "question": "What is RTO in disaster recovery?",
+      "generated_answer": "Based on the provided context, I can explain RTO specifically as it relates to the disaster recovery procedure described in **Q9.2**.\n\n**RTO (Recovery Time Objective)** is the maximum acceptable time to restore services after a disaster. In this context, the RTO for a Primary Data Center failover during a total power blackout is **less than 5 minutes (RTO < 5 minutes)**.\n\nThe specific steps and timeframes to achieve this RTO are:\n\n1. **Trigger condition**: Primary utility power fails, UPS battery capacity drops below **20%**, and generator pickup does not occur.\n2. **Action**: The Infrastructure Lead executes **DR Runbook DR-FAILOVER-PROD**.\n3. **Execution**: Global DNS updates are performed via automated BGP route injection.\n4. **Timeframe**: Client traffic is redirected to **DR Site Beta** within **180 seconds** (which is 3 minutes, well within the 5-minute RTO).\n\n**Related metric**: The context also mentions **RPO (Recovery Point Objective)** in **Q9.3**, which is set to **15 seconds** for critical customer SQL database transaction logs via continuous WAL log shipping to Secondary DR Storage Buckets. While RTO measures time to recovery, RPO measures maximum acceptable data loss.\n\n**Cross-domain dependency**: The context does not provide a broader definition of RTO beyond this specific DR scenario, nor does it detail RTO targets for other systems or applications. For general disaster recovery policy details, you would need to consult the broader DR framework (not included in the provided context).",
+      "ground_truth": "RTO stands for Recovery Time Objective, which is the maximum acceptable time to restore services after a disaster. The enterprise target is <5 minutes during a DR failover.",
+      "chunks": [
+        {
+          "content": "Q9.3: What is the target Recovery Point Objective (RPO) for critical customer SQL database transaction logs? \nThe mandatory RPO for core relational database transaction logs is configured to 15 seconds via continuous WAL log \nshipping to Secondary DR Storage Buckets. \nQ9.2: How is a Primary Data Center failover to Secondary DR Site executed during a total power blackout? \nIf primary utility power fails and UPS battery capacity drops below 20% without generator pickup, Infrastructure Lead \nexecutes DR Runbook DR-FAILOVER-PROD . Global DNS updates via automated BGP route injection redirect client \ntraffic to DR Site Beta within 180 seconds (RTO < 5 minutes). \n",
+          "page": 12,
+          "score": 0.09721212089061737
+        },
+        {
+          "content": "Upon activation of EVAC-FIRE-01 , cease work immediately, secure chemical containers if safe, and proceed to \nAssembly Area Delta via stairwells. Elevators are automatically disabled. ",
+          "page": 12,
+          "score": 1.8719551007961854e-05
+        },
+        {
+          "content": "Q9.1: What is the mandatory protocol when a facility building-wide fire alarm sounds (Alarm EVAC-FIRE-01)? \n",
+          "page": 12,
+          "score": 1.6160587620106526e-05
+        }
+      ],
+      "num_chunks": 3
+    }
+  ]
+}

@@ -27,3 +27,9 @@ frontend/dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Generated at runtime
+backend/chroma_db/
+*.log
+*.tsbuildinfo
+backend_colab.zip
